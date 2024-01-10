@@ -1,6 +1,5 @@
 package ru.adavydova.booksmart.domain.model
 
-import java.util.Locale.Category
 
 data class VolumeInfo(
     val title: String,
