@@ -98,6 +98,8 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
 
+    implementation("com.squareup.leakcanary:leakcanary-android:3.0-alpha-1")
+
     //Coil
     implementation("io.coil-kt:coil-compose:2.5.0")
 }

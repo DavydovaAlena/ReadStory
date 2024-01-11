@@ -1,4 +1,4 @@
-package ru.adavydova.booksmart.presentation.search_book_screen.component
+package ru.adavydova.booksmart.presentation.component.searchbar
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
@@ -22,7 +22,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import ru.adavydova.booksmart.R
-import ru.adavydova.booksmart.permission_logic.PermissionTextProvider
+import ru.adavydova.booksmart.presentation.permission_logic.PermissionTextProvider
 import ru.adavydova.booksmart.presentation.search_book_screen.event.SearchBookEvent
 import ru.adavydova.booksmart.presentation.search_book_screen.viewmodel.SearchScreenViewModel
 
@@ -70,8 +70,8 @@ fun SearchBookScreen(
                 .clip(CircleShape),
             query = searchState.query,
             onClick = toSearchFullScreen,
-            onValueChange = { viewModel.onEvent(SearchBookEvent.UpdateQuery(it)) },
-            onSearch = { viewModel.onEvent(SearchBookEvent.SearchNews) },
+            onValueChange = { viewModel.onEvent(SearchBookEvent.UpdateAndSearchQuery(it)) },
+            goOnRequest = {  },
             checkingThePermission = checkingThePermission
         )
 

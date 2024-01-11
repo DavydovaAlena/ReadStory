@@ -1,5 +1,6 @@
 package ru.adavydova.booksmart.presentation.search_book_screen.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
@@ -23,20 +24,12 @@ class SearchScreenViewModel @Inject constructor(
     fun onEvent(event: SearchBookEvent) {
         when (event) {
 
-            SearchBookEvent.SearchNews -> {
-                val books = bookUseCase.searchBookUseCase(
-                    searchBooksState.value.query
-                ).cachedIn(viewModelScope)
-                _searchBooksState.value = searchBooksState.value.copy(
-                    books = books
-                )
-
-            }
-
-            is SearchBookEvent.UpdateQuery -> {
+            is SearchBookEvent.UpdateAndSearchQuery -> {
                 _searchBooksState.value = searchBooksState.value.copy(
                     query = event.query
                 )
+                Log.d("Q", searchBooksState.value.query)
+
                 val books = bookUseCase.searchBookUseCase(
                     searchBooksState.value.query
                 ).cachedIn(viewModelScope)
@@ -47,12 +40,6 @@ class SearchScreenViewModel @Inject constructor(
 
             }
 
-            is SearchBookEvent.GoogleAssistantUse -> {
-
-                _searchBooksState.value = searchBooksState.value.copy(
-                    query = event.query
-                )
-            }
         }
     }
 }

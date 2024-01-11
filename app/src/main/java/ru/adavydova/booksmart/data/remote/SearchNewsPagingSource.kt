@@ -1,5 +1,6 @@
 package ru.adavydova.booksmart.data.remote
 
+import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import ru.adavydova.booksmart.data.mapper.toBooks
@@ -26,6 +27,7 @@ class SearchNewsPagingSource(
                 query = query,
                 startIndex = page
             )
+
             val books = booksPaging.toBooks()
             LoadResult.Page(
                 data = books.books,

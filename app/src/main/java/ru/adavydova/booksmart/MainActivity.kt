@@ -13,8 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import ru.adavydova.booksmart.permission_logic.MainViewModel
-import ru.adavydova.booksmart.permission_logic.PermissionEvent
+import ru.adavydova.booksmart.presentation.permission_logic.MainViewModel
+import ru.adavydova.booksmart.presentation.permission_logic.PermissionEvent
 import ru.adavydova.booksmart.presentation.navigation.NavHost
 import ru.adavydova.booksmart.presentation.search_book_screen.component.PermissionDeclinedDialog
 import ru.adavydova.booksmart.presentation.search_book_screen.component.PermissionDialog
@@ -24,8 +24,10 @@ import ru.adavydova.booksmart.ui.theme.BookSmartTheme
 class MainActivity : ComponentActivity() {
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
 
         setContent {
             BookSmartTheme {

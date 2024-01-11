@@ -1,4 +1,4 @@
-package ru.adavydova.booksmart.permission_logic
+package ru.adavydova.booksmart.presentation.permission_logic
 
 import android.Manifest
 import android.content.Intent

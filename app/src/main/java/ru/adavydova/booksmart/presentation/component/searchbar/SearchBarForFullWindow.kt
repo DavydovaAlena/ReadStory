@@ -1,4 +1,4 @@
-package ru.adavydova.booksmart.presentation.search_book_screen.component
+package ru.adavydova.booksmart.presentation.component.searchbar
 
 import android.app.Activity
 import android.content.Intent
@@ -7,20 +7,15 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -28,116 +23,38 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.delay
 import ru.adavydova.booksmart.R
-import ru.adavydova.booksmart.permission_logic.PermissionTextProvider
+import ru.adavydova.booksmart.presentation.permission_logic.PermissionTextProvider
 import ru.adavydova.booksmart.presentation.search_book_screen.common.colorSearchBar
 import ru.adavydova.booksmart.ui.theme.md_theme_dark_surfaceTint
 import java.util.Locale
 
 
 @Composable
-fun SearchBar(
-    modifier: Modifier = Modifier,
-    query: String,
-    onClick: () -> Unit,
-    checkingThePermission: (PermissionTextProvider, Boolean) -> Unit,
-    onValueChange: (String) -> Unit,
-    onSearch: () -> Unit,
-
-    ) {
-
-    val voiceQueryResultLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.StartActivityForResult(), onResult = {
-            if (it.resultCode == Activity.RESULT_OK) {
-                val result =
-                    it.data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS) ?: listOf("")
-                val queryText = result[0].toString()
-                onValueChange(queryText)
-                onSearch()
-            }
-        })
-
-    val permissionContract = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestPermission(),
-        onResult = { isGranted ->
-            checkingThePermission(PermissionTextProvider.RecordAudioTextProvider, isGranted)
-            if (isGranted) {
-                val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
-                    putExtra(
-                        RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                        RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH
-                    )
-                    putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
-                    putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak Something")
-                }
-                voiceQueryResultLauncher.launch(intent)
-            }
-        }
-    )
-
-    val interactionSource = remember {
-        MutableInteractionSource()
-    }
-    val isClicked = interactionSource.collectIsPressedAsState().value
-
-    LaunchedEffect(key1 = isClicked) {
-        if (isClicked) {
-            onClick()
-        }
-    }
-
-    TextField(
-        modifier = modifier
-            .fillMaxWidth(),
-        value = query,
-        maxLines = 1,
-        readOnly = true,
-        onValueChange = {},
-        placeholder = { if (query == "") Text(text = "Search book") },
-        leadingIcon = {
-            Icon(
-                imageVector = Icons.Outlined.Search,
-                contentDescription = null
-            )
-        },
-        trailingIcon = {
-            IconButton(onClick = {
-                permissionContract.launch(PermissionTextProvider.RecordAudioTextProvider.permissionName)
-            }) {
-                Icon(
-                    imageVector = ImageVector.vectorResource(id = R.drawable.baseline_keyboard_voice_24),
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onSurface
-                )
-            }
-        },
-        interactionSource = interactionSource,
-        colors = TextFieldDefaults.colorSearchBar
-    )
-}
-
-@Composable
 fun SearchBarForFullWindow(
     modifier: Modifier = Modifier,
     query: String,
     onValueChange: (String) -> Unit,
-    onSearch: () -> Unit,
-    onClick: () -> Unit,
+    goOnRequest: (String)-> Unit,
     checkingThePermission: (PermissionTextProvider, Boolean) -> Unit,
     backClick: () -> Unit
 
 ) {
 
-    val interactionSource = remember {
-        MutableInteractionSource()
+
+    val focusRequester = remember {
+        FocusRequester()
     }
-    val isClicked = interactionSource.collectIsPressedAsState().value
 
     val voiceQueryResultLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult(), onResult = {
@@ -146,7 +63,6 @@ fun SearchBarForFullWindow(
                     it.data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS) ?: listOf("")
                 val queryText = result[0].toString()
                 onValueChange(queryText)
-                onSearch()
             }
         })
 
@@ -168,11 +84,11 @@ fun SearchBarForFullWindow(
         }
     )
 
-    LaunchedEffect(key1 = isClicked) {
-        if (isClicked) {
-            onClick()
-        }
-    }
+    LaunchedEffect(key1 = LocalContext.current, block = {
+         delay(200)
+         focusRequester.requestFocus()
+    })
+
 
     Row(
         modifier = Modifier
@@ -184,7 +100,7 @@ fun SearchBarForFullWindow(
 
         IconButton(
             modifier = Modifier
-                .width(60.dp),
+                .width(50.dp),
             colors = IconButtonDefaults.iconButtonColors(
                 containerColor = MaterialTheme.colorScheme.background,
                 contentColor = Color(md_theme_dark_surfaceTint.toArgb())
@@ -197,14 +113,16 @@ fun SearchBarForFullWindow(
             )
         }
 
+
         TextField(
-            readOnly = false,
             modifier = modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .focusRequester(focusRequester)
+
+            ,
             value = query,
             maxLines = 1,
-            onValueChange = onValueChange,
-            placeholder = { if (query == "") Text(text = "Search book") },
+            onValueChange = { onValueChange(it) },
             trailingIcon = {
                 IconButton(onClick = {
                     permissionContract.launch(PermissionTextProvider.RecordAudioTextProvider.permissionName)
@@ -216,12 +134,11 @@ fun SearchBarForFullWindow(
                     )
                 }
             },
-            interactionSource = interactionSource,
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Search
             ),
             keyboardActions = KeyboardActions(
-                onSearch = { onSearch() }
+                onSearch = { goOnRequest(query) }
             ),
             colors = TextFieldDefaults.colorSearchBar
         )
@@ -230,22 +147,3 @@ fun SearchBarForFullWindow(
 
 
 }
-
-
-//
-//
-//
-//@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
-//@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
-//@Composable
-//fun SearchBarPreview() {
-//    BookSmartTheme {
-//        SearchBar(
-//            modifier = Modifier.padding(16.dp),
-//            query = "",
-//            onValueChange = { },
-//            onSearch = {},
-//            onClick = {},
-//        )
-//    }
-//}

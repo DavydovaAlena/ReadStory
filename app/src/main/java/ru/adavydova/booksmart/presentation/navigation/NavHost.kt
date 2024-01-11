@@ -8,8 +8,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
-import ru.adavydova.booksmart.permission_logic.PermissionTextProvider
-import ru.adavydova.booksmart.presentation.search_book_screen.component.SearchBookScreen
+import ru.adavydova.booksmart.presentation.permission_logic.PermissionTextProvider
+import ru.adavydova.booksmart.presentation.component.searchbar.SearchBookScreen
 import ru.adavydova.booksmart.presentation.search_book_screen.component.SearchFullWindowScreen
 
 
@@ -64,7 +64,9 @@ fun NavGraphBuilder.searchNavGraph(
                         inclusive = true
                     )
                 },
-                checkingThePermission = checkingThePermission
+                checkingThePermission = checkingThePermission,
+                goOnRequest = { },
+                navigateToDetail = {}
             )
         }
 

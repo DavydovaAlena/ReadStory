@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ru.adavydova.booksmart.permission_logic.PermissionTextProvider
+import ru.adavydova.booksmart.presentation.permission_logic.PermissionTextProvider
 
 
 @Composable
@@ -29,11 +29,10 @@ fun PermissionDialog(
 ) {
 
     val permissionContract = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestPermission(),
-        onResult = { isGranted ->
-            onClickButtonOk(isGranted, permissions)
-        }
-    )
+        contract = ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        onClickButtonOk(isGranted, permissions)
+    }
 
     AlertDialog(
         title = {
