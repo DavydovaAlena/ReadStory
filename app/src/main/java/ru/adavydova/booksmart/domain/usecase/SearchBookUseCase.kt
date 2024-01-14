@@ -8,7 +8,7 @@ import ru.adavydova.booksmart.domain.repository.BooksRepository
 class SearchBookUseCase (
     private val repository: BooksRepository
 ){
-    operator fun invoke(query: String): Flow<PagingData<Book>>{
-        return repository.searchBooks(query = query)
+    operator fun invoke(query: String, maxResults: Int): Flow<PagingData<Book>>{
+        return repository.searchBooks(query = query, maxResult = maxResults)
     }
 }

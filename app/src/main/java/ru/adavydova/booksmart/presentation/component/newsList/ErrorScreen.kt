@@ -34,7 +34,6 @@ fun ErrorScreen(
             "Internet Unavailable"
         }
         else -> {
-            Log.d("error", (error.toString()?: "nooo").toString())
             "Unknown exception "
         }
     }

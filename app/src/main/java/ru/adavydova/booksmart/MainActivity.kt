@@ -7,17 +7,26 @@ import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import ru.adavydova.booksmart.presentation.permission_logic.MainViewModel
 import ru.adavydova.booksmart.presentation.permission_logic.PermissionEvent
 import ru.adavydova.booksmart.presentation.navigation.NavHost
-import ru.adavydova.booksmart.presentation.search_book_screen.component.PermissionDeclinedDialog
-import ru.adavydova.booksmart.presentation.search_book_screen.component.PermissionDialog
+import ru.adavydova.booksmart.presentation.permission_logic.PermissionTextProvider
+import ru.adavydova.booksmart.presentation.search_book_enable_screen.component.PermissionDeclinedDialog
+import ru.adavydova.booksmart.presentation.search_book_enable_screen.component.PermissionDialog
 import ru.adavydova.booksmart.ui.theme.BookSmartTheme
 
 @AndroidEntryPoint
@@ -33,6 +42,7 @@ class MainActivity : ComponentActivity() {
             BookSmartTheme {
 
                 Surface(
+                    shadowElevation = 5.dp,
                     modifier = Modifier
                         .fillMaxSize(),
                     color = MaterialTheme.colorScheme.background

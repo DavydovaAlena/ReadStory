@@ -59,7 +59,7 @@ fun SearchItem(
         AsyncImage(
             contentScale = ContentScale.Crop,
             model = ImageRequest.Builder(context)
-                .data(book.volumeInfo.imageLinks.parseUrlImage())
+                .data(book.volumeInfo.imageLinks?.parseUrlImage())
                 .build(),
             contentDescription = null,
             modifier = Modifier

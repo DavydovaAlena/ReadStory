@@ -1,0 +1,101 @@
+{
+  ConstraintSets: {
+    start: {
+
+      books_list: {
+        alpha: 1,
+        width: 'parent',
+        end: ['parent', 'end', 0],
+        top: ['search_bar', 'bottom', 0],
+        start: ['parent', 'start', 0],
+        bottom: ['parent', 'bottom', 16],
+      },
+      icon_program_image: {
+        alpha: 0,
+        height: 80,
+        width: 200,
+        translationZ: 0,
+        centerHorizontally: 'parent',
+        top: ['parent', 'top', -90]
+      },
+      search_bar: {
+        width: 'parent',
+        translationZ: 0,
+        start: ['parent', 'start', 10],
+        end: ['parent', 'end', 10],
+        top: ['icon_program_image', 'bottom', 16],
+      },
+      bottom_line: {
+        width: 'parent',
+        top: ['search_bar', 'bottom', 10],
+        height: 14,
+        alpha: 0.6,
+        translationZ: 0
+      }
+
+
+
+    },
+
+    end: {
+      books_list: {
+        alpha: 1,
+        width: 'parent',
+        top: ['search_bar', 'bottom', 0],
+        end: ['parent', 'end', 0],
+        start: ['parent', 'start', 0],
+        bottom: ['parent', 'bottom', 16],
+      },
+      icon_program_image: {
+        height: 80,
+        alpha: 1,
+        centerHorizontally: 'parent',
+        width: 200,
+        translationZ: -10,
+        start: ['parent', 'start', 0],
+        end: ['parent', 'end', 0],
+        top: ['parent', 'top', 20]
+      },
+      search_bar: {
+        translationZ: -10,
+        width: 'parent',
+        start: ['parent', 'start', 16],
+        end: ['parent', 'end', 16],
+        top: ['icon_program_image', 'bottom', 10],
+      },
+
+      bottom_line: {
+        width: 'parent',
+        top: ['search_bar', 'bottom', 10],
+        height: 14,
+        alpha: 0,
+        translationZ: 0
+      }
+
+    },
+  },
+  Transitions: {
+    default:{
+      from: 'start',
+      to: 'end',
+      pathMotionArc: 'startHorizontal',
+      KeyFrames: {
+        KeyAttributes: [
+          {
+          target: 'icon_program_image',
+          frames: [0],
+          },
+
+          {
+            target: 'bottom_line',
+            frames: [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100], //For frames we pass a List containing number between 0 - 100
+            rotationZ: [0, 9, 18, 27, 36, 45, 54, 63, 72, 81, 90, 81, 72, 63, 54, 45, 36, 27, 18, 9, 0],  //For dangling effect
+            translationX: [0, 9, 18, 27, 36, 45, 54, 63, 72, 81, 90, 81, 72, 63, 54, 45, 36, 27, 18, 9, 0],
+            translationY: [0, -14, -28, -42, -56, -70, -84, -98, -112, -126, -130, -126, -112, -98, -84, -70, -56, -42, -28, -14, 0],
+            translationZ: [-1.0, -0.9, -0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, -0.1, 0.0, 0.0, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]
+          }
+        ],
+      }
+    }
+  }
+}

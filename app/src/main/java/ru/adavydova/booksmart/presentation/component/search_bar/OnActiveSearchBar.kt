@@ -1,4 +1,4 @@
-package ru.adavydova.booksmart.presentation.component.searchbar
+package ru.adavydova.booksmart.presentation.component.search_bar
 
 import android.app.Activity
 import android.content.Intent
@@ -30,24 +30,27 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 import ru.adavydova.booksmart.R
 import ru.adavydova.booksmart.presentation.permission_logic.PermissionTextProvider
-import ru.adavydova.booksmart.presentation.search_book_screen.common.colorSearchBar
+import ru.adavydova.booksmart.presentation.search_book_enable_screen.common.colorSearchBar
 import ru.adavydova.booksmart.ui.theme.md_theme_dark_surfaceTint
 import java.util.Locale
 
 
 @Composable
-fun SearchBarForFullWindow(
+fun OnActiveSearchBar(
     modifier: Modifier = Modifier,
     query: String,
     onValueChange: (String) -> Unit,
     goOnRequest: (String)-> Unit,
     checkingThePermission: (PermissionTextProvider, Boolean) -> Unit,
-    backClick: () -> Unit
+    backClick: () -> Unit,
+    useGoogleAssistant: (String)-> Unit
 
 ) {
 
@@ -62,7 +65,7 @@ fun SearchBarForFullWindow(
                 val result =
                     it.data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS) ?: listOf("")
                 val queryText = result[0].toString()
-                onValueChange(queryText)
+                useGoogleAssistant(queryText)
             }
         })
 
@@ -120,9 +123,9 @@ fun SearchBarForFullWindow(
                 .focusRequester(focusRequester)
 
             ,
-            value = query,
+            value = TextFieldValue(text = query, selection = TextRange(query.length)),
             maxLines = 1,
-            onValueChange = { onValueChange(it) },
+            onValueChange = { onValueChange(it.text) },
             trailingIcon = {
                 IconButton(onClick = {
                     permissionContract.launch(PermissionTextProvider.RecordAudioTextProvider.permissionName)

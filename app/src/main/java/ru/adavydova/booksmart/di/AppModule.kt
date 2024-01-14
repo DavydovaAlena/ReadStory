@@ -11,6 +11,7 @@ import ru.adavydova.booksmart.data.remote.BooksApi
 import ru.adavydova.booksmart.data.remote.repository.BooksRepositoryImpl
 import ru.adavydova.booksmart.domain.repository.BooksRepository
 import ru.adavydova.booksmart.domain.usecase.BooksUseCase
+import ru.adavydova.booksmart.domain.usecase.FilterBooksUseCase
 import ru.adavydova.booksmart.domain.usecase.SearchBookUseCase
 import javax.inject.Singleton
 
@@ -44,7 +45,8 @@ class AppModule {
     @Provides
     fun provideBooksUseCase(booksRepository: BooksRepository): BooksUseCase{
     return BooksUseCase(
-        searchBookUseCase = SearchBookUseCase(booksRepository)
+        searchBookUseCase = SearchBookUseCase(booksRepository),
+        filterBooksUseCase = FilterBooksUseCase(booksRepository)
     )
     }
 }

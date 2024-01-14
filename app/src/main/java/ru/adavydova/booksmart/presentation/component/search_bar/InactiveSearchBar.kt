@@ -1,10 +1,11 @@
-package ru.adavydova.booksmart.presentation.component.searchbar
+package ru.adavydova.booksmart.presentation.component.search_bar
 
 import android.app.Activity
 import android.content.Intent
 import android.speech.RecognizerIntent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,21 +23,22 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import ru.adavydova.booksmart.R
+import ru.adavydova.booksmart.presentation.inactive_search_book_screen.viewmodel.InactiveSearchBookScreenViewModel
 import ru.adavydova.booksmart.presentation.permission_logic.PermissionTextProvider
-import ru.adavydova.booksmart.presentation.search_book_screen.common.colorSearchBar
+import ru.adavydova.booksmart.presentation.search_book_enable_screen.common.colorSearchBar
 import java.util.Locale
 
 
 @Composable
-fun SearchBar(
+fun InactiveSearchBar(
     modifier: Modifier = Modifier,
     query: String,
-    onClick: () -> Unit,
     checkingThePermission: (PermissionTextProvider, Boolean) -> Unit,
-    onValueChange: (String) -> Unit,
-    goOnRequest: () -> Unit,
-
+    navigateToOnActiveSearchScreen: (String)-> Unit,
+    useGoogleAssistant: (String) -> Unit,
+    viewModel: InactiveSearchBookScreenViewModel = hiltViewModel<InactiveSearchBookScreenViewModel>()
     ) {
 
     val voiceQueryResultLauncher = rememberLauncherForActivityResult(
@@ -45,8 +47,7 @@ fun SearchBar(
                 val result =
                     it.data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS) ?: listOf("")
                 val queryText = result[0].toString()
-                onValueChange(queryText)
-                goOnRequest()
+                useGoogleAssistant(queryText)
             }
         })
 
@@ -75,7 +76,7 @@ fun SearchBar(
 
     LaunchedEffect(key1 = isClicked) {
         if (isClicked) {
-            onClick()
+            navigateToOnActiveSearchScreen(query)
         }
     }
 

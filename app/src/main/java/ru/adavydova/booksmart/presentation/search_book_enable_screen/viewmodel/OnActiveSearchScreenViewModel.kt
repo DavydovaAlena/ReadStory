@@ -1,6 +1,7 @@
-package ru.adavydova.booksmart.presentation.search_book_screen.viewmodel
+package ru.adavydova.booksmart.presentation.search_book_enable_screen.viewmodel
 
 import android.util.Log
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
@@ -8,18 +9,27 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import ru.adavydova.booksmart.domain.usecase.BooksUseCase
-import ru.adavydova.booksmart.presentation.search_book_screen.event.SearchBookEvent
-import ru.adavydova.booksmart.presentation.search_book_screen.state.SearchBooksState
+import ru.adavydova.booksmart.presentation.search_book_enable_screen.event.SearchBookEvent
+import ru.adavydova.booksmart.presentation.search_book_enable_screen.state.SearchBooksState
 import javax.inject.Inject
 
 @HiltViewModel
-class SearchScreenViewModel @Inject constructor(
-    private val bookUseCase: BooksUseCase
+class OnActiveSearchScreenViewModel @Inject constructor(
+    private val bookUseCase: BooksUseCase,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val _searchBooksState = MutableStateFlow(SearchBooksState())
     val searchBooksState = _searchBooksState.asStateFlow()
 
+
+    init {
+        savedStateHandle.get<String>("query")?.let {
+            _searchBooksState.value = searchBooksState.value.copy(
+                query = it
+            )
+        }
+    }
 
     fun onEvent(event: SearchBookEvent) {
         when (event) {
@@ -28,10 +38,10 @@ class SearchScreenViewModel @Inject constructor(
                 _searchBooksState.value = searchBooksState.value.copy(
                     query = event.query
                 )
-                Log.d("Q", searchBooksState.value.query)
 
                 val books = bookUseCase.searchBookUseCase(
-                    searchBooksState.value.query
+                    query = searchBooksState.value.query,
+                    maxResults = 40
                 ).cachedIn(viewModelScope)
 
                 _searchBooksState.value = searchBooksState.value.copy(

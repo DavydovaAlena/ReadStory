@@ -9,6 +9,8 @@ import ru.adavydova.booksmart.domain.model.Book
 class SearchNewsPagingSource(
     private val booksApi: BooksApi,
     private val query: String,
+    private val maxResults: Int,
+    private val filters: Map<String,String>
 ) : PagingSource<Int, Book>() {
     override fun getRefreshKey(state: PagingState<Int, Book>): Int? {
 
@@ -20,19 +22,30 @@ class SearchNewsPagingSource(
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Book> {
-        val page = params.key ?: 1
+        val page = params.key ?: 0
 
         return try {
-            val booksPaging = booksApi.searchBooks(
+            val books = booksApi.searchBooks(
                 query = query,
-                startIndex = page
-            )
+                startIndex = page*maxResults,
+                maxResults = maxResults,
+                filters = filters
+            ).toBooks()
 
-            val books = booksPaging.toBooks()
+            if (books.books.isEmpty()){
+                return LoadResult.Page(emptyList(), prevKey = null, nextKey = null)
+            }
+
+            val maxItem = books.totalResult
+            val nextPage = if (maxResults * page + 1 < maxItem ) page + 1 else null
+            Log.d("page", page.toString())
+            Log.d("max", maxItem.toString())
+            Log.d("res", (maxResults * page + 1 < maxItem ).toString())
+
             LoadResult.Page(
                 data = books.books,
-                prevKey = if (page > 1) page - 1 else null,
-                nextKey = if (page >= books.books.size / 10) null else page + 1
+                prevKey = if (page > 0) page - 1 else null,
+                nextKey = nextPage
             )
         } catch (e: Exception) {
             return LoadResult.Error(

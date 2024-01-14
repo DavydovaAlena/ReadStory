@@ -1,51 +1,53 @@
-package ru.adavydova.booksmart.presentation.component.searchbar
+package ru.adavydova.booksmart.presentation.start_search_screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import ru.adavydova.booksmart.R
+import ru.adavydova.booksmart.presentation.component.search_bar.InactiveSearchBar
 import ru.adavydova.booksmart.presentation.permission_logic.PermissionTextProvider
-import ru.adavydova.booksmart.presentation.search_book_screen.event.SearchBookEvent
-import ru.adavydova.booksmart.presentation.search_book_screen.viewmodel.SearchScreenViewModel
+
 
 @Composable
-fun SearchBookScreen(
+fun StartSearchScreen(
     modifier: Modifier = Modifier,
-    toSearchFullScreen: () -> Unit,
+    navigateToInactiveSearchScreen: (String)-> Unit,
+    navigateToOnActiveSearchScreen: (String)-> Unit,
     checkingThePermission: (PermissionTextProvider, Boolean) -> Unit,
-    viewModel: SearchScreenViewModel = hiltViewModel<SearchScreenViewModel>(),
 ) {
 
-    val searchState by viewModel.searchBooksState.collectAsState()
-
-
     Column(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
-
-        ) {
+            .padding(
+                top = 50.dp,
+                bottom = 16.dp,
+                start = 16.dp,
+                end = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
 
         Image(
-            modifier = Modifier.width(200.dp),
+            modifier = Modifier
+                .width(200.dp)
+                .layoutId("icon_program_image"),
             imageVector = if (isSystemInDarkTheme()) {
                 ImageVector.vectorResource(id = R.drawable.color_logo___no_background)
             } else {
@@ -54,10 +56,10 @@ fun SearchBookScreen(
             contentDescription = null
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
 
-        SearchBar(
+        InactiveSearchBar(
             modifier = Modifier
+                .layoutId("search_bar")
                 .border(
                     width = 1.dp,
                     color = MaterialTheme.colorScheme.onSecondary,
@@ -68,12 +70,12 @@ fun SearchBookScreen(
                     shape = CircleShape
                 )
                 .clip(CircleShape),
-            query = searchState.query,
-            onClick = toSearchFullScreen,
-            onValueChange = { viewModel.onEvent(SearchBookEvent.UpdateAndSearchQuery(it)) },
-            goOnRequest = {  },
-            checkingThePermission = checkingThePermission
+            useGoogleAssistant = navigateToInactiveSearchScreen,
+            checkingThePermission = checkingThePermission,
+            query = "",
+            navigateToOnActiveSearchScreen = navigateToOnActiveSearchScreen
         )
+
 
     }
 }

@@ -39,7 +39,7 @@ data class VolumeInfoDto(
     @Json(name = "publishedDate")
     val publishedDate: String,
     @Json(name = "publisher")
-    val publisher: String,
+    val publisher: String?,
     @Json(name = "ratingsCount")
     val ratingsCount: Int?,
     @Json(name = "subtitle")

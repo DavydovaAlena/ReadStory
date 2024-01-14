@@ -34,7 +34,7 @@ import ru.adavydova.booksmart.R
 import ru.adavydova.booksmart.ui.theme.BookSmartTheme
 
 @Composable
-fun SimmerSearchItem(
+fun ShimmerSearchItem(
     modifier: Modifier = Modifier
 ) {
 
@@ -107,7 +107,7 @@ fun SimmerSearchItem(
 @Composable
 fun SimmerSearchItemPreview() {
     BookSmartTheme {
-        SimmerSearchItem()
+        ShimmerSearchItem()
     }
 }
 fun Modifier.shimmerEffect() = composed {

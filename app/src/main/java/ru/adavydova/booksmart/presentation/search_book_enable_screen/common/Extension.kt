@@ -1,4 +1,4 @@
-package ru.adavydova.booksmart.presentation.search_book_screen.common
+package ru.adavydova.booksmart.presentation.search_book_enable_screen.common
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TextFieldColors

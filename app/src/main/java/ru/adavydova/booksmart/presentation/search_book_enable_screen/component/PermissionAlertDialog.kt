@@ -1,4 +1,4 @@
-package ru.adavydova.booksmart.presentation.search_book_screen.component
+package ru.adavydova.booksmart.presentation.search_book_enable_screen.component
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
