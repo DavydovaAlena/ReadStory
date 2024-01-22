@@ -3,6 +3,7 @@ package ru.adavydova.booksmart.presentation.component.search_item.middle_variant
 import android.content.res.Resources.Theme
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -42,6 +43,7 @@ fun CardBookItem(
     ) {
     Card(
         modifier = Modifier
+            .clickable { onClick(book) }
             .fillMaxWidth()
             .clip(RoundedCornerShape(10.dp))
             .border(1.dp, MaterialTheme.colorScheme.secondaryContainer, RoundedCornerShape(10.dp))

@@ -1,20 +1,12 @@
 package ru.adavydova.booksmart.presentation.inactive_search_book_screen.component
 
-import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.scrollable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
@@ -25,15 +17,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import ru.adavydova.booksmart.domain.model.Book
 import ru.adavydova.booksmart.presentation.component.newsList.ListBooksWithScrollState
 import ru.adavydova.booksmart.presentation.component.search_item.middle_variant.CardBookItem
 import ru.adavydova.booksmart.presentation.inactive_search_book_screen.viewmodel.InactiveSearchBookScreenViewModel
@@ -50,6 +40,7 @@ object ScrollInactiveScreenValue{
 @Composable
 fun InactiveSearchBookScreen(
     modifier: Modifier = Modifier,
+    navigateToDetailBook: (Book)-> Unit,
     navigateToOnActiveSearchScreen : (String)->Unit,
     navigateToInactiveSearchScreen: (String)->Unit,
     checkingThePermission: ((PermissionTextProvider, Boolean) -> Unit),
@@ -124,7 +115,7 @@ fun InactiveSearchBookScreen(
                             ),
                         scrollState = scrollState,
                         changeErrorState = { errorState.value = it },
-                        onClick = {},
+                        navigateToDetail = navigateToDetailBook,
                         card = { book, isClicked ->
                             CardBookItem(book, isClicked)
                         })

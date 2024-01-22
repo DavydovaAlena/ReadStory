@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import ru.adavydova.booksmart.domain.usecase.BooksUseCase
@@ -21,7 +22,7 @@ class OnActiveSearchScreenViewModel @Inject constructor(
 
     private val _searchBooksState = MutableStateFlow(SearchBooksState())
     val searchBooksState = _searchBooksState.asStateFlow()
-
+    private var  getBooksJob: Job? = null
 
     init {
         savedStateHandle.get<String>("query")?.let {
@@ -41,7 +42,7 @@ class OnActiveSearchScreenViewModel @Inject constructor(
 
                 val books = bookUseCase.searchBookUseCase(
                     query = searchBooksState.value.query,
-                    maxResults = 40
+                    maxResults = 20
                 ).cachedIn(viewModelScope)
 
                 _searchBooksState.value = searchBooksState.value.copy(

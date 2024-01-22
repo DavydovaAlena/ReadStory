@@ -45,8 +45,6 @@ fun SearchBooksMotionHandler(
 ) {
 
 
-
-
     val context = LocalContext.current
     val motionScene = remember {
         context.resources.openRawResource(R.raw.motion_scene)

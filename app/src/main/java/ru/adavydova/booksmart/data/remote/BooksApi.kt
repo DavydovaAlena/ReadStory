@@ -1,9 +1,11 @@
 package ru.adavydova.booksmart.data.remote
 
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 import retrofit2.http.QueryMap
 import ru.adavydova.booksmart.data.remote.dto.books.BooksDto
+import ru.adavydova.booksmart.data.remote.dto.books.ItemDto
 
 
 interface BooksApi {
@@ -16,5 +18,9 @@ interface BooksApi {
 
     ): BooksDto
 
+    @GET("volumes/{volumeId}")
+    suspend fun getBookById(
+        @Path("volumeId") bookId: String
+    ) : ItemDto
 
 }

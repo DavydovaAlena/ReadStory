@@ -11,7 +11,7 @@ class FilterBooksUseCase(
     operator fun invoke(query: String, filters: HashMap<String,String>): Flow<PagingData<Book>>{
         return repository.searchBooks(
             query = query,
-            maxResult = 40,
+            maxResult = 10,
             filters = filters
         )
     }

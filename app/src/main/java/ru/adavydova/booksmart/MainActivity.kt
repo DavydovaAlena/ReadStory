@@ -21,6 +21,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import ru.adavydova.booksmart.presentation.navigation.BottomNavigationApp
 import ru.adavydova.booksmart.presentation.permission_logic.MainViewModel
 import ru.adavydova.booksmart.presentation.permission_logic.PermissionEvent
 import ru.adavydova.booksmart.presentation.navigation.NavHost
@@ -38,6 +39,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
 
+
         setContent {
             BookSmartTheme {
 
@@ -52,16 +54,25 @@ class MainActivity : ComponentActivity() {
                     val context = LocalContext.current
                     val permissionRequiredList = viewModel.permissionRequiredList
 
-                    NavHost(
-                        checkingThePermission = { permissionTextProvider, isGranted ->
-                            viewModel.onPermissionEvent(
-                                PermissionEvent.PermissionRequest(
-                                    permission = permissionTextProvider,
-                                    isGranted = isGranted
-                                )
+                    BottomNavigationApp( checkingThePermission = { permissionTextProvider, isGranted ->
+                        viewModel.onPermissionEvent(
+                            PermissionEvent.PermissionRequest(
+                                permission = permissionTextProvider,
+                                isGranted = isGranted
                             )
-                        }
-                    )
+                        )
+                    })
+
+//                    NavHost(
+//                        checkingThePermission = { permissionTextProvider, isGranted ->
+//                            viewModel.onPermissionEvent(
+//                                PermissionEvent.PermissionRequest(
+//                                    permission = permissionTextProvider,
+//                                    isGranted = isGranted
+//                                )
+//                            )
+//                        }
+//                    )
 
                     permissionRequiredList.forEach { permission ->
 
