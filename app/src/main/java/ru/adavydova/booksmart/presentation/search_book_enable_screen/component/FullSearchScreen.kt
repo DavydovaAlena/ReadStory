@@ -20,9 +20,9 @@ import ru.adavydova.booksmart.presentation.component.newsList.ListOfSearchItems
 import ru.adavydova.booksmart.presentation.component.newsList.NotFoundScreen
 import ru.adavydova.booksmart.presentation.component.search_bar.OnActiveSearchBar
 import ru.adavydova.booksmart.presentation.component.search_item.short_variant.SearchItem
-import ru.adavydova.booksmart.presentation.permission_logic.PermissionTextProvider
-import ru.adavydova.booksmart.presentation.search_book_enable_screen.event.SearchBookEvent
-import ru.adavydova.booksmart.presentation.search_book_enable_screen.viewmodel.OnActiveSearchScreenViewModel
+import ru.adavydova.booksmart.presentation.main_screen.PermissionTextProvider
+import ru.adavydova.booksmart.presentation.search_book_enable_screen.SearchBookEvent
+import ru.adavydova.booksmart.presentation.search_book_enable_screen.OnActiveSearchScreenViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

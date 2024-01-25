@@ -1,11 +1,9 @@
 package ru.adavydova.booksmart.presentation.inactive_search_book_screen.component
 
-import android.util.Log
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -16,8 +14,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.DefaultShadowColor
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.LocalContext
@@ -29,7 +25,7 @@ import androidx.constraintlayout.compose.MotionLayout
 import androidx.constraintlayout.compose.MotionScene
 import ru.adavydova.booksmart.R
 import ru.adavydova.booksmart.presentation.component.search_bar.InactiveSearchBar
-import ru.adavydova.booksmart.presentation.permission_logic.PermissionTextProvider
+import ru.adavydova.booksmart.presentation.main_screen.PermissionTextProvider
 
 
 @OptIn(ExperimentalMotionApi::class)
@@ -90,10 +86,7 @@ fun SearchBooksMotionHandler(
             useGoogleAssistant = navigateToInactiveSearchScreen,
             checkingThePermission = checkingThePermission
         )
-
-
-
-
+        
     }
 
 

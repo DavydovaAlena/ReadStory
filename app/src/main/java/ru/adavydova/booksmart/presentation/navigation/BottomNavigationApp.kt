@@ -22,7 +22,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import ru.adavydova.booksmart.R
-import ru.adavydova.booksmart.presentation.permission_logic.PermissionTextProvider
+import ru.adavydova.booksmart.presentation.main_screen.PermissionTextProvider
 
 @Composable
 fun BottomNavigationApp(
@@ -64,7 +64,8 @@ fun BottomNavigationApp(
 
 
     val isBottomBarNotVisible = remember(backStackState) {
-        backStackState?.destination?.route == Route.DetailBookScreen.route + "?bookId={bookId}"
+        backStackState?.destination?.route == Route.DetailBookScreen.route + "?bookId={bookId}" ||
+                backStackState?.destination?.route == Route.ReadBookScreen.route + "?bookName={bookName}&bookUrl={bookUrl}"
     }
 
 

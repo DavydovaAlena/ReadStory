@@ -1,4 +1,4 @@
-package ru.adavydova.booksmart.presentation.search_book_enable_screen.state
+package ru.adavydova.booksmart.presentation.search_book_enable_screen
 
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow

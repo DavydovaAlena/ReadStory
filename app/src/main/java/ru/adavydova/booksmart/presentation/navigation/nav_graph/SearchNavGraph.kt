@@ -3,24 +3,27 @@ package ru.adavydova.booksmart.presentation.navigation.nav_graph
 import android.util.Log
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
-import androidx.navigation.Navigator
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import ru.adavydova.booksmart.presentation.detail_book.DetailBookViewModel
 import ru.adavydova.booksmart.presentation.detail_book.component.DetailBookScreen
 import ru.adavydova.booksmart.presentation.detail_book.component.DetailTopBar
+import ru.adavydova.booksmart.presentation.detail_book.component.WebViewBook
 import ru.adavydova.booksmart.presentation.inactive_search_book_screen.component.InactiveSearchBookScreen
+import ru.adavydova.booksmart.presentation.main_screen.PermissionTextProvider
 import ru.adavydova.booksmart.presentation.navigation.Route
-import ru.adavydova.booksmart.presentation.permission_logic.PermissionTextProvider
 import ru.adavydova.booksmart.presentation.search_book_enable_screen.component.SearchFullWindowScreen
 import ru.adavydova.booksmart.presentation.start_search_screen.StartSearchScreen
 
@@ -37,46 +40,92 @@ fun NavGraphBuilder.searchNavGraph(
         startDestination = Route.StartSearchScreen.route
     ) {
 
-
         composable(
             route = Route.DetailBookScreen.route + "?bookId={bookId}",
             arguments = listOf(
                 navArgument(
                     name = "bookId"
-                ){
+                ) {
                     type = NavType.StringType
                 }
             )
-        ){
+        ) {
 
             val viewModel = hiltViewModel<DetailBookViewModel>()
             val bookState by viewModel.bookState.collectAsState()
+            var toRead by remember {
+                mutableStateOf<Boolean?>(null)
+            }
+
+            LaunchedEffect(key1 = toRead) {
+                if (toRead == true) {
+                    navController.navigate(
+                        Route.ReadBookScreen.route +
+                                "?bookName=${bookState.book?.volumeInfo?.title}&bookUrl=${bookState.book?.id}"
+                    )
+                }
+            }
+
             Scaffold(
                 topBar = {
                     DetailTopBar(
                         navigateBack = {
                             navController.popBackStack()
-                        })
+                        },
+                        bookUrl = bookState.book?.id,
+                        read = toRead,
+                        bookName = bookState.book?.volumeInfo?.title,
+                        toRead = { toRead = it })
                 }
-            ) {padding->
+            ) { padding ->
                 bookState.book?.let {
                     DetailBookScreen(
                         modifier = Modifier.padding(padding),
-                        book = it )
+                        book = it
+                    )
                 }
 
             }
 
         }
 
+
+        composable(
+            route = Route.ReadBookScreen.route + "?bookName={bookName}&bookUrl={bookUrl}",
+            arguments = listOf(
+                navArgument("bookName") {
+                    type = NavType.StringType
+                },
+                navArgument("bookUrl") {
+                    type = NavType.StringType
+                }
+            )
+        ) {
+
+            val bookName = it.arguments?.getString("bookName")
+            val bookUrl = it.arguments?.getString("bookUrl")
+
+            if (bookName != null && bookUrl != null) {
+                Log.d("tyt", "")
+                WebViewBook(
+                    bookName = bookName,
+                    url = bookUrl,
+                    backPressed = { navController.popBackStack() })
+            }
+        }
+
+
+
+
         composable(
             route = Route.StartSearchScreen.route
-        ){
+        ) {
             StartSearchScreen(
                 navigateToInactiveSearchScreen = {
-                    navController.navigate(Route.InactiveSearchScreen.route + "?query=${it}")},
+                    navController.navigate(Route.InactiveSearchScreen.route + "?query=${it}")
+                },
                 navigateToOnActiveSearchScreen = {
-                    navController.navigate(Route.ActiveSearchScreen.route+ "?query=${it}")
+                    navController.navigate(Route.ActiveSearchScreen.route + "?query=${it}")
                 },
                 checkingThePermission = checkingThePermission,
             )
@@ -88,7 +137,7 @@ fun NavGraphBuilder.searchNavGraph(
             arguments = listOf(
                 navArgument(
                     name = "query"
-                ){
+                ) {
                     nullable = true
                     type = NavType.StringType
                 }
@@ -97,13 +146,15 @@ fun NavGraphBuilder.searchNavGraph(
             InactiveSearchBookScreen(
                 checkingThePermission = checkingThePermission,
                 navigateToInactiveSearchScreen = {
-                    navController.navigate(Route.InactiveSearchScreen.route + "?query=${it}") },
+                    navController.navigate(Route.InactiveSearchScreen.route + "?query=${it}")
+                },
                 navigateToOnActiveSearchScreen = {
-                    navController.navigate(Route.ActiveSearchScreen.route+ "?query=${it}")
+                    navController.navigate(Route.ActiveSearchScreen.route + "?query=${it}")
                 },
                 navigateToDetailBook = {
                     Log.d("ID", it.id)
-                    navController.navigate(Route.DetailBookScreen.route + "?bookId=${it.id}") }
+                    navController.navigate(Route.DetailBookScreen.route + "?bookId=${it.id}")
+                }
             )
         }
 
@@ -112,7 +163,7 @@ fun NavGraphBuilder.searchNavGraph(
             arguments = listOf(
                 navArgument(
                     name = "query"
-                ){
+                ) {
                     nullable = true
                     type = NavType.StringType
                 }
@@ -128,7 +179,7 @@ fun NavGraphBuilder.searchNavGraph(
                 },
                 checkingThePermission = checkingThePermission,
                 goOnRequest = {
-                    navController.navigate(Route.InactiveSearchScreen.route + "?query=${it}"){
+                    navController.navigate(Route.InactiveSearchScreen.route + "?query=${it}") {
                         navController.popBackStack()
                     }
                 },
@@ -142,5 +193,5 @@ fun NavGraphBuilder.searchNavGraph(
         }
 
     }
-
 }
+

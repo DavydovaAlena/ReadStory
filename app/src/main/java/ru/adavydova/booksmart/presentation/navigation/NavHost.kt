@@ -2,13 +2,11 @@ package ru.adavydova.booksmart.presentation.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.rememberNavController
 import ru.adavydova.booksmart.presentation.navigation.nav_graph.homeNavGraph
 import ru.adavydova.booksmart.presentation.navigation.nav_graph.musicNavGraph
-import ru.adavydova.booksmart.presentation.permission_logic.PermissionTextProvider
+import ru.adavydova.booksmart.presentation.main_screen.PermissionTextProvider
 import ru.adavydova.booksmart.presentation.navigation.nav_graph.searchNavGraph
 
 

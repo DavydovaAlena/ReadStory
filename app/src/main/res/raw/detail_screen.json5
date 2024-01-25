@@ -1,0 +1,42 @@
+{
+  ConstraintSets: {
+
+    start: {
+//      column_first: {
+//        width: 'parent',
+//      },
+//
+      book_image: {
+        width: 'parent',
+        top: ['parent', 'top', 40],
+        height: 60,
+      }
+    },
+
+
+    end: {
+      book_image: {
+        top: ['parent', 'top', 0],
+        left: ['parent', 'left', 0],
+        right: ['parent', 'right', 0],
+        centerHorizontally: 'parent',
+        height: 180,
+      }
+    }
+  },
+  Transactions: {
+    defoult: {
+      from: 'start',
+      to: 'end',
+      pathMotionArc: 'startHorizontal',
+      KeyFrames: {
+        KeyAttributes: [
+          {
+            target: 'book_image',
+            frames: [0]
+          }
+        ]
+      }
+    }
+  }
+}

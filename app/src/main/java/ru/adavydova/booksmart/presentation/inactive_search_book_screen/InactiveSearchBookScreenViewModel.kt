@@ -1,7 +1,5 @@
-package ru.adavydova.booksmart.presentation.inactive_search_book_screen.viewmodel
+package ru.adavydova.booksmart.presentation.inactive_search_book_screen
 
-import android.util.Log
-import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,8 +11,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.adavydova.booksmart.domain.usecase.BooksUseCase
-import ru.adavydova.booksmart.presentation.inactive_search_book_screen.event.InactiveSearchScreenEvent
-import ru.adavydova.booksmart.presentation.inactive_search_book_screen.state.InactiveSearchBookScreenState
 import javax.inject.Inject
 
 @HiltViewModel

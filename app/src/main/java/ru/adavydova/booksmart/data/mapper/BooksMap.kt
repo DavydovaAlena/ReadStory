@@ -38,6 +38,7 @@ fun BooksDto.toBooks(): Books {
                     publishedDate = volumeInfo.publishedDate ?: "",
                     description = volumeInfo.description ?: "",
                     pageCount = volumeInfo.pageCount ?: 0,
+                    identifier = volumeInfo.industryIdentifiers?.first()?.identifier,
                     categories = volumeInfo.categories ?: emptyList(),
                     imageLinks = volumeInfo.imageLinks?.thumbnail
                         ?: volumeInfo.imageLinks?.smallThumbnail ?: "",
@@ -71,6 +72,7 @@ fun ItemDto.toBook(): Book{
             publisher = volumeInfo.publisher,
             publishedDate = volumeInfo.publishedDate ?: "",
             description = volumeInfo.description ?: "",
+            identifier = volumeInfo.industryIdentifiers?.first()?.identifier,
             pageCount = volumeInfo.pageCount ?: 0,
             categories = volumeInfo.categories ?: emptyList(),
             imageLinks = volumeInfo.imageLinks?.thumbnail

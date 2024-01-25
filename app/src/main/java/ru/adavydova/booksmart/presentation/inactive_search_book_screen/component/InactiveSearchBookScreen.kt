@@ -26,8 +26,8 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import ru.adavydova.booksmart.domain.model.Book
 import ru.adavydova.booksmart.presentation.component.newsList.ListBooksWithScrollState
 import ru.adavydova.booksmart.presentation.component.search_item.middle_variant.CardBookItem
-import ru.adavydova.booksmart.presentation.inactive_search_book_screen.viewmodel.InactiveSearchBookScreenViewModel
-import ru.adavydova.booksmart.presentation.permission_logic.PermissionTextProvider
+import ru.adavydova.booksmart.presentation.inactive_search_book_screen.InactiveSearchBookScreenViewModel
+import ru.adavydova.booksmart.presentation.main_screen.PermissionTextProvider
 
 
 

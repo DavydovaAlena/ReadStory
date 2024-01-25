@@ -5,11 +5,12 @@ import android.content.Intent
 import android.speech.RecognizerIntent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -25,8 +26,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import ru.adavydova.booksmart.R
-import ru.adavydova.booksmart.presentation.inactive_search_book_screen.viewmodel.InactiveSearchBookScreenViewModel
-import ru.adavydova.booksmart.presentation.permission_logic.PermissionTextProvider
+import ru.adavydova.booksmart.presentation.inactive_search_book_screen.InactiveSearchBookScreenViewModel
+import ru.adavydova.booksmart.presentation.main_screen.PermissionTextProvider
 import ru.adavydova.booksmart.presentation.search_book_enable_screen.common.colorSearchBar
 import java.util.Locale
 
@@ -95,15 +96,25 @@ fun InactiveSearchBar(
             )
         },
         trailingIcon = {
-            IconButton(onClick = {
-                permissionContract.launch(PermissionTextProvider.RecordAudioTextProvider.permissionName)
-            }) {
-                Icon(
-                    imageVector = ImageVector.vectorResource(id = R.drawable.baseline_keyboard_voice_24),
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onSurface
-                )
+
+            Row {
+                IconButton(onClick = {
+                    permissionContract.launch(PermissionTextProvider.RecordAudioTextProvider.permissionName)
+                }) {
+                    Icon(
+                        imageVector = ImageVector.vectorResource(id = R.drawable.baseline_keyboard_voice_24),
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onSurface
+                    )
+                }
+
+                IconButton(onClick = { }) {
+                    Icon(imageVector = Icons.Default.MoreVert,
+                        contentDescription = null)
+                }
+
             }
+
         },
         interactionSource = interactionSource,
         colors = TextFieldDefaults.colorSearchBar
