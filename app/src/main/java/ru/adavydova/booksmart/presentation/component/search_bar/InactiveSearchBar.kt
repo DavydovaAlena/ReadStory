@@ -27,6 +27,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import ru.adavydova.booksmart.R
 import ru.adavydova.booksmart.presentation.inactive_search_book_screen.InactiveSearchBookScreenViewModel
+import ru.adavydova.booksmart.presentation.inactive_search_book_screen.ShowState
 import ru.adavydova.booksmart.presentation.main_screen.PermissionTextProvider
 import ru.adavydova.booksmart.presentation.search_book_enable_screen.common.colorSearchBar
 import java.util.Locale
@@ -35,6 +36,7 @@ import java.util.Locale
 @Composable
 fun InactiveSearchBar(
     modifier: Modifier = Modifier,
+    openSearchFilterMenu: (ShowState)->Unit,
     query: String,
     checkingThePermission: (PermissionTextProvider, Boolean) -> Unit,
     navigateToOnActiveSearchScreen: (String)-> Unit,
@@ -108,7 +110,9 @@ fun InactiveSearchBar(
                     )
                 }
 
-                IconButton(onClick = { }) {
+                IconButton(onClick = {
+                    openSearchFilterMenu(ShowState.Open)
+                }) {
                     Icon(imageVector = Icons.Default.MoreVert,
                         contentDescription = null)
                 }

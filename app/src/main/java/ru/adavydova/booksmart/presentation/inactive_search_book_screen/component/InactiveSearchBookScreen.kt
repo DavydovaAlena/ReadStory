@@ -1,5 +1,6 @@
 package ru.adavydova.booksmart.presentation.inactive_search_book_screen.component
 
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -27,6 +28,9 @@ import ru.adavydova.booksmart.domain.model.Book
 import ru.adavydova.booksmart.presentation.component.newsList.ListBooksWithScrollState
 import ru.adavydova.booksmart.presentation.component.search_item.middle_variant.CardBookItem
 import ru.adavydova.booksmart.presentation.inactive_search_book_screen.InactiveSearchBookScreenViewModel
+import ru.adavydova.booksmart.presentation.inactive_search_book_screen.InactiveSearchScreenEvent
+import ru.adavydova.booksmart.presentation.inactive_search_book_screen.ShowState
+import ru.adavydova.booksmart.presentation.inactive_search_book_screen.getShowState
 import ru.adavydova.booksmart.presentation.main_screen.PermissionTextProvider
 
 
@@ -47,8 +51,9 @@ fun InactiveSearchBookScreen(
     viewModel: InactiveSearchBookScreenViewModel = hiltViewModel<InactiveSearchBookScreenViewModel>(),
 ) {
 
-    val searchState by viewModel.screenState.collectAsState()
-    val books = searchState.books?.collectAsLazyPagingItems()
+    val screenState by viewModel.screenState.collectAsState()
+    val filterState by viewModel.stateFilterBook.collectAsState()
+    val books = screenState.books?.collectAsLazyPagingItems()
 
     val errorState: MutableState<LoadState.Error?> = remember {
         mutableStateOf(null)
@@ -67,8 +72,6 @@ fun InactiveSearchBookScreen(
     }
     val scrollState = rememberScrollState()
 
-
-
     LaunchedEffect(key1 = der.value, block = {
 
         if (lazyState.firstVisibleItemIndex<1){
@@ -77,8 +80,47 @@ fun InactiveSearchBookScreen(
     })
 
 
+
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
+        snackbarHost = {
+            if (screenState.showSearchMenu == ShowState.Open){
+
+                Log.d("ok", "odw")
+                SearchFilterWindow(
+                    expendedFilter = screenState.showFilterMenu(),
+                    onExpendedFilter = {
+                        viewModel.onEvent(InactiveSearchScreenEvent.OpenOrCloseFilterMenu(it.getShowState()))},
+                    expendedOrder = screenState.showOrderMenu()  ,
+                    onExpendedOrderMenu = {
+                        viewModel.onEvent(InactiveSearchScreenEvent.OpenOrCloseOrderMenu(it.getShowState()))
+                    },
+                    expendedLanguage = screenState.showLanguageMenu() ,
+                    onExpendedLanguage = {
+                        viewModel.onEvent(InactiveSearchScreenEvent.OpenOrCloseLanguageMenu(it.getShowState()))
+                    },
+                    closeMenu = {
+                        viewModel.onEvent(InactiveSearchScreenEvent.CancelAndCloseSearchMenu)
+                    },
+                    insertFilter = {
+                        viewModel.onEvent(InactiveSearchScreenEvent.InsertFilter)
+                    },
+                    onSelectFilter = {
+                        viewModel.onEvent(InactiveSearchScreenEvent.SelectFilterType(it))
+                    },
+                    onSelectLanguageType ={
+                        viewModel.onEvent(InactiveSearchScreenEvent.SelectLanguageType(it))
+                    } ,
+                    onSelectOrderType = {
+                        viewModel.onEvent(InactiveSearchScreenEvent.SelectOrderType(it))
+                    },
+                    selectFilter = filterState.filter,
+                    selectLanguage = filterState.languageRestrict,
+                    selectOrder = filterState.orderType
+                )
+            }
+        },
         content = {
 
             Column(
@@ -94,8 +136,15 @@ fun InactiveSearchBookScreen(
                     progress = toolbarState.progress,
                     navigateToInactiveSearchScreen = navigateToInactiveSearchScreen,
                     navigateToOnActiveSearchScreen = navigateToOnActiveSearchScreen,
-                    query = searchState.query,
-                    checkingThePermission = checkingThePermission
+                    query = screenState.query,
+                    checkingThePermission = checkingThePermission,
+                    openSearchFilterMenu = {
+                        viewModel.onEvent(
+                            InactiveSearchScreenEvent.OpenOrCloseSearchMenu(
+                                it
+                            )
+                        )
+                    }
                 )
 
 

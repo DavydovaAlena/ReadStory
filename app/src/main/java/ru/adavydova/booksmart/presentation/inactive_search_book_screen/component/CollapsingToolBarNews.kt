@@ -25,6 +25,7 @@ import androidx.constraintlayout.compose.MotionLayout
 import androidx.constraintlayout.compose.MotionScene
 import ru.adavydova.booksmart.R
 import ru.adavydova.booksmart.presentation.component.search_bar.InactiveSearchBar
+import ru.adavydova.booksmart.presentation.inactive_search_book_screen.ShowState
 import ru.adavydova.booksmart.presentation.main_screen.PermissionTextProvider
 
 
@@ -36,6 +37,7 @@ fun SearchBooksMotionHandler(
     currentHeight:Dp,
     navigateToOnActiveSearchScreen: (String)->Unit,
     navigateToInactiveSearchScreen: (String)->Unit,
+    openSearchFilterMenu: (ShowState)-> Unit,
     checkingThePermission: (PermissionTextProvider, Boolean) -> Unit,
     progress: Float
 ) {
@@ -82,11 +84,12 @@ fun SearchBooksMotionHandler(
                 )
                 .clip(CircleShape),
             query = query,
+            openSearchFilterMenu = openSearchFilterMenu,
             navigateToOnActiveSearchScreen = navigateToOnActiveSearchScreen,
             useGoogleAssistant = navigateToInactiveSearchScreen,
             checkingThePermission = checkingThePermission
         )
-        
+
     }
 
 

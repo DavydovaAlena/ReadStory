@@ -73,7 +73,8 @@ fun StartSearchScreen(
             useGoogleAssistant = navigateToInactiveSearchScreen,
             checkingThePermission = checkingThePermission,
             query = "",
-            navigateToOnActiveSearchScreen = navigateToOnActiveSearchScreen
+            navigateToOnActiveSearchScreen = navigateToOnActiveSearchScreen,
+            openSearchFilterMenu = {}
         )
 
 

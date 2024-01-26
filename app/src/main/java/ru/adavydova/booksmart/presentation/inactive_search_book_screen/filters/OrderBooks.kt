@@ -5,3 +5,14 @@ sealed class OrderBooks(val order: String) {
     object RelevanceOrderType: OrderBooks("relevance")
 
 }
+
+fun String.selectOrderType(): OrderBooks{
+   return when(this){
+        OrderBooks.NewestOrderType.order -> OrderBooks.NewestOrderType
+        OrderBooks.RelevanceOrderType.order -> OrderBooks.RelevanceOrderType
+        else -> {
+            throw IllegalArgumentException("incorrect value")
+        }
+    }
+}
+

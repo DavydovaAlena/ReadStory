@@ -11,13 +11,30 @@ data class InactiveSearchBookScreenState(
     val books: Flow<PagingData<Book>>? = null,
     val query: String = "",
     val orderType: OrderBooks = OrderBooks.RelevanceOrderType,
-    val languageRestrict: Set<LanguageRestrictFilterBooks> = setOf(),
+    val languageRestrict: LanguageRestrictFilterBooks = LanguageRestrictFilterBooks.AllLanguage,
     val filter: FilterBooks = FilterBooks.Ebooks,
-    val showSideBar: ShowState = ShowState.Close,
-    val showAdditionalParameter: ShowState = ShowState.Close,
+    val showSearchMenu: ShowState = ShowState.Close,
+    val showOrderMenu:ShowState = ShowState.Close,
+    val showFilterMenu:ShowState = ShowState.Close,
+    val showLanguageMenu:ShowState = ShowState.Close,
+
 )
 
 sealed class ShowState{
     object Close: ShowState()
     object Open: ShowState()
+
+ operator fun invoke(): Boolean{
+     return when(this){
+         Close -> false
+         Open -> true
+     }
+ }
+
+}
+fun Boolean.getShowState():ShowState{
+    return when(this){
+        true -> ShowState.Open
+        false -> ShowState.Close
+    }
 }
