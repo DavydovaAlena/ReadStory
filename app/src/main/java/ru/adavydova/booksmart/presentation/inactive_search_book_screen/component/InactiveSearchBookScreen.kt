@@ -1,6 +1,5 @@
 package ru.adavydova.booksmart.presentation.inactive_search_book_screen.component
 
-import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -35,18 +34,14 @@ import ru.adavydova.booksmart.presentation.main_screen.PermissionTextProvider
 
 
 
-object ScrollInactiveScreenValue{
-    const val CARD_SIZE = 200
 
-}
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun InactiveSearchBookScreen(
     modifier: Modifier = Modifier,
-    navigateToDetailBook: (Book)-> Unit,
-    navigateToOnActiveSearchScreen : (String)->Unit,
-    navigateToInactiveSearchScreen: (String)->Unit,
+    navigateToDetailBook: (Book) -> Unit,
+    navigateToOnActiveSearchScreen: (String) -> Unit,
+    navigateToInactiveSearchScreen: (String) -> Unit,
     checkingThePermission: ((PermissionTextProvider, Boolean) -> Unit),
     viewModel: InactiveSearchBookScreenViewModel = hiltViewModel<InactiveSearchBookScreenViewModel>(),
 ) {
@@ -60,8 +55,7 @@ fun InactiveSearchBookScreen(
     }
 
     val lazyState = rememberLazyListState()
-    val der  = remember { derivedStateOf { lazyState.firstVisibleItemScrollOffset } }
-    val der2  = remember { derivedStateOf { lazyState.firstVisibleItemIndex } }
+    val der = remember { derivedStateOf { lazyState.firstVisibleItemScrollOffset } }
 
 
     val toolbarHeightRange = with(LocalDensity.current) {
@@ -72,9 +66,10 @@ fun InactiveSearchBookScreen(
     }
     val scrollState = rememberScrollState()
 
+
     LaunchedEffect(key1 = der.value, block = {
 
-        if (lazyState.firstVisibleItemIndex<1){
+        if (lazyState.firstVisibleItemIndex < 1) {
             toolbarState.scrollValue = der.value
         }
     })
@@ -85,18 +80,19 @@ fun InactiveSearchBookScreen(
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         snackbarHost = {
-            if (screenState.showSearchMenu == ShowState.Open){
+            if (screenState.showSearchMenu == ShowState.Open) {
 
-                Log.d("ok", "odw")
+
                 SearchFilterWindow(
                     expendedFilter = screenState.showFilterMenu(),
                     onExpendedFilter = {
-                        viewModel.onEvent(InactiveSearchScreenEvent.OpenOrCloseFilterMenu(it.getShowState()))},
-                    expendedOrder = screenState.showOrderMenu()  ,
+                        viewModel.onEvent(InactiveSearchScreenEvent.OpenOrCloseFilterMenu(it.getShowState()))
+                    },
+                    expendedOrder = screenState.showOrderMenu(),
                     onExpendedOrderMenu = {
                         viewModel.onEvent(InactiveSearchScreenEvent.OpenOrCloseOrderMenu(it.getShowState()))
                     },
-                    expendedLanguage = screenState.showLanguageMenu() ,
+                    expendedLanguage = screenState.showLanguageMenu(),
                     onExpendedLanguage = {
                         viewModel.onEvent(InactiveSearchScreenEvent.OpenOrCloseLanguageMenu(it.getShowState()))
                     },
@@ -109,9 +105,9 @@ fun InactiveSearchBookScreen(
                     onSelectFilter = {
                         viewModel.onEvent(InactiveSearchScreenEvent.SelectFilterType(it))
                     },
-                    onSelectLanguageType ={
+                    onSelectLanguageType = {
                         viewModel.onEvent(InactiveSearchScreenEvent.SelectLanguageType(it))
-                    } ,
+                    },
                     onSelectOrderType = {
                         viewModel.onEvent(InactiveSearchScreenEvent.SelectOrderType(it))
                     },

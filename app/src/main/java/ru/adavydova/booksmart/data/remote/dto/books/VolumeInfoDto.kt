@@ -17,7 +17,7 @@ data class VolumeInfoDto(
     @Json(name = "contentVersion")
     val contentVersion: String?,
     @Json(name = "description")
-    val description: String,
+    val description: String?,
     @Json(name = "dimensions")
     val dimensions: DimensionsDto?,
     @Json(name = "imageLinks")
@@ -27,23 +27,23 @@ data class VolumeInfoDto(
     @Json(name = "infoLink")
     val infoLink: String?,
     @Json(name = "language")
-    val language: String,
+    val language: String?,
     @Json(name = "mainCategory")
     val mainCategory: String?,
     @Json(name = "pageCount")
-    val pageCount: Int,
+    val pageCount: Int?,
     @Json(name = "previewLink")
     val previewLink: String?,
     @Json(name = "printType")
     val printType: String?,
     @Json(name = "publishedDate")
-    val publishedDate: String,
+    val publishedDate: String?,
     @Json(name = "publisher")
     val publisher: String?,
     @Json(name = "ratingsCount")
     val ratingsCount: Int?,
     @Json(name = "subtitle")
-    val subtitle: String,
+    val subtitle: String?,
     @Json(name = "title")
-    val title: String
+    val title: String?
 )

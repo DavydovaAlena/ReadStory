@@ -32,7 +32,7 @@ fun BooksDto.toBooks(): Books {
 
                     ),
                 volumeInfo = VolumeInfo(
-                    title = volumeInfo.title,
+                    title = volumeInfo.title?: "",
                     authors = volumeInfo.authors ?: listOf(),
                     publisher = volumeInfo.publisher,
                     publishedDate = volumeInfo.publishedDate ?: "",
@@ -67,7 +67,7 @@ fun ItemDto.toBook(): Book{
     return Book(
         id = id,
         volumeInfo = VolumeInfo(
-            title = volumeInfo.title,
+            title = volumeInfo.title?: "",
             authors = volumeInfo.authors ?: listOf(),
             publisher = volumeInfo.publisher,
             publishedDate = volumeInfo.publishedDate ?: "",
