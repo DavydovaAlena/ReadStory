@@ -1,6 +1,5 @@
 package ru.adavydova.booksmart.presentation.inactive_search_book_screen.component
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -8,20 +7,22 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import ru.adavydova.booksmart.domain.model.Book
@@ -30,11 +31,11 @@ import ru.adavydova.booksmart.presentation.component.search_item.middle_variant.
 import ru.adavydova.booksmart.presentation.inactive_search_book_screen.InactiveSearchBookScreenViewModel
 import ru.adavydova.booksmart.presentation.inactive_search_book_screen.InactiveSearchScreenEvent
 import ru.adavydova.booksmart.presentation.inactive_search_book_screen.ShowState
+import ru.adavydova.booksmart.presentation.inactive_search_book_screen.filters.FilterBooks
+import ru.adavydova.booksmart.presentation.inactive_search_book_screen.filters.LanguageRestrictFilterBooks
+import ru.adavydova.booksmart.presentation.inactive_search_book_screen.filters.OrderBooks
 import ru.adavydova.booksmart.presentation.inactive_search_book_screen.getShowState
 import ru.adavydova.booksmart.presentation.main_screen.PermissionTextProvider
-
-
-
 
 
 @Composable
@@ -55,9 +56,6 @@ fun InactiveSearchBookScreen(
         mutableStateOf(null)
     }
 
-    val lazyState = rememberLazyListState()
-    val der = remember { derivedStateOf { lazyState.firstVisibleItemScrollOffset } }
-
 
     val toolbarHeightRange = with(LocalDensity.current) {
         MIN_TOOLBAR_HEIGHT.roundToPx()..MAX_TOOLBAR_HEIGHT.roundToPx()
@@ -65,8 +63,8 @@ fun InactiveSearchBookScreen(
     val toolbarState = rememberSaveable(saver = MiExitUntilCollapsedState.Saver) {
         MiExitUntilCollapsedState(toolbarHeightRange)
     }
-    val scrollState = rememberScrollState()
-
+    val lazyState = rememberLazyListState()
+    val der = remember { derivedStateOf { lazyState.firstVisibleItemScrollOffset } }
 
     LaunchedEffect(key1 = der.value, block = {
 
@@ -75,27 +73,23 @@ fun InactiveSearchBookScreen(
         }
     })
 
-
-
-
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         snackbarHost = {
             if (screenState.showSearchMenu == ShowState.Open) {
 
-
                 SearchFilterWindow(
-                    expendedFilter = screenState.showFilterMenu(),
-                    onExpendedFilter = {
-                        viewModel.onEvent(InactiveSearchScreenEvent.OpenOrCloseFilterMenu(it.getShowState()))
+                    filters = viewModel.filters,
+                    expended = {
+                        when (it) {
+                            FilterBooks::class -> screenState.showFilterMenu.invoke()
+                            OrderBooks::class -> screenState.showOrderMenu()
+                            LanguageRestrictFilterBooks::class -> screenState.showLanguageMenu()
+                            else -> throw IllegalArgumentException("error type")
+                        }
                     },
-                    expendedOrder = screenState.showOrderMenu(),
-                    onExpendedOrderMenu = {
-                        viewModel.onEvent(InactiveSearchScreenEvent.OpenOrCloseOrderMenu(it.getShowState()))
-                    },
-                    expendedLanguage = screenState.showLanguageMenu(),
-                    onExpendedLanguage = {
-                        viewModel.onEvent(InactiveSearchScreenEvent.OpenOrCloseLanguageMenu(it.getShowState()))
+                    onExpended = { select , type->
+                        viewModel.onEvent(InactiveSearchScreenEvent.OpenOrCloseFilterMenu(select.getShowState(), type))
                     },
                     closeMenu = {
                         viewModel.onEvent(InactiveSearchScreenEvent.CancelAndCloseSearchMenu)
@@ -103,18 +97,26 @@ fun InactiveSearchBookScreen(
                     insertFilter = {
                         viewModel.onEvent(InactiveSearchScreenEvent.InsertFilter)
                     },
-                    onSelectFilter = {
+                    onSelect = {
                         viewModel.onEvent(InactiveSearchScreenEvent.SelectFilterType(it))
                     },
-                    onSelectLanguageType = {
-                        viewModel.onEvent(InactiveSearchScreenEvent.SelectLanguageType(it))
+                    select = {
+                        when (it) {
+                            FilterBooks::class -> filterState.filter.filter
+                            OrderBooks::class -> filterState.orderType.order
+                            LanguageRestrictFilterBooks::class -> filterState.languageRestrict.language
+                            else -> throw IllegalArgumentException("error type")
+                        }
                     },
-                    onSelectOrderType = {
-                        viewModel.onEvent(InactiveSearchScreenEvent.SelectOrderType(it))
-                    },
-                    selectFilter = filterState.filter,
-                    selectLanguage = filterState.languageRestrict,
-                    selectOrder = filterState.orderType
+                    name = {
+                        when (it) {
+                            FilterBooks::class -> "Filter type"
+                            OrderBooks::class -> "Order by"
+                            LanguageRestrictFilterBooks::class -> "Language"
+                            else -> throw IllegalArgumentException("error type")
+                        }
+                    }
+
                 )
             }
         },
@@ -144,12 +146,9 @@ fun InactiveSearchBookScreen(
                     }
                 )
 
-
-
                 books?.let { pagingBooks ->
 
                     ListBooksWithScrollState(
-                        lazyState = lazyState,
                         books = pagingBooks,
                         modifier = Modifier
                             .layoutId("books")
@@ -159,12 +158,12 @@ fun InactiveSearchBookScreen(
                                 end = 16.dp,
                                 bottom = 16.dp
                             ),
-                        scrollState = scrollState,
                         changeErrorState = { errorState.value = it },
                         navigateToDetail = navigateToDetailBook,
                         card = { book, isClicked ->
                             CardBookItem(book, isClicked)
-                        })
+                        },
+                        lazyState = lazyState)
                 }
 
 

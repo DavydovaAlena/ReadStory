@@ -5,16 +5,26 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import ru.adavydova.booksmart.domain.model.Book
 import ru.adavydova.booksmart.presentation.component.search_item.middle_variant.ShimmerCardBookItem
 import ru.adavydova.booksmart.presentation.component.search_item.short_variant.ShimmerSearchItem
+import ru.adavydova.booksmart.presentation.inactive_search_book_screen.component.MAX_TOOLBAR_HEIGHT
+import ru.adavydova.booksmart.presentation.inactive_search_book_screen.component.MIN_TOOLBAR_HEIGHT
+import ru.adavydova.booksmart.presentation.inactive_search_book_screen.component.MiExitUntilCollapsedState
 
 @Composable
 fun ListOfSearchItems(
@@ -69,17 +79,18 @@ fun ListOfSearchItems(
 
 @Composable
 fun ListBooksWithScrollState(
-    lazyState: LazyListState,
+    lazyState:LazyListState,
     modifier: Modifier = Modifier,
     books: LazyPagingItems<Book>,
-    scrollState: ScrollState,
     card: @Composable (Book, (Book)->Unit)-> Unit,
     changeErrorState: (LoadState.Error?)-> Unit,
     navigateToDetail: (Book)-> Unit,
 ) {
 
     val handlePagingResult = handlePagingResult(books = books)
-    val context = LocalContext.current
+
+
+
 
     when(handlePagingResult){
         is PagingStateLoad.Error -> {

@@ -1,22 +1,15 @@
 package ru.adavydova.booksmart.presentation.inactive_search_book_screen.filters
 
-sealed class LanguageRestrictFilterBooks(val language: String) {
+
+interface FilterTypeBook
+
+sealed class LanguageRestrictFilterBooks(val language: String): FilterTypeBook {
     object RuBooks: LanguageRestrictFilterBooks(language = "ru")
     object EnBooks: LanguageRestrictFilterBooks(language = "en")
     object FrBooks: LanguageRestrictFilterBooks(language = "fr")
     object DeBooks: LanguageRestrictFilterBooks(language = "de")
     object AllLanguage: LanguageRestrictFilterBooks(language = "all")
 
-
-    operator fun invoke(): List<LanguageRestrictFilterBooks>{
-        return listOf(
-            RuBooks,
-            EnBooks,
-            FrBooks,
-            DeBooks,
-            AllLanguage
-        )
-    }
 }
 
 fun String.selectLanguageRestrict(): LanguageRestrictFilterBooks{

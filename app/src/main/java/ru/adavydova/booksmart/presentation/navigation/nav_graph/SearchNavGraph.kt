@@ -116,7 +116,6 @@ fun NavGraphBuilder.searchNavGraph(
 
 
 
-
         composable(
             route = Route.StartSearchScreen.route
         ) {

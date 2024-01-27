@@ -13,6 +13,13 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.adavydova.booksmart.domain.usecase.BooksUseCase
 import ru.adavydova.booksmart.presentation.inactive_search_book_screen.filters.FilterBookState
+import ru.adavydova.booksmart.presentation.inactive_search_book_screen.filters.FilterBooks
+import ru.adavydova.booksmart.presentation.inactive_search_book_screen.filters.FilterTypeBook
+import ru.adavydova.booksmart.presentation.inactive_search_book_screen.filters.LanguageRestrictFilterBooks
+import ru.adavydova.booksmart.presentation.inactive_search_book_screen.filters.OrderBooks
+import ru.adavydova.booksmart.presentation.inactive_search_book_screen.filters.selectFilterType
+import ru.adavydova.booksmart.presentation.inactive_search_book_screen.filters.selectLanguageRestrict
+import ru.adavydova.booksmart.presentation.inactive_search_book_screen.filters.selectOrderType
 import javax.inject.Inject
 
 @HiltViewModel
@@ -34,6 +41,13 @@ class InactiveSearchBookScreenViewModel
         )
     )
     val stateFilterBook = _stateFilterBook.asStateFlow()
+
+    val filters = mapOf(
+        FilterBooks::class to listOf(FilterBooks.Partial.filter, FilterBooks.Full.filter, FilterBooks.PaidEbooks.filter, FilterBooks.Ebooks.filter, FilterBooks.FreeEbooks.filter),
+        OrderBooks::class to listOf(OrderBooks.NewestOrderType.order, OrderBooks.RelevanceOrderType.order),
+        LanguageRestrictFilterBooks::class to listOf(LanguageRestrictFilterBooks.DeBooks.language, LanguageRestrictFilterBooks.FrBooks.language,
+            LanguageRestrictFilterBooks.EnBooks.language, LanguageRestrictFilterBooks.RuBooks.language, LanguageRestrictFilterBooks.AllLanguage.language)
+    )
 
 
     init {
@@ -64,16 +78,14 @@ class InactiveSearchBookScreenViewModel
             }
 
             is InactiveSearchScreenEvent.OpenOrCloseFilterMenu -> {
-                _screenState.value = screenState.value.copy(showFilterMenu = event.enable)
+                when(event.filterType){
+                    OrderBooks::class ->  _screenState.value = screenState.value.copy(showOrderMenu = event.enable)
+                    FilterBooks::class -> _screenState.value = screenState.value.copy(showFilterMenu = event.enable)
+                    LanguageRestrictFilterBooks::class ->_screenState.value = screenState.value.copy(showLanguageMenu = event.enable)
+                }
+
             }
 
-            is InactiveSearchScreenEvent.OpenOrCloseLanguageMenu -> {
-                _screenState.value = screenState.value.copy(showLanguageMenu = event.enable)
-            }
-
-            is InactiveSearchScreenEvent.OpenOrCloseOrderMenu -> {
-                _screenState.value = screenState.value.copy(showOrderMenu = event.enable)
-            }
 
             InactiveSearchScreenEvent.CancelAndCloseSearchMenu -> {
                 _stateFilterBook.value = stateFilterBook.value.copy(
@@ -110,17 +122,19 @@ class InactiveSearchBookScreenViewModel
             }
 
             is InactiveSearchScreenEvent.SelectFilterType -> {
-                _stateFilterBook.value = stateFilterBook.value.copy(filter = event.filterBook)
+                filters.forEach { (typeFilter, listFilter) ->
+                    val filter = listFilter.firstOrNull { it ==  event.filter}
+                    filter?.let {
+                        when(typeFilter){
+                            OrderBooks::class -> _stateFilterBook.value = stateFilterBook.value.copy(orderType = it.selectOrderType())
+                            FilterBooks::class -> _stateFilterBook.value = stateFilterBook.value.copy(filter = it.selectFilterType())
+                            LanguageRestrictFilterBooks::class -> _stateFilterBook.value = stateFilterBook.value.copy(languageRestrict = it.selectLanguageRestrict())
+                        }
+                    }
+                }
+
             }
 
-            is InactiveSearchScreenEvent.SelectLanguageType -> {
-                _stateFilterBook.value =
-                    stateFilterBook.value.copy(languageRestrict = event.language)
-            }
-
-            is InactiveSearchScreenEvent.SelectOrderType -> {
-                _stateFilterBook.value = stateFilterBook.value.copy(orderType = event.orderBooks)
-            }
         }
     }
 

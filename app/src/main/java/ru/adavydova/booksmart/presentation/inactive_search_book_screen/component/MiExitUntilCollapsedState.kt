@@ -1,7 +1,9 @@
 package ru.adavydova.booksmart.presentation.inactive_search_book_screen.component
 
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.mapSaver
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.structuralEqualityPolicy
@@ -60,9 +62,9 @@ interface MiToolbarState {
 }
 
 abstract class MiScrollFlagState(heightRange: IntRange, scrollValue: Int) : MiToolbarState {
-    var scrollFlagValue by mutableStateOf(
+    var scrollFlagValue by mutableIntStateOf(
         value = scrollValue.coerceAtLeast(0),
-        policy = structuralEqualityPolicy()
+
     )
     val rangeDifference = heightRange.last - heightRange.first
     val minHeight = heightRange.first
@@ -77,3 +79,5 @@ abstract class MiScrollFlagState(heightRange: IntRange, scrollValue: Int) : MiTo
     final override val progress: Float
         get() = 1 - (maxHeight - height) / rangeDifference
 }
+
+
