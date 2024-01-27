@@ -9,15 +9,15 @@ data class SaleInfoDto(
     @Json(name = "buyLink")
     val buyLink: String?,
     @Json(name = "country")
-    val country: String?,
+    val country: String,
     @Json(name = "isEbook")
-    val isEbook: Boolean?,
+    val isEbook: Boolean,
     @Json(name = "listPrice")
-    val listPrice: ListPriceDto,
+    val listPrice: ListPriceDto?,
     @Json(name = "onSaleDate")
     val onSaleDate: String?,
     @Json(name = "retailPrice")
-    val retailPrice: RetailPriceDto,
+    val retailPrice: RetailPriceDto?,
     @Json(name = "saleability")
-    val saleability: String?
+    val saleability: String
 )

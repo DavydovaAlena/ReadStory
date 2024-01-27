@@ -96,6 +96,7 @@ fun SearchFilterWindow(
     ) {
 
 
+
         Column(
             modifier = Modifier
                 .clickable(

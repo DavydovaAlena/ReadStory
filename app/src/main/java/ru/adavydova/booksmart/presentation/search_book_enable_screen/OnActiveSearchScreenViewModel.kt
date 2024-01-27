@@ -7,6 +7,7 @@ import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.cancellable
 import ru.adavydova.booksmart.domain.usecase.BooksUseCase
 import javax.inject.Inject
 
@@ -32,13 +33,15 @@ class OnActiveSearchScreenViewModel @Inject constructor(
         when (event) {
 
             is SearchBookEvent.UpdateAndSearchQuery -> {
+
+                searchBooksState.value.books?.cancellable()
                 _searchBooksState.value = searchBooksState.value.copy(
                     query = event.query
                 )
 
                 val books = bookUseCase.searchBookUseCase(
                     query = searchBooksState.value.query,
-                    maxResults = 20
+                    maxResults = 10
                 ).cachedIn(viewModelScope)
 
                 _searchBooksState.value = searchBooksState.value.copy(

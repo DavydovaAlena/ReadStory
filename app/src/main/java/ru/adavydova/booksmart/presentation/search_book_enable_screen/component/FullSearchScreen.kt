@@ -59,14 +59,13 @@ fun SearchFullWindowScreen(
 
         ) { padding ->
 
-//        errorState.value?.let {
-//            if (searchState.query.length > 1) {
-//                NotFoundScreen()
-////                ErrorScreen(
-////                    modifier = Modifier.padding(padding),
-////                    error = it)
-//            }
-//        }
+        errorState.value?.let {
+
+                NotFoundScreen()
+//                ErrorScreen(
+//                    modifier = Modifier.padding(padding),
+//                    error = it)
+        }
 
 
         books?.let { pagingBooks ->

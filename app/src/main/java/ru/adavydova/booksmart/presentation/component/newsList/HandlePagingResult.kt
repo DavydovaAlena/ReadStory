@@ -34,7 +34,7 @@ fun handlePagingResult(
             PagingStateLoad.Load
         }
         error != null -> {
-            Log.d("error", error.error.message?: "hz")
+
             PagingStateLoad.Error(error)
 //            if (!loadState.append.endOfPaginationReached) {
 //                PagingStateLoad.NoItemWasFound

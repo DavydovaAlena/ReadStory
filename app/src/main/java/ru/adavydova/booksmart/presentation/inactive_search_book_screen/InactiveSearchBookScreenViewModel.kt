@@ -8,6 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.adavydova.booksmart.domain.usecase.BooksUseCase
@@ -32,28 +33,26 @@ class InactiveSearchBookScreenViewModel
             languageRestrict = _screenState.value.languageRestrict
         )
     )
-
     val stateFilterBook = _stateFilterBook.asStateFlow()
 
 
     init {
-
         savedStateHandle.get<String>("query")?.let { query ->
             viewModelScope.launch {
-                val books = searchBooks(query)
+                _screenState.value = screenState.value.copy(query = query)
+                val books = searchBooks()
                 _screenState.value = screenState.value.copy(
-                    query = query,
                     books = books
                 )
             }
         }
     }
 
-    private suspend fun searchBooks(query: String) = withContext(Dispatchers.IO) {
+
+    private suspend fun searchBooks() = withContext(Dispatchers.IO) {
         val books = useCase.searchBookUseCase(
-            query = query,
-            maxResults = 10
-        ).cachedIn(viewModelScope)
+            query = screenState.value.query,
+            maxResults = 5).cachedIn(viewModelScope)
         books
     }
 
@@ -83,7 +82,7 @@ class InactiveSearchBookScreenViewModel
                     languageRestrict = _screenState.value.languageRestrict
                 )
                 _screenState.value = screenState.value.copy(
-                showSearchMenu = ShowState.Close
+                    showSearchMenu = ShowState.Close
                 )
             }
 
@@ -95,16 +94,19 @@ class InactiveSearchBookScreenViewModel
                     showSearchMenu = ShowState.Close
                 )
 
-                val books = useCase.filterBooksUseCase(
-                    query = screenState.value.query,
-                    orderType = screenState.value.orderType,
-                    languageRestrict = screenState.value.languageRestrict,
-                    filter = screenState.value.filter
-                ).cachedIn(viewModelScope)
-
-                _screenState.value = screenState.value.copy(
-                    books = books
-                )
+                _screenState.value.books?.cancellable()
+                viewModelScope.launch {
+                    val books = useCase.filterBooksUseCase(
+                        filter =  screenState.value.filter,
+                        orderType = screenState.value.orderType,
+                        languageRestrict = screenState.value.languageRestrict,
+                        maxResult = 5,
+                        query = screenState.value.query
+                    ).cachedIn(viewModelScope)
+                    _screenState.value = screenState.value.copy(
+                        books = books
+                    )
+                }
             }
 
             is InactiveSearchScreenEvent.SelectFilterType -> {

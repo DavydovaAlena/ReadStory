@@ -13,6 +13,7 @@ class FilterBooksUseCase(
 ) {
     operator fun invoke(
         query: String,
+        maxResult: Int,
         orderType: OrderBooks,
         filter: FilterBooks,
         languageRestrict: LanguageRestrictFilterBooks
@@ -36,7 +37,7 @@ class FilterBooksUseCase(
 
         return repository.searchBooks(
             query = query,
-            maxResult = 10,
+            maxResult = maxResult,
             filters = filters
         )
     }

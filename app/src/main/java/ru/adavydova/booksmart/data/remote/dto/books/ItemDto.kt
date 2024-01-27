@@ -15,7 +15,7 @@ data class ItemDto(
     @Json(name = "kind")
     val kind: String,
     @Json(name = "saleInfo")
-    val saleInfo: SaleInfoDto?,
+    val saleInfo: SaleInfoDto,
     @Json(name = "searchInfo")
     val searchInfo: SearchInfoDto?,
     @Json(name = "selfLink")

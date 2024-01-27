@@ -152,7 +152,6 @@ fun NavGraphBuilder.searchNavGraph(
                     navController.navigate(Route.ActiveSearchScreen.route + "?query=${it}")
                 },
                 navigateToDetailBook = {
-                    Log.d("ID", it.id)
                     navController.navigate(Route.DetailBookScreen.route + "?bookId=${it.id}")
                 }
             )

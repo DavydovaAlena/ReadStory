@@ -7,7 +7,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class RetailPriceDto(
     @Json(name = "amount")
-    val amount: Double,
+    val amount: Double?,
     @Json(name = "currencyCode")
-    val currencyCode: String
+    val currencyCode: String?
 )

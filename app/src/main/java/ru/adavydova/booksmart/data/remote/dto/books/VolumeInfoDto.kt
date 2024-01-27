@@ -7,31 +7,31 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class VolumeInfoDto(
     @Json(name = "authors")
-    val authors: List<String>,
+    val authors: List<String>?,
     @Json(name = "averageRating")
     val averageRating: Double?,
     @Json(name = "canonicalVolumeLink")
-    val canonicalVolumeLink: String?,
+    val canonicalVolumeLink: String,
     @Json(name = "categories")
-    val categories: List<String>,
+    val categories: List<String>?,
     @Json(name = "contentVersion")
-    val contentVersion: String?,
+    val contentVersion: String,
     @Json(name = "description")
     val description: String?,
     @Json(name = "dimensions")
     val dimensions: DimensionsDto?,
     @Json(name = "imageLinks")
-    val imageLinks: ImageLinksDto?,
+    val imageLinks: ImageLinksDto,
     @Json(name = "industryIdentifiers")
     val industryIdentifiers: List<IndustryIdentifierDto>?,
     @Json(name = "infoLink")
-    val infoLink: String?,
+    val infoLink: String,
     @Json(name = "language")
-    val language: String?,
+    val language: String,
     @Json(name = "mainCategory")
     val mainCategory: String?,
     @Json(name = "pageCount")
-    val pageCount: Int?,
+    val pageCount: Int,
     @Json(name = "previewLink")
     val previewLink: String?,
     @Json(name = "printType")

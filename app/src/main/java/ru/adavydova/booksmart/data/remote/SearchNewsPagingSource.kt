@@ -3,7 +3,6 @@ package ru.adavydova.booksmart.data.remote
 import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import retrofit2.HttpException
 import ru.adavydova.booksmart.data.mapper.toBooks
 import ru.adavydova.booksmart.domain.model.Book
 
@@ -28,7 +27,7 @@ class SearchNewsPagingSource(
         return try {
             val books = booksApi.searchBooks(
                 query = query,
-                startIndex = page*maxResults,
+                startIndex = if (page == 0) 0 else page * maxResults,
                 maxResults = maxResults,
                 filters = filters
             ).toBooks()
@@ -38,20 +37,23 @@ class SearchNewsPagingSource(
                 return LoadResult.Page(emptyList(), prevKey = null, nextKey = null)
             }
 
-            val maxItem = books.totalResult
-            val nextPage = if (maxResults * page + 1 < maxItem ) page + 1 else null
-
+            if (books.books.size < maxResults){
+                return LoadResult.Page(
+                    data = books.books,
+                    prevKey = null,
+                    nextKey = null
+                )
+            }
 
             LoadResult.Page(
                 data = books.books,
                 prevKey = if (page > 0) page - 1 else null,
-                nextKey = nextPage
+                nextKey = page + 1
             )
 
-        } catch (e: HttpException) {
-            e.printStackTrace()
+        } catch (e: Exception) {
             return LoadResult.Error(
-                throwable = Throwable(e.message)
+                throwable = Throwable("error paging data")
             )
         }
     }

@@ -7,7 +7,17 @@ sealed class FilterBooks(val filter: String){
     object PaidEbooks: FilterBooks(filter = "paid-ebooks")
     object Partial: FilterBooks(filter = "partial")
 
+    operator fun invoke(): List<FilterBooks>{
+        return listOf(
+            Ebooks,
+            FreeEbooks,
+            Full,
+            PaidEbooks,
+            Partial
+        )
+    }
 }
+
 fun String.selectFilterType(): FilterBooks {
     return when(this){
        FilterBooks.Full.filter -> FilterBooks.Full

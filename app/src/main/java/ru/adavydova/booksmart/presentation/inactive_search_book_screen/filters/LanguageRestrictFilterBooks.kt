@@ -6,6 +6,17 @@ sealed class LanguageRestrictFilterBooks(val language: String) {
     object FrBooks: LanguageRestrictFilterBooks(language = "fr")
     object DeBooks: LanguageRestrictFilterBooks(language = "de")
     object AllLanguage: LanguageRestrictFilterBooks(language = "all")
+
+
+    operator fun invoke(): List<LanguageRestrictFilterBooks>{
+        return listOf(
+            RuBooks,
+            EnBooks,
+            FrBooks,
+            DeBooks,
+            AllLanguage
+        )
+    }
 }
 
 fun String.selectLanguageRestrict(): LanguageRestrictFilterBooks{

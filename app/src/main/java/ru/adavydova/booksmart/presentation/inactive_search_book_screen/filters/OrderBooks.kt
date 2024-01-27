@@ -4,6 +4,13 @@ sealed class OrderBooks(val order: String) {
     object NewestOrderType: OrderBooks("newest")
     object RelevanceOrderType: OrderBooks("relevance")
 
+    operator fun invoke(): List<OrderBooks>{
+        return listOf(
+            NewestOrderType,
+            RelevanceOrderType
+        )
+    }
+
 }
 
 fun String.selectOrderType(): OrderBooks{
