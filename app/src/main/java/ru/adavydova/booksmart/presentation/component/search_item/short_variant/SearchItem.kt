@@ -28,14 +28,14 @@ import ru.adavydova.booksmart.domain.model.Book
 @Composable
 fun SearchItem(
     book: Book,
-    onClick: (Book)-> Unit,
+    onClick: (String)-> Unit,
 
 ) {
    val context = LocalContext.current
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onClick(book) }
+            .clickable { onClick(book.volumeInfo.title) }
             .height(70.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp)

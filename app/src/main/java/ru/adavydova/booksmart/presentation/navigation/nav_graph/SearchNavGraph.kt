@@ -181,8 +181,10 @@ fun NavGraphBuilder.searchNavGraph(
                         navController.popBackStack()
                     }
                 },
-                navigateToDetail = {
-
+                navigateToFullSearchScreen = {
+                    navController.navigate(Route.InactiveSearchScreen.route + "?query=${it}"){
+                        navController.popBackStack()
+                    }
                 },
                 useGoogleAssistant = {
                     navController.navigate(Route.InactiveSearchScreen.route + "?query=${it}")

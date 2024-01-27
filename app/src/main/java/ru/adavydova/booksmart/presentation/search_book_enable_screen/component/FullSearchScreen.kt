@@ -15,24 +15,23 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
-import ru.adavydova.booksmart.domain.model.Book
 import ru.adavydova.booksmart.presentation.component.newsList.ListOfSearchItems
 import ru.adavydova.booksmart.presentation.component.newsList.NotFoundScreen
 import ru.adavydova.booksmart.presentation.component.search_bar.OnActiveSearchBar
 import ru.adavydova.booksmart.presentation.component.search_item.short_variant.SearchItem
 import ru.adavydova.booksmart.presentation.main_screen.PermissionTextProvider
-import ru.adavydova.booksmart.presentation.search_book_enable_screen.SearchBookEvent
 import ru.adavydova.booksmart.presentation.search_book_enable_screen.OnActiveSearchScreenViewModel
+import ru.adavydova.booksmart.presentation.search_book_enable_screen.SearchBookEvent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchFullWindowScreen(
     viewModel: OnActiveSearchScreenViewModel = hiltViewModel<OnActiveSearchScreenViewModel>(),
     backClick: () -> Unit,
-    navigateToDetail: (Book) -> Unit,
+    navigateToFullSearchScreen: (String) -> Unit,
     goOnRequest: (String) -> Unit,
     checkingThePermission: (PermissionTextProvider, Boolean) -> Unit,
-    useGoogleAssistant: (String)-> Unit
+    useGoogleAssistant: (String) -> Unit
 ) {
     val context = LocalContext.current
     val searchState by viewModel.searchBooksState.collectAsState()
@@ -52,21 +51,15 @@ fun SearchFullWindowScreen(
                 checkingThePermission = checkingThePermission,
                 backClick = backClick,
                 goOnRequest = goOnRequest,
-                useGoogleAssistant = useGoogleAssistant
+                useGoogleAssistant = useGoogleAssistant,
+                clearQuery =  { viewModel.onEvent(SearchBookEvent.ClearQuery) }
 
             )
         },
 
         ) { padding ->
 
-        errorState.value?.let {
-
-                NotFoundScreen()
-//                ErrorScreen(
-//                    modifier = Modifier.padding(padding),
-//                    error = it)
-        }
-
+        errorState.value?.error?.printStackTrace()
 
         books?.let { pagingBooks ->
 
@@ -80,7 +73,7 @@ fun SearchFullWindowScreen(
                         bottom = padding.calculateBottomPadding()
                     ),
                 changeErrorState = { errorState.value = it },
-                onClick = { navigateToDetail(it) },
+                onClick = { navigateToFullSearchScreen(it) },
                 card = { book, onClick ->
                     SearchItem(book = book, onClick = onClick)
                 },

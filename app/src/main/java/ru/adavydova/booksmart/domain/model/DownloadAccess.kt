@@ -1,5 +1,9 @@
 package ru.adavydova.booksmart.domain.model
 
+import androidx.room.Entity
+
+
+@Entity
 data class DownloadAccess(
     val kind: String,
     val volumeId: String,

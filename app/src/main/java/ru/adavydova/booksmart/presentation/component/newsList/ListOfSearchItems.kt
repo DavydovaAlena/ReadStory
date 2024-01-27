@@ -30,15 +30,13 @@ import ru.adavydova.booksmart.presentation.inactive_search_book_screen.component
 fun ListOfSearchItems(
     modifier: Modifier = Modifier,
     books: LazyPagingItems<Book>,
-    card: @Composable (Book, (Book)->Unit)-> Unit,
+    card: @Composable (Book, (String)->Unit)-> Unit,
     changeErrorState: (LoadState.Error?)-> Unit,
-    onClick: (Book)-> Unit,
+    onClick: (String)-> Unit,
 ) {
 
     val handlePagingResult = handlePagingResult(books = books)
-
-
-
+    
     when(handlePagingResult){
         is PagingStateLoad.Error -> {
             changeErrorState(handlePagingResult.message)

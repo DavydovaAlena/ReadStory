@@ -32,6 +32,7 @@ class OnActiveSearchScreenViewModel @Inject constructor(
     fun onEvent(event: SearchBookEvent) {
         when (event) {
 
+
             is SearchBookEvent.UpdateAndSearchQuery -> {
 
                 searchBooksState.value.books?.cancellable()
@@ -50,6 +51,19 @@ class OnActiveSearchScreenViewModel @Inject constructor(
 
             }
 
+             SearchBookEvent.ClearQuery -> {
+                _searchBooksState.value = searchBooksState.value.copy(
+                    query = "",
+                )
+                 val books = bookUseCase.searchBookUseCase(
+                     query = searchBooksState.value.query,
+                     maxResults = 10
+                 ).cachedIn(viewModelScope)
+
+                 _searchBooksState.value = searchBooksState.value.copy(
+                     books = books
+                 )
+            }
         }
     }
 }

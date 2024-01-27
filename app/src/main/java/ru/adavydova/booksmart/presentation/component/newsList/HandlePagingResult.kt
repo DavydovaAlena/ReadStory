@@ -11,10 +11,6 @@ fun handlePagingResult(
     books: LazyPagingItems<Book>
 ): PagingStateLoad {
     val loadState = books.loadState
-
-
-
-
     val error: LoadState.Error? = when{
 
         loadState.refresh is LoadState.Error -> {
@@ -34,13 +30,7 @@ fun handlePagingResult(
             PagingStateLoad.Load
         }
         error != null -> {
-
             PagingStateLoad.Error(error)
-//            if (!loadState.append.endOfPaginationReached) {
-//                PagingStateLoad.NoItemWasFound
-//            } else {
-//
-//            }
         }
         else -> {
            PagingStateLoad.Success

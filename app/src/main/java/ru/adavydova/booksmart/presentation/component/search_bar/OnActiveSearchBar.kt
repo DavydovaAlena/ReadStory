@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
@@ -20,7 +22,10 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -47,16 +52,19 @@ fun OnActiveSearchBar(
     modifier: Modifier = Modifier,
     query: String,
     onValueChange: (String) -> Unit,
-    goOnRequest: (String)-> Unit,
+    goOnRequest: (String) -> Unit,
+    clearQuery: ()->Unit,
     checkingThePermission: (PermissionTextProvider, Boolean) -> Unit,
     backClick: () -> Unit,
-    useGoogleAssistant: (String)-> Unit
+    useGoogleAssistant: (String) -> Unit
 
 ) {
 
-
     val focusRequester = remember {
         FocusRequester()
+    }
+    var microState by remember {
+        mutableStateOf(true)
     }
 
     val voiceQueryResultLauncher = rememberLauncherForActivityResult(
@@ -88,10 +96,13 @@ fun OnActiveSearchBar(
     )
 
     LaunchedEffect(key1 = LocalContext.current, block = {
-         delay(200)
-         focusRequester.requestFocus()
+        delay(200)
+        focusRequester.requestFocus()
     })
 
+    LaunchedEffect(key1 = query, block = {
+        microState = query.isEmpty()
+    })
 
     Row(
         modifier = Modifier
@@ -120,22 +131,37 @@ fun OnActiveSearchBar(
         TextField(
             modifier = modifier
                 .fillMaxWidth()
-                .focusRequester(focusRequester)
-
-            ,
+                .focusRequester(focusRequester),
             value = TextFieldValue(text = query, selection = TextRange(query.length)),
             maxLines = 1,
             onValueChange = { onValueChange(it.text) },
             trailingIcon = {
-                IconButton(onClick = {
-                    permissionContract.launch(PermissionTextProvider.RecordAudioTextProvider.permissionName)
-                }) {
-                    Icon(
-                        imageVector = ImageVector.vectorResource(id = R.drawable.baseline_keyboard_voice_24),
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onSurface
-                    )
+                when (microState) {
+                    true -> {
+                        IconButton(onClick = {
+                            permissionContract.launch(PermissionTextProvider.RecordAudioTextProvider.permissionName)
+                        }) {
+                            Icon(
+                                imageVector = ImageVector.vectorResource(id = R.drawable.baseline_keyboard_voice_24),
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.onSurface
+                            )
+                        }
+
+                    }
+
+                    false -> {
+                        IconButton(onClick = clearQuery) {
+                            Icon(
+                                imageVector = Icons.Default.Clear,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.onSurface
+                            )
+                        }
+
+                    }
                 }
+
             },
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Search
