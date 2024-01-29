@@ -11,10 +11,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import ru.adavydova.booksmart.domain.usecase.BooksUseCase
+import ru.adavydova.booksmart.domain.usecase.books_remote.BooksRemoteUseCase
 import ru.adavydova.booksmart.presentation.inactive_search_book_screen.filters.FilterBookState
 import ru.adavydova.booksmart.presentation.inactive_search_book_screen.filters.FilterBooks
-import ru.adavydova.booksmart.presentation.inactive_search_book_screen.filters.FilterTypeBook
 import ru.adavydova.booksmart.presentation.inactive_search_book_screen.filters.LanguageRestrictFilterBooks
 import ru.adavydova.booksmart.presentation.inactive_search_book_screen.filters.OrderBooks
 import ru.adavydova.booksmart.presentation.inactive_search_book_screen.filters.selectFilterType
@@ -26,7 +25,7 @@ import javax.inject.Inject
 class InactiveSearchBookScreenViewModel
 @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val useCase: BooksUseCase
+    private val useCase: BooksRemoteUseCase
 ) : ViewModel() {
 
     private val _screenState = MutableStateFlow(InactiveSearchBookScreenState())

@@ -1,6 +1,5 @@
 package ru.adavydova.booksmart.data.remote.repository
 
-import android.util.Log
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -15,11 +14,11 @@ import ru.adavydova.booksmart.data.remote.BooksApi
 import ru.adavydova.booksmart.data.remote.SearchNewsPagingSource
 import ru.adavydova.booksmart.data.remote.util.Resource
 import ru.adavydova.booksmart.domain.model.Book
-import ru.adavydova.booksmart.domain.repository.BooksRepository
+import ru.adavydova.booksmart.domain.repository.BooksRemoteRepository
 
-class BooksRepositoryImpl(
+class BooksRemoteRepositoryImpl(
     private val api: BooksApi
-): BooksRepository {
+): BooksRemoteRepository {
     override fun searchBooks(
         query: String,
         maxResult: Int,

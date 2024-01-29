@@ -26,7 +26,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -49,16 +48,10 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ExperimentalMotionApi
-import androidx.constraintlayout.compose.MotionLayout
-import androidx.constraintlayout.compose.MotionScene
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import ru.adavydova.booksmart.R
 import ru.adavydova.booksmart.domain.model.Book
 import ru.adavydova.booksmart.presentation.component.search_item.short_variant.parseUrlImage
-import ru.adavydova.booksmart.presentation.inactive_search_book_screen.component.MAX_TOOLBAR_HEIGHT
-import ru.adavydova.booksmart.presentation.inactive_search_book_screen.component.MIN_TOOLBAR_HEIGHT
-import ru.adavydova.booksmart.presentation.inactive_search_book_screen.component.MiExitUntilCollapsedState
 
 @OptIn(ExperimentalMotionApi::class)
 @Composable
@@ -69,7 +62,7 @@ fun DetailBookScreen(
 
     val context = LocalContext.current
     val scrollState = rememberScrollState()
-    val description = book.volumeInfo.description ?: ""
+    val description = book.description ?: ""
     val maxLines by remember {
         mutableIntStateOf(3)
     }
@@ -111,166 +104,165 @@ fun DetailBookScreen(
     }
 
 
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceBetween,
-            modifier = modifier
-                .fillMaxSize()
-                .verticalScroll(scrollState)
-        ) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceBetween,
+        modifier = modifier
+            .fillMaxSize()
+            .verticalScroll(scrollState)
+    ) {
 
-            Column(
-                modifier = Modifier
-                    .padding(20.dp)
-                    .fillMaxSize()
-                    .background(Color.Transparent),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
+        Column(
+            modifier = Modifier
+                .padding(20.dp)
+                .fillMaxSize()
+                .background(Color.Transparent),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
 
 //                Spacer(modifier = Modifier.height(30.dp))
 
-                AsyncImage(
-                    contentScale = ContentScale.FillBounds,
-                    modifier = Modifier
-                        .layoutId("book_image")
-                        .padding()
-                        .shadow(10.dp, RoundedCornerShape(5.dp))
-                        .clip(RoundedCornerShape(5.dp))
-                        .height(180.dp)
-                        .fillMaxWidth(0.35f)
-                        .border(1.dp, MaterialTheme.colorScheme.outline)
-           ,
+            AsyncImage(
+                contentScale = ContentScale.FillBounds,
+                modifier = Modifier
+                    .layoutId("book_image")
+                    .padding()
+                    .shadow(10.dp, RoundedCornerShape(5.dp))
+                    .clip(RoundedCornerShape(5.dp))
+                    .height(180.dp)
+                    .fillMaxWidth(0.35f)
+                    .border(1.dp, MaterialTheme.colorScheme.outline),
 
-                    model = ImageRequest.Builder(context)
-                        .data(book.volumeInfo.imageLinks?.parseUrlImage()).build(),
-                    contentDescription = null
-                )
-                Spacer(modifier = Modifier.height(20.dp))
-
+                model = ImageRequest.Builder(context)
+                    .data(book.imageLinks?.parseUrlImage()).build(),
+                contentDescription = null
+            )
+            Spacer(modifier = Modifier.height(20.dp))
 
 
-                Text(
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier,
-                    color = MaterialTheme.colorScheme.secondary,
-                    text = book.volumeInfo.title,
-                    style = MaterialTheme.typography.titleMedium.copy(fontSize = 22.sp)
-                )
 
-                Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                textAlign = TextAlign.Center,
+                modifier = Modifier,
+                color = MaterialTheme.colorScheme.secondary,
+                text = book.title,
+                style = MaterialTheme.typography.titleMedium.copy(fontSize = 22.sp)
+            )
 
-                Text(
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    text = "Author: " + book.volumeInfo.authors.joinToString()
-                )
+            Spacer(modifier = Modifier.height(8.dp))
 
-
-                Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                text = "Author: " + book.authors
+            )
 
 
-                Text(
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    text = "Categories: " + (book.volumeInfo.categories)?.joinToString()
-                )
+            Spacer(modifier = Modifier.height(4.dp))
 
 
-                Spacer(modifier = Modifier.height(8.dp))
-
-                Box(
-                    Modifier
-                        .fillMaxWidth(0.6f)
-                        .height(1.dp)
-                        .border(1.dp, MaterialTheme.colorScheme.primaryContainer)
-                )
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                Box(modifier = Modifier.fillMaxWidth()) {
-
-                    Text(
-                        modifier = Modifier,
-                        maxLines = if (expanded) Int.MAX_VALUE else maxLines,
-                        overflow = TextOverflow.Ellipsis,
-                        onTextLayout = {
-                            textLayoutState.value = it
-                        },
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.secondary,
-                        text = cutText ?: description
-                    )
-
-                    if (!expanded) {
-                        val density = LocalDensity.current
-                        Text(
-                            onTextLayout = { seeMoreSizeState.value = it.size },
-                            modifier = Modifier
-                                .offsetShowMoreLabel(seeMoreOffset, density)
-                                .clickable {
-                                    expanded = true
-                                    cutText = null
-                                }
-                                .alpha(if (seeMoreOffset != null) 1f else 0f),
-                            text = "...Show more")
-                    }
-
-
-                }
-
-            }
+            Text(
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                text = "Categories: " + (book.categories)
+            )
 
 
             Spacer(modifier = Modifier.height(8.dp))
 
+            Box(
+                Modifier
+                    .fillMaxWidth(0.6f)
+                    .height(1.dp)
+                    .border(1.dp, MaterialTheme.colorScheme.primaryContainer)
+            )
 
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(20.dp),
-                verticalArrangement = Arrangement.Bottom
-            ) {
+            Spacer(modifier = Modifier.height(16.dp))
 
-                Button(
-                    shape = RoundedCornerShape(5.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    onClick = { /*TODO*/ }) {
+            Box(modifier = Modifier.fillMaxWidth()) {
 
+                Text(
+                    modifier = Modifier,
+                    maxLines = if (expanded) Int.MAX_VALUE else maxLines,
+                    overflow = TextOverflow.Ellipsis,
+                    onTextLayout = {
+                        textLayoutState.value = it
+                    },
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.secondary,
+                    text = cutText ?: description
+                )
+
+                if (!expanded) {
+                    val density = LocalDensity.current
                     Text(
-                        style = MaterialTheme.typography.titleMedium,
-                        text = "Buy now"
-                    )
-
+                        onTextLayout = { seeMoreSizeState.value = it.size },
+                        modifier = Modifier
+                            .offsetShowMoreLabel(seeMoreOffset, density)
+                            .clickable {
+                                expanded = true
+                                cutText = null
+                            }
+                            .alpha(if (seeMoreOffset != null) 1f else 0f),
+                        text = "...Show more")
                 }
 
-                Spacer(modifier = Modifier.height(8.dp))
 
-                Button(
-                    shape = RoundedCornerShape(5.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primaryContainer
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    onClick = { /*TODO*/ }) {
-
-                    Text(
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.background,
-                        text = "Read the free fragment"
-                    )
-
-
-                }
             }
 
         }
+
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(20.dp),
+            verticalArrangement = Arrangement.Bottom
+        ) {
+
+            Button(
+                shape = RoundedCornerShape(5.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary
+                ),
+                modifier = Modifier
+                    .fillMaxWidth(),
+                onClick = { /*TODO*/ }) {
+
+                Text(
+                    style = MaterialTheme.typography.titleMedium,
+                    text = "Buy now"
+                )
+
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Button(
+                shape = RoundedCornerShape(5.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer
+                ),
+                modifier = Modifier
+                    .fillMaxWidth(),
+                onClick = { /*TODO*/ }) {
+
+                Text(
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.background,
+                    text = "Read the free fragment"
+                )
+
+
+            }
+        }
+
+    }
 
 
 }

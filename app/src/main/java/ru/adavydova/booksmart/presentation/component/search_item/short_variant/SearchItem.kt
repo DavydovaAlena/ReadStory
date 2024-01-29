@@ -28,14 +28,14 @@ import ru.adavydova.booksmart.domain.model.Book
 @Composable
 fun SearchItem(
     book: Book,
-    onClick: (String)-> Unit,
+    onClick: (String) -> Unit,
 
-) {
-   val context = LocalContext.current
+    ) {
+    val context = LocalContext.current
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onClick(book.volumeInfo.title) }
+            .clickable { onClick(book.title) }
             .height(70.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp)
@@ -53,13 +53,13 @@ fun SearchItem(
         Text(
             modifier = Modifier.weight(5f),
             maxLines = 2,
-            text = book.volumeInfo.title
+            text = book.title
         )
 
         AsyncImage(
             contentScale = ContentScale.Crop,
             model = ImageRequest.Builder(context)
-                .data(book.volumeInfo.imageLinks?.parseUrlImage())
+                .data(book.imageLinks?.parseUrlImage())
                 .build(),
             contentDescription = null,
             modifier = Modifier

@@ -17,6 +17,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
+import ru.adavydova.booksmart.presentation.detail_book.DetailBookEvent
 import ru.adavydova.booksmart.presentation.detail_book.DetailBookViewModel
 import ru.adavydova.booksmart.presentation.detail_book.component.DetailBookScreen
 import ru.adavydova.booksmart.presentation.detail_book.component.DetailTopBar
@@ -61,7 +62,7 @@ fun NavGraphBuilder.searchNavGraph(
                 if (toRead == true) {
                     navController.navigate(
                         Route.ReadBookScreen.route +
-                                "?bookName=${bookState.book?.volumeInfo?.title}&bookUrl=${bookState.book?.id}"
+                                "?bookName=${bookState.book?.title}&bookUrl=${bookState.book?.id}"
                     )
                 }
             }
@@ -74,8 +75,11 @@ fun NavGraphBuilder.searchNavGraph(
                         },
                         bookUrl = bookState.book?.id,
                         read = toRead,
-                        bookName = bookState.book?.volumeInfo?.title,
-                        toRead = { toRead = it })
+                        bookName = bookState.book?.title,
+                        toRead = { toRead = it },
+                        favoriteState = bookState.favorite,
+                        deleteOrInsertBook = { viewModel.onEvent(DetailBookEvent.DeleteOrInsertBook) })
+
                 }
             ) { padding ->
                 bookState.book?.let {
@@ -182,7 +186,7 @@ fun NavGraphBuilder.searchNavGraph(
                     }
                 },
                 navigateToFullSearchScreen = {
-                    navController.navigate(Route.InactiveSearchScreen.route + "?query=${it}"){
+                    navController.navigate(Route.InactiveSearchScreen.route + "?query=${it}") {
                         navController.popBackStack()
                     }
                 },

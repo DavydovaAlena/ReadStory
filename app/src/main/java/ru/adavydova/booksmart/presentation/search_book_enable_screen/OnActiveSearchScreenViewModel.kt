@@ -8,12 +8,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.cancellable
-import ru.adavydova.booksmart.domain.usecase.BooksUseCase
+import ru.adavydova.booksmart.domain.usecase.books_remote.BooksRemoteUseCase
 import javax.inject.Inject
 
 @HiltViewModel
 class OnActiveSearchScreenViewModel @Inject constructor(
-    private val bookUseCase: BooksUseCase,
+    private val bookUseCase: BooksRemoteUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 

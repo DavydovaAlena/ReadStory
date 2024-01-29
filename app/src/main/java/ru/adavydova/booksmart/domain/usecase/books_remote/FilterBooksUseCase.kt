@@ -1,15 +1,15 @@
-package ru.adavydova.booksmart.domain.usecase
+package ru.adavydova.booksmart.domain.usecase.books_remote
 
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import ru.adavydova.booksmart.domain.model.Book
-import ru.adavydova.booksmart.domain.repository.BooksRepository
+import ru.adavydova.booksmart.domain.repository.BooksRemoteRepository
 import ru.adavydova.booksmart.presentation.inactive_search_book_screen.filters.FilterBooks
 import ru.adavydova.booksmart.presentation.inactive_search_book_screen.filters.LanguageRestrictFilterBooks
 import ru.adavydova.booksmart.presentation.inactive_search_book_screen.filters.OrderBooks
 
 class FilterBooksUseCase(
-    val repository: BooksRepository
+    val repository: BooksRemoteRepository
 ) {
     operator fun invoke(
         query: String,

@@ -59,8 +59,6 @@ fun WebViewBook(
 
             WebView(ctx).apply {
 
-
-                settings.cacheMode = WebSettings.LOAD_NO_CACHE
                 webViewClient = object : WebViewClient() {
 
                     override fun shouldOverrideUrlLoading(

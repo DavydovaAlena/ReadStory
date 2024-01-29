@@ -1,6 +1,5 @@
 package ru.adavydova.booksmart.presentation.component.search_item.middle_variant
 
-import android.content.res.Resources.Theme
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -17,18 +16,13 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CardElevation
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.colorspace.ColorSpaces
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -77,19 +71,19 @@ fun CardBookItem(
                 Text(
                     maxLines = 2,
                     style = MaterialTheme.typography.titleMedium,
-                    text = book.volumeInfo.title,
+                    text = book.title,
                     color = MaterialTheme.colorScheme.onSurface
                 )
 
                 Text(
                     maxLines = 2,
                     style = MaterialTheme.typography.labelLarge,
-                    text = book.volumeInfo.authors.joinToString (),
+                    text = book.authors,
                     color = MaterialTheme.colorScheme.onSurface
                 )
 
 
-                book.volumeInfo.description?.let {
+                book.description?.let {
 
                     Text(
                         maxLines = 3,
@@ -104,13 +98,15 @@ fun CardBookItem(
             }
 
             Spacer(modifier = Modifier.width(8.dp))
-            Box(modifier = Modifier
-                .fillMaxHeight()
-                .width(5.dp)
-                .background(MaterialTheme.colorScheme.scrim)
-                .border(1.dp, MaterialTheme.colorScheme.onSurface))
+            Box(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .width(5.dp)
+                    .background(MaterialTheme.colorScheme.scrim)
+                    .border(1.dp, MaterialTheme.colorScheme.onSurface)
+            )
 
-            book.volumeInfo.imageLinks?.let {
+            book.imageLinks?.let {
 
                 AsyncImage(
                     contentScale = ContentScale.FillBounds,

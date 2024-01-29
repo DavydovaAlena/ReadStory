@@ -3,6 +3,7 @@ package ru.adavydova.booksmart.presentation.detail_book.component
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material.icons.rounded.FavoriteBorder
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -17,6 +18,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import ru.adavydova.booksmart.R
+import ru.adavydova.booksmart.domain.model.Book
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -24,6 +26,8 @@ fun DetailTopBar(
     navigateBack: ()-> Unit,
     bookUrl: String?,
     bookName:String?,
+    favoriteState: Boolean,
+    deleteOrInsertBook: ()-> Unit,
     read:Boolean?,
     toRead: (Boolean)-> Unit
 ) {
@@ -38,16 +42,22 @@ fun DetailTopBar(
                     imageVector = Icons.Default.ArrowBack,
                     contentDescription = null)
             }
-            
-
         },
 
         actions = {
 
-            IconButton(onClick = {
-            }) {
-                Icon(imageVector = Icons.Rounded.FavoriteBorder,
-                    contentDescription = null)
+            IconButton(onClick = deleteOrInsertBook) {
+                when(favoriteState){
+                    true -> {
+                        Icon(imageVector = Icons.Rounded.Favorite,
+                            contentDescription = null)
+                    }
+                    false -> {
+                        Icon(imageVector = Icons.Rounded.FavoriteBorder,
+                            contentDescription = null)
+                    }
+                }
+
             }
 
             IconButton(onClick = { /*TODO*/ }) {

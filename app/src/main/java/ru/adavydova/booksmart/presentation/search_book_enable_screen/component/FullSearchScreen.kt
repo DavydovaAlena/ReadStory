@@ -10,13 +10,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import ru.adavydova.booksmart.presentation.component.newsList.ListOfSearchItems
-import ru.adavydova.booksmart.presentation.component.newsList.NotFoundScreen
 import ru.adavydova.booksmart.presentation.component.search_bar.OnActiveSearchBar
 import ru.adavydova.booksmart.presentation.component.search_item.short_variant.SearchItem
 import ru.adavydova.booksmart.presentation.main_screen.PermissionTextProvider
@@ -33,7 +31,7 @@ fun SearchFullWindowScreen(
     checkingThePermission: (PermissionTextProvider, Boolean) -> Unit,
     useGoogleAssistant: (String) -> Unit
 ) {
-    val context = LocalContext.current
+
     val searchState by viewModel.searchBooksState.collectAsState()
     val books = searchState.books?.collectAsLazyPagingItems()
 
@@ -52,7 +50,7 @@ fun SearchFullWindowScreen(
                 backClick = backClick,
                 goOnRequest = goOnRequest,
                 useGoogleAssistant = useGoogleAssistant,
-                clearQuery =  { viewModel.onEvent(SearchBookEvent.ClearQuery) }
+                clearQuery = { viewModel.onEvent(SearchBookEvent.ClearQuery) }
 
             )
         },
