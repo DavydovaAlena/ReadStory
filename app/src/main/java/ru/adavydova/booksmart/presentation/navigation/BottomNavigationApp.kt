@@ -22,7 +22,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import ru.adavydova.booksmart.R
-import ru.adavydova.booksmart.presentation.main_screen.PermissionTextProvider
+import ru.adavydova.booksmart.presentation.screens.main_screen.PermissionTextProvider
 
 @Composable
 fun BottomNavigationApp(
@@ -92,7 +92,7 @@ fun BottomNavigationApp(
         Box(modifier = Modifier.padding(it)) {
             NavHost(
                 navController = navController,
-                checkingThePermission = checkingThePermission
+                checkingThePermission = checkingThePermission,
             )
         }
     }
@@ -103,7 +103,7 @@ fun BottomNavigationApp(
 private fun navigateToBottomBar(navController: NavController, route: String) {
     navController.navigate(route) {
         Log.d("route", route)
-        Log.d("graph", navController.currentDestination?.route?: "d")
+        Log.d("graph", navController.currentDestination?.route ?: "d")
         popUpTo(navController.graph.findStartDestination().id) {
             saveState = true
         }

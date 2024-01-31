@@ -3,7 +3,7 @@ package ru.adavydova.booksmart.domain.usecase.books_remote
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import ru.adavydova.booksmart.data.remote.util.Resource
+import ru.adavydova.booksmart.util.Resource
 import ru.adavydova.booksmart.domain.model.Book
 import ru.adavydova.booksmart.domain.repository.BooksRemoteRepository
 

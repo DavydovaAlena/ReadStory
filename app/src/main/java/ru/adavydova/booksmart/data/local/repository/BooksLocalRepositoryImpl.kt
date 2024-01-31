@@ -1,7 +1,7 @@
 package ru.adavydova.booksmart.data.local.repository
 
 import kotlinx.coroutines.flow.Flow
-import ru.adavydova.booksmart.data.local.BookDao
+import ru.adavydova.booksmart.data.local.book.BookDao
 import ru.adavydova.booksmart.domain.model.Book
 import ru.adavydova.booksmart.domain.repository.BooksLocalRepository
 

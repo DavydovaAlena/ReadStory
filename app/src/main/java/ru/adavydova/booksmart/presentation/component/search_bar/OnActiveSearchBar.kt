@@ -41,8 +41,8 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 import ru.adavydova.booksmart.R
-import ru.adavydova.booksmart.presentation.main_screen.PermissionTextProvider
-import ru.adavydova.booksmart.presentation.search_book_enable_screen.common.colorSearchBar
+import ru.adavydova.booksmart.presentation.screens.main_screen.PermissionTextProvider
+import ru.adavydova.booksmart.presentation.screens.search_book_enable_screen.common.colorSearchBar
 import ru.adavydova.booksmart.ui.theme.md_theme_dark_surfaceTint
 import java.util.Locale
 

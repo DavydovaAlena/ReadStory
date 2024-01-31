@@ -6,7 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import ru.adavydova.booksmart.presentation.navigation.nav_graph.homeNavGraph
 import ru.adavydova.booksmart.presentation.navigation.nav_graph.musicNavGraph
-import ru.adavydova.booksmart.presentation.main_screen.PermissionTextProvider
+import ru.adavydova.booksmart.presentation.screens.main_screen.PermissionTextProvider
 import ru.adavydova.booksmart.presentation.navigation.nav_graph.searchNavGraph
 
 
@@ -24,7 +24,9 @@ fun NavHost(
     ) {
         searchNavGraph(navController = navController, checkingThePermission = checkingThePermission)
         homeNavGraph(navController = navController)
-        musicNavGraph(navController = navController)
+        musicNavGraph(
+            navController = navController,
+            checkingThePermission = checkingThePermission)
     }
 
 }

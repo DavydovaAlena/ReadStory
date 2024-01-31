@@ -1,3 +1,4 @@
+import java.util.Properties
 
 
 plugins {
@@ -25,7 +26,9 @@ android {
             useSupportLibrary = true
         }
 
+
     }
+
 
     buildTypes {
         release {
@@ -48,7 +51,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.4"
+        kotlinCompilerExtensionVersion = "1.5.8"
     }
     packaging {
         resources {
@@ -67,7 +70,7 @@ dependencies {
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.material3:material3")
+//    implementation("androidx.compose.material3:material3")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -75,6 +78,7 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+    implementation("androidx.compose.material3:material3:1.2.0-rc01")
 
 
     implementation("com.squareup.okhttp3:okhttp")
@@ -114,6 +118,18 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
     implementation("androidx.compose.foundation:foundation:1.6.0-rc01")
 
+    implementation ("com.google.android.recaptcha:recaptcha:18.4.0")
+    implementation ("com.google.android.gms:play-services-safetynet:18.0.1")
 
+    //Media3
+    implementation("androidx.media3:media3-datasource-okhttp:1.2.1")
+    implementation("androidx.media3:media3-exoplayer:1.2.1")
+    implementation("androidx.media3:media3-ui:1.2.1")
+    implementation("androidx.media3:media3-session:1.2.1")
+    implementation("androidx.media3:media3-exoplayer-ima:1.2.1")
+    implementation("androidx.media3:media3-ui:1.2.1")
+    implementation("androidx.media3:media3-ui-leanback:1.2.1")
+    implementation("androidx.media3:media3-exoplayer-workmanager:1.2.1")
+    //
 
 }

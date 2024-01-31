@@ -22,9 +22,9 @@ import androidx.paging.compose.LazyPagingItems
 import ru.adavydova.booksmart.domain.model.Book
 import ru.adavydova.booksmart.presentation.component.search_item.middle_variant.ShimmerCardBookItem
 import ru.adavydova.booksmart.presentation.component.search_item.short_variant.ShimmerSearchItem
-import ru.adavydova.booksmart.presentation.inactive_search_book_screen.component.MAX_TOOLBAR_HEIGHT
-import ru.adavydova.booksmart.presentation.inactive_search_book_screen.component.MIN_TOOLBAR_HEIGHT
-import ru.adavydova.booksmart.presentation.inactive_search_book_screen.component.MiExitUntilCollapsedState
+import ru.adavydova.booksmart.presentation.screens.inactive_search_book_screen.component.MAX_TOOLBAR_HEIGHT
+import ru.adavydova.booksmart.presentation.screens.inactive_search_book_screen.component.MIN_TOOLBAR_HEIGHT
+import ru.adavydova.booksmart.presentation.screens.inactive_search_book_screen.component.MiExitUntilCollapsedState
 
 @Composable
 fun ListOfSearchItems(

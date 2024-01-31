@@ -12,7 +12,7 @@ import retrofit2.HttpException
 import ru.adavydova.booksmart.data.mapper.toBook
 import ru.adavydova.booksmart.data.remote.BooksApi
 import ru.adavydova.booksmart.data.remote.SearchNewsPagingSource
-import ru.adavydova.booksmart.data.remote.util.Resource
+import ru.adavydova.booksmart.util.Resource
 import ru.adavydova.booksmart.domain.model.Book
 import ru.adavydova.booksmart.domain.repository.BooksRemoteRepository
 

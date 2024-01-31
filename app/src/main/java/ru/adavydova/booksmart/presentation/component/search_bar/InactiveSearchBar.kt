@@ -26,10 +26,10 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import ru.adavydova.booksmart.R
-import ru.adavydova.booksmart.presentation.inactive_search_book_screen.InactiveSearchBookScreenViewModel
-import ru.adavydova.booksmart.presentation.inactive_search_book_screen.ShowState
-import ru.adavydova.booksmart.presentation.main_screen.PermissionTextProvider
-import ru.adavydova.booksmart.presentation.search_book_enable_screen.common.colorSearchBar
+import ru.adavydova.booksmart.presentation.screens.inactive_search_book_screen.InactiveSearchBookScreenViewModel
+import ru.adavydova.booksmart.presentation.screens.inactive_search_book_screen.ShowState
+import ru.adavydova.booksmart.presentation.screens.main_screen.PermissionTextProvider
+import ru.adavydova.booksmart.presentation.screens.search_book_enable_screen.common.colorSearchBar
 import java.util.Locale
 
 

@@ -17,16 +17,16 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import ru.adavydova.booksmart.presentation.detail_book.DetailBookEvent
-import ru.adavydova.booksmart.presentation.detail_book.DetailBookViewModel
-import ru.adavydova.booksmart.presentation.detail_book.component.DetailBookScreen
-import ru.adavydova.booksmart.presentation.detail_book.component.DetailTopBar
-import ru.adavydova.booksmart.presentation.detail_book.component.WebViewBook
-import ru.adavydova.booksmart.presentation.inactive_search_book_screen.component.InactiveSearchBookScreen
-import ru.adavydova.booksmart.presentation.main_screen.PermissionTextProvider
+import ru.adavydova.booksmart.presentation.screens.detail_book_screen.DetailBookEvent
+import ru.adavydova.booksmart.presentation.screens.detail_book_screen.DetailBookViewModel
+import ru.adavydova.booksmart.presentation.screens.detail_book_screen.component.DetailBookScreen
+import ru.adavydova.booksmart.presentation.screens.detail_book_screen.component.DetailTopBar
+import ru.adavydova.booksmart.presentation.screens.detail_book_screen.component.WebViewBook
+import ru.adavydova.booksmart.presentation.screens.inactive_search_book_screen.component.InactiveSearchBookScreen
+import ru.adavydova.booksmart.presentation.screens.main_screen.PermissionTextProvider
 import ru.adavydova.booksmart.presentation.navigation.Route
-import ru.adavydova.booksmart.presentation.search_book_enable_screen.component.SearchFullWindowScreen
-import ru.adavydova.booksmart.presentation.start_search_screen.StartSearchScreen
+import ru.adavydova.booksmart.presentation.screens.search_book_enable_screen.component.SearchFullWindowScreen
+import ru.adavydova.booksmart.presentation.screens.start_search_screen.StartSearchScreen
 
 
 fun NavGraphBuilder.searchNavGraph(
