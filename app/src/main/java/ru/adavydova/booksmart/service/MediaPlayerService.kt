@@ -29,7 +29,7 @@ class MediaPlayerService : MediaSessionService() {
         private const val NOTIFICATION_ID = 1233242
         private const val CHANNEL_ID =
             "booksmart/service/media_player_service/session_notification_channel_id"
-        private val immutableFlag = PendingIntent.FLAG_IMMUTABLE
+        private const val immutableFlag = PendingIntent.FLAG_IMMUTABLE
     }
 
     override fun onCreate() {

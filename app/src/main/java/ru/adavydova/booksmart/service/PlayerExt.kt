@@ -10,11 +10,9 @@ internal val Player.currentMediaItems: List<MediaItem> get() {
 }
 
 fun Player.updatePlaylist(incoming: List<MediaItem>) {
-    Log.d("33333", "updatePlaylist: itemsToAdd: $mediaItemCount")
     val oldMediaIds = currentMediaItems.map { it.mediaId }.toSet()
     val itemsToAdd = incoming.filterNot { item -> item.mediaId in oldMediaIds }
     addMediaItems(itemsToAdd)
-    Log.d("33333", "updatePlaylist: itemsToAdd: $mediaItemCount")
 }
 
 fun Player.playMediaAt(index: Int) {

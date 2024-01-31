@@ -1,6 +1,7 @@
 package ru.adavydova.booksmart.presentation.player
 
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -25,7 +26,7 @@ class PlayerViewModel @Inject constructor(
     private val _isPlayerSetUp = MutableStateFlow(false)
     val isPlayerSetUp = _isPlayerSetUp.asStateFlow()
 
-    private val audioUris = savedStateHandle.getStateFlow("audioUris", emptyList<Uri>())
+    private val audioUris = savedStateHandle.getStateFlow("audioUris", emptyList<MediaItem>())
     private val _audioState = MutableStateFlow<AudioState>(AudioState())
     val audioState = _audioState.asStateFlow()
 
@@ -37,18 +38,31 @@ class PlayerViewModel @Inject constructor(
 
     fun getAudioData(){
         viewModelScope.launch {
-            val audioList = withContext(Dispatchers.Default){
+            val audioList = withContext(Dispatchers.IO){
                 audioUseCase.getAudioUseCase()
             }
-            _audioState.value = audioState.value.copy(audio = audioList)
+            val audioNewListId= audioList.map {
+                Log.d("uri new", it.id.toString())
+                it.id }
+            val audioOldListId= audioState.value.audioItems.map {
+                it.id }
 
-            audioList.forEach { audioData ->
-                savedStateHandle["audioUris"] = audioUris.value + audioData.uri
+
+            if (!audioNewListId.equalsIgnoreOrder(audioOldListId)){
+                Log.d("d", audioOldListId.size.toString())
+
+                _audioState.update { audio->
+                    audio.copy(
+                        audioItems = audio.audioItems + audioList
+                    )
+                }
+
             }
 
         }
 
-
     }
 
 }
+
+fun <T> List<T>.equalsIgnoreOrder(other: List<T>) = this.size == other.size && this.toSet() == other.toSet()
