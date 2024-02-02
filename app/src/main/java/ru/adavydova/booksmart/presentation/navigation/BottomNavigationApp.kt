@@ -7,6 +7,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material.icons.sharp.Home
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -37,17 +40,20 @@ fun BottomNavigationApp(
     val bottomNavigationItems = listOf<BottomNavigationItem>(
         BottomNavigationItem(
             route = Route.HomeNavGraph.route,
-            icon = Icons.Default.Home,
+            selectedIcon = Icons.Sharp.Home,
+            unselectedIcon = Icons.Outlined.Home,
             name = "Home"
         ),
         BottomNavigationItem(
             route = Route.SearchNavGraph.route,
-            icon = Icons.Default.Search,
+            selectedIcon = Icons.Filled.Search,
+            unselectedIcon = Icons.Outlined.Search,
             name = "Search book"
         ),
         BottomNavigationItem(
             route = Route.MusicNavGraph.route,
-            icon = ImageVector.vectorResource(id = R.drawable.baseline_library_music_24),
+            selectedIcon = ImageVector.vectorResource(id = R.drawable.sharp_library_music_24),
+            unselectedIcon = ImageVector.vectorResource(id = R.drawable.unsharp_library_music_24),
             name = "Music"
         ),
 
@@ -102,8 +108,7 @@ fun BottomNavigationApp(
 
 private fun navigateToBottomBar(navController: NavController, route: String) {
     navController.navigate(route) {
-        Log.d("route", route)
-        Log.d("graph", navController.currentDestination?.route ?: "d")
+
         popUpTo(navController.graph.findStartDestination().id) {
             saveState = true
         }
@@ -114,6 +119,7 @@ private fun navigateToBottomBar(navController: NavController, route: String) {
 
 data class BottomNavigationItem(
     val route: String,
-    val icon: ImageVector,
+    val selectedIcon: ImageVector,
+    val unselectedIcon: ImageVector,
     val name: String
 )

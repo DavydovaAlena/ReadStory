@@ -3,9 +3,11 @@ package ru.adavydova.booksmart.presentation.player.component
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -34,18 +36,20 @@ fun PlayerControls(
     ) {
         PreviousButton(
             modifier = Modifier
-                .size(64.dp)
+                .size(74.dp)
                 .padding(8.dp),
             iconTint = MaterialTheme.colorScheme.onSurface
         ) {
             onPrevClick()
         }
+
+        Spacer(modifier = Modifier.width(5.dp))
         PlayPauseButton(
             modifier = Modifier
-                .size(64.dp)
+                .size(74.dp)
                 .background(color = MaterialTheme.colorScheme.onSurface, shape = CircleShape)
                 .padding(8.dp),
-            isPlaying = playerState.isPlaying,
+            isPlaying =   playerState.isPlaying,
             isBuffering = playerState.isBuffering,
             iconTint = MaterialTheme.colorScheme.surface
         ) {
@@ -53,9 +57,10 @@ fun PlayerControls(
                 playWhenReady = !playWhenReady
             }
         }
+        Spacer(modifier = Modifier.width(5.dp))
         NextButton(
             modifier = Modifier
-                .size(64.dp)
+                .size(74.dp)
                 .padding(8.dp),
             iconTint = MaterialTheme.colorScheme.onSurface
         ) {

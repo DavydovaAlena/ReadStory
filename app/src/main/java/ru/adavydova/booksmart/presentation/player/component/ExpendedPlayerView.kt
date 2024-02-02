@@ -1,15 +1,31 @@
 package ru.adavydova.booksmart.presentation.player.component
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.basicMarquee
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import ru.adavydova.booksmart.R
+import ru.adavydova.booksmart.presentation.component.timebar.SliderMusicBar
 import ru.adavydova.booksmart.service.PlayerState
 
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ExpendedPlayerView(
     modifier: Modifier = Modifier,
@@ -21,17 +37,55 @@ fun ExpendedPlayerView(
 
     Column(
         modifier = modifier
-            .background(MaterialTheme.colorScheme.surface)
+            .padding(10.dp)
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally) {
 
-        ExpendedPlayerTopBar { onCollapseTap() }
+
+        ExpendedPlayerTopBar(playerState = playerState,
+            onCollapseTap = { onCollapseTap() })
+
+        Spacer(modifier = Modifier.height(20.dp))
+
         PlayerArtwork(playerState = playerState)
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Text(
+            modifier = Modifier
+                .padding(horizontal = 20.dp)
+                .fillMaxWidth()
+                .basicMarquee(),
+            color = MaterialTheme.colorScheme.onBackground,
+            style = MaterialTheme.typography.headlineMedium,
+            text = playerState.mediaMetadata.title.toString()
+        )
+
+        Spacer(modifier = Modifier.height(5.dp))
+        Text(
+            modifier = Modifier
+                .padding(horizontal = 20.dp)
+                .fillMaxWidth(),
+            text = playerState.mediaMetadata.artist.toString())
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        SliderMusicBar(
+            modifier = Modifier
+                .padding(10.dp)
+                .height(1.dp)
+                .fillMaxWidth(),
+            playerState = playerState)
+
+        Spacer(modifier = Modifier.height(20.dp))
+
         PlayerControls(
             playerState = playerState,
             onPrevClick = onPrevClick,
             onNextClick = onNextClick
         )
+
+
 
     }
 }

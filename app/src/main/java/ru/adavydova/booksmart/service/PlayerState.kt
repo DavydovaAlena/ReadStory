@@ -1,5 +1,6 @@
 package ru.adavydova.booksmart.service
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
@@ -18,6 +19,19 @@ import androidx.media3.common.TrackSelectionParameters
 import androidx.media3.common.Tracks
 import androidx.media3.common.VideoSize
 import androidx.media3.common.text.CueGroup
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 fun Player.state(): PlayerState {
     return PlayerStateImpl(this)
@@ -25,6 +39,8 @@ fun Player.state(): PlayerState {
 
 
 interface PlayerState {
+
+
     val player: Player
 
     val timeline: Timeline
@@ -90,6 +106,9 @@ interface PlayerState {
 internal class PlayerStateImpl(
     override val player: Player
 ) : PlayerState {
+
+
+
     override var timeline: Timeline by mutableStateOf(player.currentTimeline)
         private set
 
@@ -175,7 +194,12 @@ internal class PlayerStateImpl(
         private set
 
     private val listener = object : Player.Listener {
+
+
+
+
         override fun onTimelineChanged(timeline: Timeline, reason: Int) {
+
             this@PlayerStateImpl.timeline = timeline
             this@PlayerStateImpl.mediaItemIndex = player.currentMediaItemIndex
         }
@@ -218,6 +242,7 @@ internal class PlayerStateImpl(
         ) {
             this@PlayerStateImpl.playWhenReady = playWhenReady
         }
+
 
         override fun onPlaybackSuppressionReasonChanged(playbackSuppressionReason: Int) {
             this@PlayerStateImpl.playbackSuppressionReason = playbackSuppressionReason
@@ -287,6 +312,8 @@ internal class PlayerStateImpl(
         override fun onCues(cues: CueGroup) {
             this@PlayerStateImpl.cues = cues
         }
+
+
     }
 
     init {

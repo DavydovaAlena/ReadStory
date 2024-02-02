@@ -110,7 +110,6 @@ fun NavGraphBuilder.searchNavGraph(
             val bookUrl = it.arguments?.getString("bookUrl")
 
             if (bookName != null && bookUrl != null) {
-                Log.d("tyt", "")
                 WebViewBook(
                     bookName = bookName,
                     url = bookUrl,

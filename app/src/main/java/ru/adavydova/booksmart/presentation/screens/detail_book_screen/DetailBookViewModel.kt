@@ -83,7 +83,6 @@ class DetailBookViewModel @Inject constructor(
 
                 DetailBookEvent.DeleteOrInsertBook -> {
 
-                    Log.d("DetailVM", "ok")
                     when (bookState.value.favorite) {
                         true -> {
                             viewModelScope.launch {

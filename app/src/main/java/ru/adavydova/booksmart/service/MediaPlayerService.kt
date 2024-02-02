@@ -7,9 +7,14 @@ import android.app.PendingIntent
 import android.app.TaskStackBuilder
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.media.AudioAttributes
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.media3.common.C
+import androidx.media3.common.C.CONTENT_TYPE_MOVIE
+import androidx.media3.common.C.USAGE_MEDIA
+import androidx.media3.common.util.Log
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaSession
@@ -34,7 +39,17 @@ class MediaPlayerService : MediaSessionService() {
 
     override fun onCreate() {
         super.onCreate()
-        val player = ExoPlayer.Builder(this).build()
+
+        val audioAttribute = androidx.media3.common.AudioAttributes.Builder()
+            .setContentType(C.AUDIO_CONTENT_TYPE_MUSIC)
+            .setUsage(USAGE_MEDIA)
+            .build()
+
+
+        val player = ExoPlayer.Builder(this)
+            .setHandleAudioBecomingNoisy(true)
+            .setAudioAttributes(audioAttribute, true)
+            .build()
 
         _mediaSession = MediaSession.Builder(this, player)
             .also { builder ->
@@ -67,7 +82,7 @@ class MediaPlayerService : MediaSessionService() {
             ensureNotificationChannel(notificationManagerCompat)
             val builder =
                 NotificationCompat.Builder(this@MediaPlayerService, CHANNEL_ID)
-                    .setSmallIcon(R.drawable.icon_dark)
+                    .setSmallIcon(R.drawable.icon_orange)
                     .setContentTitle(getString(R.string.notification_content_title))
                     .setStyle(
                         NotificationCompat.BigTextStyle()
@@ -114,18 +129,19 @@ class MediaPlayerService : MediaSessionService() {
     }
 
     override fun onDestroy() {
-        mediaSession.run {
+        _mediaSession?.run {
             getBackStackedActivity()?.let { setSessionActivity(it) }
             player.release()
             release()
             _mediaSession = null
         }
         clearListener()
+        Log.d("Service", "OnDestroy")
         super.onDestroy()
     }
 
     override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaSession? {
-        return mediaSession
+        return _mediaSession
     }
 
 }

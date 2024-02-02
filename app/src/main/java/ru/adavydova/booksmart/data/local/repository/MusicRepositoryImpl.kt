@@ -22,14 +22,19 @@ class MusicRepositoryImpl @Inject constructor(
         MediaStore.Audio.AudioColumns.DISPLAY_NAME,
     )
 
+    private var selectionClause: String? =
+        "${MediaStore.Audio.AudioColumns.IS_MUSIC} = ? AND ${MediaStore.Audio.Media.MIME_TYPE} NOT IN (?, ?, ?)"
+    private var selectionArg = arrayOf("1", "audio/amr", "audio/3gpp", "audio/aac")
+
+    private val sortOrder = "${MediaStore.Audio.AudioColumns.DATA} ASC"
     override suspend fun getAudioItems(): List<AudioData> {
         val audioList = mutableListOf<AudioData>()
         mCursor = context.contentResolver.query(
             MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
             projection,
-            null,
-            null,
-            null
+            selectionClause,
+            selectionArg,
+            sortOrder
         )
         mCursor?.use { cursor ->
             val idColumn =

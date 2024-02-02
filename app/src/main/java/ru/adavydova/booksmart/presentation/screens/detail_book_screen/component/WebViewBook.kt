@@ -86,17 +86,14 @@ fun WebViewBook(
 
             when (state) {
                 Lifecycle.Event.ON_PAUSE -> {
-                    Log.d("d", "pause")
                     it.onPause()
                 }
 
                 Lifecycle.Event.ON_RESUME -> {
-                    Log.d("d", "resume")
                     it.onResume()
                 }
 
                 else -> {
-                    Log.d("d", state.name)
                     Unit
                 }
             }

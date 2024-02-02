@@ -1,5 +1,7 @@
 package ru.adavydova.booksmart.presentation.player.component
 
+import android.graphics.Bitmap
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -13,7 +15,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
@@ -27,36 +28,42 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import ru.adavydova.booksmart.R
 import ru.adavydova.booksmart.data.local.audio.AudioData
+import ru.adavydova.booksmart.service.PlayerState
 
 @Composable
 fun AudioList(
     onUpdateList: (List<AudioData>) -> Unit,
     modifier: Modifier = Modifier,
+    playerState:PlayerState?,
     onAudioClick: (Int) -> Unit,
     audioList: List<AudioData>,
     isPlayerSetupUp: Boolean = false
 ) {
 
-    LaunchedEffect(key1 = audioList, block = {
+    LaunchedEffect(key1 = audioList, playerState?.mediaItemIndex, block = {
+        Log.d("fefe", "fewef")
         onUpdateList(audioList)
     })
 
 
     Column(
         modifier = Modifier
-        .fillMaxHeight(0.45f)
-        .fillMaxWidth()
+            .fillMaxHeight(0.45f)
+            .fillMaxWidth()
     ) {
 
         Text(
             modifier = Modifier.padding(16.dp),
             style = MaterialTheme.typography.titleLarge,
-            text = "Your music file")
+            text = "Your music file"
+        )
 
 
         LazyHorizontalGrid(
@@ -94,8 +101,10 @@ fun AudioItem(
     ) {
 
         Image(
-            modifier = Modifier.size(50.dp).weight(1f),
-            imageVector = ImageVector.vectorResource(id = R.drawable.ic_launcher_background),
+            modifier = Modifier
+                .size(50.dp)
+                .weight(1f),
+            bitmap = ImageBitmap.imageResource(id = R.drawable.player_image2),
             contentDescription = null
         )
 
@@ -110,13 +119,15 @@ fun AudioItem(
             Text(
                 style = MaterialTheme.typography.titleMedium,
                 maxLines = 1,
-                text = item.title)
+                text = item.title
+            )
 
             Text(
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.outline,
                 maxLines = 2,
-                text = item.artist)
+                text = item.artist
+            )
         }
 
         IconButton(

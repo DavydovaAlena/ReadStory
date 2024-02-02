@@ -1,12 +1,10 @@
 package ru.adavydova.booksmart.presentation.player
 
-import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.media3.common.MediaItem
-import androidx.media3.common.Player
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,7 +19,7 @@ import javax.inject.Inject
 class PlayerViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val audioUseCase: AudioUseCase,
-): ViewModel() {
+) : ViewModel() {
 
     private val _isPlayerSetUp = MutableStateFlow(false)
     val isPlayerSetUp = _isPlayerSetUp.asStateFlow()
@@ -30,39 +28,41 @@ class PlayerViewModel @Inject constructor(
     private val _audioState = MutableStateFlow<AudioState>(AudioState())
     val audioState = _audioState.asStateFlow()
 
-    fun setupPlayer() {
-        _isPlayerSetUp.update {
-            true
+    fun setupPlayer(statePlayer: Int?) {
+        Log.d("okkkk", statePlayer.toString())
+        if (statePlayer == 1){
+            _isPlayerSetUp.update {
+                true
+            }
         }
+
     }
 
-    fun getAudioData(){
+    fun resettingPlayer(){
+        _isPlayerSetUp.update {
+            false
+        }
+    }
+    fun getAudioData(countPlayerItem: Int) {
+
         viewModelScope.launch {
-            val audioList = withContext(Dispatchers.IO){
+            val audioList = withContext(Dispatchers.IO) {
                 audioUseCase.getAudioUseCase()
             }
-            val audioNewListId= audioList.map {
-                Log.d("uri new", it.id.toString())
-                it.id }
-            val audioOldListId= audioState.value.audioItems.map {
-                it.id }
 
+            if (!audioState.value.audioItems.equalsIgnoreOrder(audioList)){
 
-            if (!audioNewListId.equalsIgnoreOrder(audioOldListId)){
-                Log.d("d", audioOldListId.size.toString())
-
-                _audioState.update { audio->
+                _audioState.update { audio ->
                     audio.copy(
                         audioItems = audio.audioItems + audioList
                     )
                 }
-
             }
-
         }
 
     }
 
 }
 
-fun <T> List<T>.equalsIgnoreOrder(other: List<T>) = this.size == other.size && this.toSet() == other.toSet()
+fun <T> List<T>.equalsIgnoreOrder(other: List<T>) =
+    this.size == other.size && this.toSet() == other.toSet()
