@@ -44,12 +44,13 @@ fun PlayerControls(
         }
 
         Spacer(modifier = Modifier.width(5.dp))
+
         PlayPauseButton(
             modifier = Modifier
                 .size(74.dp)
                 .background(color = MaterialTheme.colorScheme.onSurface, shape = CircleShape)
                 .padding(8.dp),
-            isPlaying =   playerState.isPlaying,
+            isPlaying = playerState.isPlaying,
             isBuffering = playerState.isBuffering,
             iconTint = MaterialTheme.colorScheme.surface
         ) {

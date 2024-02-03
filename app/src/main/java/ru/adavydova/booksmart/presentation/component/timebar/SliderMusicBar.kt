@@ -35,7 +35,6 @@ fun SliderMusicBar(
 
     LaunchedEffect(key1 = playerState.isPlaying, playerState.isBuffering, playerState.isPlaying, block = {
         while (isActive && (playerState.isPlaying)){
-            Log.d("ok", "ok")
             currentPosition = (player.currentPosition.toFloat()/player.duration.toFloat())* 100f
             delay(200)
         }

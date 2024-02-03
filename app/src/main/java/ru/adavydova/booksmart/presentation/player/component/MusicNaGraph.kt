@@ -32,6 +32,7 @@ import androidx.navigation.navigation
 import kotlinx.coroutines.launch
 import ru.adavydova.booksmart.data.mapper.toMediaItem
 import ru.adavydova.booksmart.presentation.navigation.Route
+import ru.adavydova.booksmart.presentation.player.PlayerScreenStateType
 import ru.adavydova.booksmart.presentation.player.PlayerViewModel
 import ru.adavydova.booksmart.presentation.player.rememberManagedMediaController
 import ru.adavydova.booksmart.presentation.screens.main_screen.PermissionTextProvider
@@ -53,8 +54,9 @@ fun NavGraphBuilder.musicNavGraph(
 
         composable(route = Route.PersonalMusicScreen.route) {
             val viewModel = hiltViewModel<PlayerViewModel>()
-            val isPlayerSetUp by viewModel.isPlayerSetUp.collectAsStateWithLifecycle()
-            val audioState by viewModel.audioState.collectAsStateWithLifecycle()
+
+            val playerScreenState by viewModel.playerState.collectAsStateWithLifecycle()
+
             val mediaController by rememberManagedMediaController()
             val coroutineScope = rememberCoroutineScope()
 
@@ -66,24 +68,29 @@ fun NavGraphBuilder.musicNavGraph(
             val selectAudioLauncher = rememberLauncherForActivityResult(
                 contract = ActivityResultContracts.RequestPermission(), onResult = { isGranted ->
                     checkingThePermission(PermissionTextProvider.ReadMediaTextProvider, isGranted)
-                    if (isGranted) {
-                        viewModel.getAudioData()
-                    }
+                    viewModel.requestingPermissionToAccessMediaData(isGranted)
                 })
+
 
             LaunchedEffect(key1 = Unit, block = {
                 selectAudioLauncher.launch(PermissionTextProvider.ReadMediaTextProvider.permissionName)
             })
 
-            LaunchedEffect(key1 = isPlayerSetUp, block = {
-                if (isPlayerSetUp) {
-                    mediaController?.run {
-                        if (mediaItemCount > 0) {
-                            prepare()
-                            play()
-                        }
+
+            LaunchedEffect(key1 = playerScreenState.playerState, block = {
+                mediaController?.run {
+                    Log.d("count", mediaItemCount.toString())
+                    Log.d("count", playerScreenState.playerState.toString())
+
+                    if (mediaItemCount > 0 && playerScreenState.permissionState && playerScreenState.playerState == PlayerScreenStateType.Ready) {
+                        prepare()
+                        play()
+                        Log.d("d", "lan")
+                        viewModel.setStatePlayer(
+                            countItemPlayer = mediaItemCount,
+                            currentStatePlayer = playerState?.mediaItemIndex ?: 0
+                        )
                     }
-                    viewModel.resettingPlayer()
                 }
             })
 
@@ -125,6 +132,7 @@ fun NavGraphBuilder.musicNavGraph(
                 }
             }
 
+
             Box(
                 modifier = Modifier
                     .fillMaxSize(),
@@ -132,11 +140,13 @@ fun NavGraphBuilder.musicNavGraph(
 
                 AudioList(
                     onAudioClick = { index ->
-                        viewModel.setupPlayer(statePlayer = playerState?.playbackState)
+                        viewModel.setStatePlayer(
+                            countItemPlayer = mediaController?.mediaItemCount ?: 0,
+                            currentStatePlayer = playerState?.playbackState ?: 0
+                        )
                         mediaController?.playMediaAt(index = index)
                     },
-                    playerState = playerState,
-                    audioList = audioState.audioItems,
+                    mediaController = mediaController,
                     onUpdateList = { items ->
                         mediaController?.updatePlaylist(items.map { item -> item.toMediaItem() })
                     }

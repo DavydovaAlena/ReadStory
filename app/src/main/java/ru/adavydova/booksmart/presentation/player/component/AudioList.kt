@@ -26,6 +26,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
@@ -33,23 +35,28 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.media3.session.MediaController
 import ru.adavydova.booksmart.R
 import ru.adavydova.booksmart.data.local.audio.AudioData
+import ru.adavydova.booksmart.presentation.component.button.SeeAllButton
 import ru.adavydova.booksmart.service.PlayerState
 
 @Composable
 fun AudioList(
     onUpdateList: (List<AudioData>) -> Unit,
     modifier: Modifier = Modifier,
-    playerState:PlayerState?,
+    mediaController: MediaController?,
     onAudioClick: (Int) -> Unit,
-    audioList: List<AudioData>,
-    isPlayerSetupUp: Boolean = false
+    viewModel: AudioFromExternalStorageViewModel = hiltViewModel()
 ) {
 
-    LaunchedEffect(key1 = audioList, playerState?.mediaItemIndex, block = {
+    val audioState by viewModel.audioState.collectAsState()
+
+    LaunchedEffect(key1 = audioState.audio, mediaController?.mediaItemCount, block = {
         Log.d("fefe", "fewef")
-        onUpdateList(audioList)
+        onUpdateList(audioState.audio)
     })
 
 
@@ -59,23 +66,33 @@ fun AudioList(
             .fillMaxWidth()
     ) {
 
-        Text(
-            modifier = Modifier.padding(16.dp),
-            style = MaterialTheme.typography.titleLarge,
-            text = "Your music file"
-        )
 
+        Row(modifier = Modifier
+            .padding(16.dp)
+            .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically) {
+
+            Text(
+                style = MaterialTheme.typography.titleLarge,
+                text = "Your music file"
+            )
+
+            SeeAllButton(){
+
+            }
+        }
 
         LazyHorizontalGrid(
             modifier = Modifier
                 .fillMaxWidth(),
-            contentPadding = PaddingValues(16.dp),
+            contentPadding = PaddingValues(10.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalArrangement = Arrangement.Center,
             rows = GridCells.Fixed(3),
             content = {
 
-                itemsIndexed(audioList) { key, audio ->
+                itemsIndexed(audioState.audio) { key, audio ->
                     AudioItem(
                         modifier = Modifier.clickable { onAudioClick(key) },
                         item = audio
@@ -95,7 +112,8 @@ fun AudioItem(
     Row(
         modifier = modifier
             .height(120.dp)
-            .width(350.dp),
+            .width(350.dp)
+            .padding(6.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {

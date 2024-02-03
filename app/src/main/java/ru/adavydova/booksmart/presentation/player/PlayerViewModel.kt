@@ -4,14 +4,11 @@ import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.media3.common.MediaItem
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import ru.adavydova.booksmart.domain.usecase.music.AudioUseCase
 import javax.inject.Inject
 
@@ -21,48 +18,59 @@ class PlayerViewModel @Inject constructor(
     private val audioUseCase: AudioUseCase,
 ) : ViewModel() {
 
-    private val _isPlayerSetUp = MutableStateFlow(false)
-    val isPlayerSetUp = _isPlayerSetUp.asStateFlow()
 
-    private val audioUris = savedStateHandle.getStateFlow("audioUris", emptyList<MediaItem>())
-    private val _audioState = MutableStateFlow<AudioState>(AudioState())
-    val audioState = _audioState.asStateFlow()
 
-    fun setupPlayer(statePlayer: Int?) {
-        Log.d("okkkk", statePlayer.toString())
-        if (statePlayer == 1){
-            _isPlayerSetUp.update {
-                true
-            }
+
+    private val _playerStateInitial = MutableStateFlow<PlayerScreenStateType>(PlayerScreenStateType.PlayerCountItemIsNull)
+    private val _permissionAudioState = MutableStateFlow<Boolean>(false)
+
+
+    val playerState = combine(_playerStateInitial, _permissionAudioState){ playerStateInitial, permissionState ->
+        MusicPlayerState(
+            playerState = playerStateInitial,
+            permissionState = permissionState
+        )
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), MusicPlayerState())
+
+
+    fun requestingPermissionToAccessMediaData(result: Boolean){
+        when(result){
+            true -> _permissionAudioState.value = true
+            false -> _permissionAudioState.value = false
         }
-
     }
 
-    fun resettingPlayer(){
-        _isPlayerSetUp.update {
-            false
+
+    fun setStatePlayer(countItemPlayer: Int, currentStatePlayer: Int){
+
+        Log.d("dfw", countItemPlayer.toString())
+        Log.d("dfw", currentStatePlayer.toString())
+
+        if (countItemPlayer == 0){
+            _playerStateInitial.value = PlayerScreenStateType.PlayerCountItemIsNull
+            return
+        }
+        when(currentStatePlayer){
+            3 ->  _playerStateInitial.value = PlayerScreenStateType.Play
+            else -> _playerStateInitial.value = PlayerScreenStateType.Ready
         }
     }
-    fun getAudioData(countPlayerItem: Int) {
 
-        viewModelScope.launch {
-            val audioList = withContext(Dispatchers.IO) {
-                audioUseCase.getAudioUseCase()
-            }
-
-            if (!audioState.value.audioItems.equalsIgnoreOrder(audioList)){
-
-                _audioState.update { audio ->
-                    audio.copy(
-                        audioItems = audio.audioItems + audioList
-                    )
-                }
-            }
-        }
-
-    }
 
 }
 
+data class MusicPlayerState (
+    val playerState: PlayerScreenStateType = PlayerScreenStateType.PlayerCountItemIsNull,
+    val permissionState: Boolean = false,
+    val load: Boolean = false,
+    val error: String? = null
+)
+
+sealed class PlayerScreenStateType{
+
+    object PlayerCountItemIsNull: PlayerScreenStateType()
+    object Ready: PlayerScreenStateType()
+    object Play: PlayerScreenStateType()
+}
 fun <T> List<T>.equalsIgnoreOrder(other: List<T>) =
     this.size == other.size && this.toSet() == other.toSet()
