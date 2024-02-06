@@ -41,7 +41,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 import ru.adavydova.booksmart.R
-import ru.adavydova.booksmart.presentation.screens.main_screen.PermissionTextProvider
+import ru.adavydova.booksmart.presentation.permission_logic.PermissionTextProvider
 import ru.adavydova.booksmart.presentation.screens.search_book_enable_screen.common.colorSearchBar
 import ru.adavydova.booksmart.ui.theme.md_theme_dark_surfaceTint
 import java.util.Locale
@@ -96,7 +96,7 @@ fun OnActiveSearchBar(
     )
 
     LaunchedEffect(key1 = LocalContext.current, block = {
-        delay(200)
+        delay(100)
         focusRequester.requestFocus()
     })
 
@@ -133,7 +133,7 @@ fun OnActiveSearchBar(
                 .fillMaxWidth()
                 .focusRequester(focusRequester),
             value = TextFieldValue(text = query, selection = TextRange(query.length)),
-            maxLines = 1,
+            maxLines = 2,
             onValueChange = { onValueChange(it.text) },
             trailingIcon = {
                 when (microState) {

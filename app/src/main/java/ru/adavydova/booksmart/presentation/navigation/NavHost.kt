@@ -4,10 +4,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import ru.adavydova.booksmart.presentation.navigation.nav_graph.favoriteBooksNavGraph
 import ru.adavydova.booksmart.presentation.navigation.nav_graph.homeNavGraph
+import ru.adavydova.booksmart.presentation.navigation.nav_graph.musicNavGraph
 import ru.adavydova.booksmart.presentation.navigation.nav_graph.searchNavGraph
-import ru.adavydova.booksmart.presentation.player.component.musicNavGraph
-import ru.adavydova.booksmart.presentation.screens.main_screen.PermissionTextProvider
+import ru.adavydova.booksmart.presentation.permission_logic.PermissionTextProvider
 
 
 @Composable
@@ -27,6 +28,9 @@ fun NavHost(
         musicNavGraph(
             navController = navController,
             checkingThePermission = checkingThePermission
+        )
+        favoriteBooksNavGraph(
+            navController = navController
         )
     }
 

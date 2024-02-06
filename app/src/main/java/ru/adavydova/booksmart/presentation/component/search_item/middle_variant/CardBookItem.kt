@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -50,7 +51,6 @@ fun CardBookItem(
 
         val context = LocalContext.current
 
-
         Row(
             modifier = Modifier
                 .padding(
@@ -70,7 +70,7 @@ fun CardBookItem(
 
                 Text(
                     maxLines = 2,
-                    style = MaterialTheme.typography.titleMedium,
+                    style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
                     text = book.title,
                     color = MaterialTheme.colorScheme.onSurface
                 )
@@ -82,7 +82,6 @@ fun CardBookItem(
                     color = MaterialTheme.colorScheme.onSurface
                 )
 
-
                 book.description?.let {
 
                     Text(
@@ -91,7 +90,7 @@ fun CardBookItem(
                             .padding(bottom = 16.dp),
                         style = MaterialTheme.typography.bodyMedium,
                         text = it,
-                        color = MaterialTheme.colorScheme.onSurface
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
 

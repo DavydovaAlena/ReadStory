@@ -1,6 +1,5 @@
 package ru.adavydova.booksmart.presentation.navigation.nav_graph
 
-import android.util.Log
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.LaunchedEffect
@@ -23,7 +22,7 @@ import ru.adavydova.booksmart.presentation.screens.detail_book_screen.component.
 import ru.adavydova.booksmart.presentation.screens.detail_book_screen.component.DetailTopBar
 import ru.adavydova.booksmart.presentation.screens.detail_book_screen.component.WebViewBook
 import ru.adavydova.booksmart.presentation.screens.inactive_search_book_screen.component.InactiveSearchBookScreen
-import ru.adavydova.booksmart.presentation.screens.main_screen.PermissionTextProvider
+import ru.adavydova.booksmart.presentation.permission_logic.PermissionTextProvider
 import ru.adavydova.booksmart.presentation.navigation.Route
 import ru.adavydova.booksmart.presentation.screens.search_book_enable_screen.component.SearchFullWindowScreen
 import ru.adavydova.booksmart.presentation.screens.start_search_screen.StartSearchScreen

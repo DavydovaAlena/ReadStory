@@ -1,4 +1,4 @@
-package ru.adavydova.booksmart.presentation.player
+package ru.adavydova.booksmart.presentation.screens.player_screen
 
 import android.content.ComponentName
 import android.content.Context

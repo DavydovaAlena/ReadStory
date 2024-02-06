@@ -21,7 +21,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import ru.adavydova.booksmart.R
 import ru.adavydova.booksmart.presentation.component.search_bar.InactiveSearchBar
-import ru.adavydova.booksmart.presentation.screens.main_screen.PermissionTextProvider
+import ru.adavydova.booksmart.presentation.permission_logic.PermissionTextProvider
 
 
 @Composable

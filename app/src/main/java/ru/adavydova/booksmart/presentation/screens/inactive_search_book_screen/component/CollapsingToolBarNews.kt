@@ -3,7 +3,6 @@ package ru.adavydova.booksmart.presentation.screens.inactive_search_book_screen.
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -26,7 +25,7 @@ import androidx.constraintlayout.compose.MotionScene
 import ru.adavydova.booksmart.R
 import ru.adavydova.booksmart.presentation.component.search_bar.InactiveSearchBar
 import ru.adavydova.booksmart.presentation.screens.inactive_search_book_screen.ShowState
-import ru.adavydova.booksmart.presentation.screens.main_screen.PermissionTextProvider
+import ru.adavydova.booksmart.presentation.permission_logic.PermissionTextProvider
 
 
 @OptIn(ExperimentalMotionApi::class)

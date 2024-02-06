@@ -1,6 +1,5 @@
-package ru.adavydova.booksmart.presentation.player.component
+package ru.adavydova.booksmart.presentation.screens.player_screen.component
 
-import android.graphics.Bitmap
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -31,17 +30,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.imageResource
-import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.media3.session.MediaController
 import ru.adavydova.booksmart.R
 import ru.adavydova.booksmart.data.local.audio.AudioData
 import ru.adavydova.booksmart.presentation.component.button.SeeAllButton
-import ru.adavydova.booksmart.service.PlayerState
+import ru.adavydova.booksmart.presentation.screens.player_screen.AudioFromExternalStorageViewModel
+import ru.adavydova.booksmart.presentation.screens.player_screen.MusicPlayerState
 
 @Composable
 fun AudioList(
@@ -74,7 +72,7 @@ fun AudioList(
             verticalAlignment = Alignment.CenterVertically) {
 
             Text(
-                style = MaterialTheme.typography.titleLarge,
+                style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold),
                 text = "Your music file"
             )
 

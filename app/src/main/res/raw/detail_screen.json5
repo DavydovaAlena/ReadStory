@@ -1,41 +1,309 @@
 {
   ConstraintSets: {
-
     start: {
-//      column_first: {
-//        width: 'parent',
-//      },
-//
-      book_image: {
-        width: 'parent',
-        top: ['parent', 'top', 40],
-        height: 60,
-      }
-    },
-
-
-    end: {
-      book_image: {
-        top: ['parent', 'top', 0],
-        left: ['parent', 'left', 0],
-        right: ['parent', 'right', 0],
-        centerHorizontally: 'parent',
-        height: 180,
-      }
-    }
-  },
-  Transactions: {
-    defoult: {
-      from: 'start',
-      to: 'end',
-      pathMotionArc: 'startHorizontal',
-      KeyFrames: {
-        KeyAttributes: [
-          {
-            target: 'book_image',
-            frames: [0]
-          }
+      favorite_book_block: {
+        translationZ: 1,
+        top: [
+          'column',
+          'top',
+          0
+        ],
+        width: 'spread',
+      },
+      pager: {
+        width: 'spread',
+        height: 'spread',
+        translationZ: -10,
+        top: [
+          'parent',
+          'top',
+          -100
+        ],
+        start: [
+          'parent',
+          'start',
+          0
+        ],
+        end: [
+          'parent',
+          'end',
+          0
+        ],
+        bottom: [
+          'page_indicator',
+          'bottom',
+          -60
         ]
+      },
+      shadow_box: {
+        height: 'spread',
+        width: 'parent',
+        translationZ: -5,
+        top: [
+          'pager',
+          'top',
+          0
+        ],
+        bottom: [
+          'pager',
+          'bottom',
+          0
+        ],
+        alpha: 0.8,
+      },
+      search_bar: {
+        top: [
+          'parent',
+          'top',
+          24
+        ],
+        start: [
+          'parent',
+          'start',
+          16
+        ],
+      },
+      title: {
+        top: [
+          'search_bar',
+          'bottom',
+          20
+        ],
+        start: [
+          'parent',
+          'start',
+          16
+        ],
+        width: 'spread',
+        scaleX: 1,
+        scaleY: 1,
+      },
+      page_indicator: {
+        end: [
+          'pager',
+          'end',
+          16
+        ],
+        top: [
+          'title',
+          'top',
+          0
+        ],
+        bottom: [
+          'title',
+          'bottom',
+          0
+        ],
+      },
+      column: {
+        width: 'parent',
+        top: [
+          'page_indicator',
+          'bottom',
+          16
+        ],
+        start: [
+          'parent',
+          'start',
+          0
+        ],
+        end: [
+          'parent',
+          'end',
+          0
+        ],
+      },
+      box: {
+        width: 'spread',
+        height: 'spread',
+        start: [
+          'parent',
+          'start',
+          0
+        ],
+        end: [
+          'parent',
+          'end',
+          0
+        ],
+        top: [
+          'parent',
+          'top',
+          0
+        ],
+        bottom: [
+          'parent',
+          'bottom',
+          -16
+        ],
+      },
+    },
+    end: {
+      pager: {
+        width: 'spread',
+        height: 'spread',
+        translationZ: -10,
+        top: [
+          'parent',
+          'top',
+          0
+        ],
+        start: [
+          'parent',
+          'start',
+          0
+        ],
+        end: [
+          'parent',
+          'end',
+          0
+        ],
+        bottom: [
+          'page_indicator',
+          'bottom',
+          -24
+        ],
+      },
+      shadow_box: {
+        translationZ: -5,
+        height: 'spread',
+        width: 'parent',
+        top: [
+          'pager',
+          'top',
+          0
+        ],
+        bottom: [
+          'pager',
+          'bottom',
+          0
+        ],
+        alpha: 0.2,
+      },
+      sort: {
+        top: [
+          'parent',
+          'top',
+          16
+        ],
+        end: [
+          'parent',
+          'end',
+          16
+        ],
+        start: [
+          'search_bar',
+          'end',
+          0
+        ],
+        width: 64,
+        height: 64,
+      },
+      search_bar: {
+        top: [
+          'parent',
+          'top',
+          24
+        ],
+        start: [
+          'parent',
+          'start',
+          16
+        ],
+      },
+      page_indicator: {
+        top: [
+          'title',
+          'bottom',
+          20
+        ],
+        start: [
+          'parent',
+          'start',
+          0
+        ],
+        end: [
+          'parent',
+          'end',
+          0
+        ],
+      },
+      title: {
+        top: [
+          'search_bar',
+          'bottom',
+          150
+        ],
+        start: [
+          'parent',
+          'start',
+          16
+        ],
+        translationX: 120,
+        scaleX: 1.5,
+        scaleY: 1.5
+      },
+      column: {
+        width: 'parent',
+        top: [
+          'page_indicator',
+          'bottom',
+          24
+        ],
+        start: [
+          'parent',
+          'start',
+          0
+        ],
+        end: [
+          'parent',
+          'end',
+          0
+        ],
+      },
+      favorite_book_block: {
+        translationZ: 1,
+        top: [
+          'column',
+          'top',
+          0
+        ],
+        width: 'spread',
+      },
+      box: {
+        width: 'spread',
+        height: 'spread',
+        start: [
+          'parent',
+          'start',
+          0
+        ],
+        end: [
+          'parent',
+          'end',
+          0
+        ],
+        top: [
+          'parent',
+          'top',
+          0
+        ],
+        bottom: [
+          'parent',
+          'bottom',
+          -16
+        ],
+      },
+    },
+    Transactions: {
+      default: {
+        from: 'start',
+        to: 'end',
+        pathMotionArc: 'startHorizontal',
+        KeyFrames: {
+          KeyAttributes: [
+          ]
+        }
       }
     }
   }

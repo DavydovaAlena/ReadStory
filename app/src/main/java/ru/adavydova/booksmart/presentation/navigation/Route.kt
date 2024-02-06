@@ -12,6 +12,10 @@ sealed class Route(val route: String) {
     object ReadBookScreen: Route(route = "read_book_screen_route")
 
 
+
+    object FavoriteNavGraph: Route(route = "favorite_nav_graph")
+    object FavoriteBooksScreen: Route(route = "favorite_book_screen_route")
+
     object HomeNavGraph: Route(route = "home_nav_graph")
     object PersonalBooksScreen: Route(route = "personal_books_screen_route")
 

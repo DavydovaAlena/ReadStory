@@ -1,4 +1,4 @@
-package ru.adavydova.booksmart.presentation.player.component
+package ru.adavydova.booksmart.presentation.screens.player_screen.component
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -21,9 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.imageResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import ru.adavydova.booksmart.R
 import ru.adavydova.booksmart.presentation.component.button.PlayPauseButton

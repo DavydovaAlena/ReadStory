@@ -1,5 +1,7 @@
-package ru.adavydova.booksmart.presentation.screens.main_screen
+package ru.adavydova.booksmart.presentation.permission_logic
 
+import android.util.Log
+import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor() : ViewModel() {
 
-    val permissionRequiredList = mutableListOf<PermissionTextProvider>()
+    val permissionRequiredList = mutableStateListOf<PermissionTextProvider>()
 
     fun onPermissionEvent(event: PermissionEvent) {
         when (event) {
@@ -31,7 +33,8 @@ class MainViewModel @Inject constructor() : ViewModel() {
 
             is PermissionEvent.PermissionRequest -> {
                 if (!event.isGranted) {
-                    permissionRequiredList[0] = event.permission
+                    permissionRequiredList.add(0, event.permission)
+                    Log.d("per", event.permission.permissionName)
                 }
             }
         }

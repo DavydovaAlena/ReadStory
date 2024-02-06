@@ -1,4 +1,4 @@
-package ru.adavydova.booksmart.presentation.screens.main_screen
+package ru.adavydova.booksmart.presentation.permission_logic
 
 sealed class PermissionEvent {
     data class PermissionRequest(val permission: PermissionTextProvider, val isGranted: Boolean): PermissionEvent()

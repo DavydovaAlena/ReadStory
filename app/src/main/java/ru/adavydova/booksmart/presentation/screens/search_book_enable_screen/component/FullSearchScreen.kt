@@ -17,7 +17,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import ru.adavydova.booksmart.presentation.component.newsList.ListOfSearchItems
 import ru.adavydova.booksmart.presentation.component.search_bar.OnActiveSearchBar
 import ru.adavydova.booksmart.presentation.component.search_item.short_variant.SearchItem
-import ru.adavydova.booksmart.presentation.screens.main_screen.PermissionTextProvider
+import ru.adavydova.booksmart.presentation.permission_logic.PermissionTextProvider
 import ru.adavydova.booksmart.presentation.screens.search_book_enable_screen.OnActiveSearchScreenViewModel
 import ru.adavydova.booksmart.presentation.screens.search_book_enable_screen.SearchBookEvent
 

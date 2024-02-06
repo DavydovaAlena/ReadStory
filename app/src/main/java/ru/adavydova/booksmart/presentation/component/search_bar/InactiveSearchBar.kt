@@ -28,7 +28,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import ru.adavydova.booksmart.R
 import ru.adavydova.booksmart.presentation.screens.inactive_search_book_screen.InactiveSearchBookScreenViewModel
 import ru.adavydova.booksmart.presentation.screens.inactive_search_book_screen.ShowState
-import ru.adavydova.booksmart.presentation.screens.main_screen.PermissionTextProvider
+import ru.adavydova.booksmart.presentation.permission_logic.PermissionTextProvider
 import ru.adavydova.booksmart.presentation.screens.search_book_enable_screen.common.colorSearchBar
 import java.util.Locale
 
@@ -87,9 +87,10 @@ fun InactiveSearchBar(
         modifier = modifier
             .fillMaxWidth(),
         value = query,
-        maxLines = 1,
+        singleLine = true,
         readOnly = true,
         onValueChange = {},
+
         placeholder = { if (query == "") Text(text = "Search book") },
         leadingIcon = {
             Icon(

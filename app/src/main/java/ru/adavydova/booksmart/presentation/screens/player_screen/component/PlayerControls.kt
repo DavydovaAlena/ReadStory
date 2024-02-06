@@ -1,4 +1,4 @@
-package ru.adavydova.booksmart.presentation.player.component
+package ru.adavydova.booksmart.presentation.screens.player_screen.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

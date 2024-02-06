@@ -1,4 +1,4 @@
-package ru.adavydova.booksmart.presentation.player.component
+package ru.adavydova.booksmart.presentation.navigation.nav_graph
 
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -32,10 +32,13 @@ import androidx.navigation.navigation
 import kotlinx.coroutines.launch
 import ru.adavydova.booksmart.data.mapper.toMediaItem
 import ru.adavydova.booksmart.presentation.navigation.Route
-import ru.adavydova.booksmart.presentation.player.PlayerScreenStateType
-import ru.adavydova.booksmart.presentation.player.PlayerViewModel
-import ru.adavydova.booksmart.presentation.player.rememberManagedMediaController
-import ru.adavydova.booksmart.presentation.screens.main_screen.PermissionTextProvider
+import ru.adavydova.booksmart.presentation.screens.player_screen.PlayerScreenStateType
+import ru.adavydova.booksmart.presentation.screens.player_screen.PlayerViewModel
+import ru.adavydova.booksmart.presentation.screens.player_screen.component.AudioList
+import ru.adavydova.booksmart.presentation.screens.player_screen.component.CompatPlayerView
+import ru.adavydova.booksmart.presentation.screens.player_screen.component.ExpendedPlayerView
+import ru.adavydova.booksmart.presentation.screens.player_screen.rememberManagedMediaController
+import ru.adavydova.booksmart.presentation.permission_logic.PermissionTextProvider
 import ru.adavydova.booksmart.service.PlayerState
 import ru.adavydova.booksmart.service.playMediaAt
 import ru.adavydova.booksmart.service.state
@@ -133,42 +136,45 @@ fun NavGraphBuilder.musicNavGraph(
             }
 
 
-            Box(
-                modifier = Modifier
-                    .fillMaxSize(),
-            ) {
+            if (playerScreenState.permissionState){
 
-                AudioList(
-                    onAudioClick = { index ->
-                        viewModel.setStatePlayer(
-                            countItemPlayer = mediaController?.mediaItemCount ?: 0,
-                            currentStatePlayer = playerState?.playbackState ?: 0
-                        )
-                        mediaController?.playMediaAt(index = index)
-                    },
-                    mediaController = mediaController,
-                    onUpdateList = { items ->
-                        mediaController?.updatePlaylist(items.map { item -> item.toMediaItem() })
-                    }
-                )
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                ) {
 
-                Spacer(modifier = Modifier.height(100.dp))
-
-                if (playerState != null && playerState?.playbackState != 1) {
-                    CompatPlayerView(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable {
-                                coroutineScope.launch {
-                                    sheetState.expand()
-                                    openBottomSheet = true
-                                }
-                            }
-                            .align(Alignment.BottomCenter),
-                        playerState = playerState!!,
+                    AudioList(
+                        onAudioClick = { index ->
+                            viewModel.setStatePlayer(
+                                countItemPlayer = mediaController?.mediaItemCount ?: 0,
+                                currentStatePlayer = playerState?.playbackState ?: 0
+                            )
+                            mediaController?.playMediaAt(index = index)
+                        },
+                        mediaController = mediaController,
+                        onUpdateList = { items ->
+                            mediaController?.updatePlaylist(items.map { item -> item.toMediaItem() })
+                        }
                     )
-                }
 
+                    Spacer(modifier = Modifier.height(100.dp))
+
+                    if (playerState != null && playerState?.playbackState != 1) {
+                        CompatPlayerView(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    coroutineScope.launch {
+                                        sheetState.expand()
+                                        openBottomSheet = true
+                                    }
+                                }
+                                .align(Alignment.BottomCenter),
+                            playerState = playerState!!,
+                        )
+                    }
+
+                }
             }
         }
 

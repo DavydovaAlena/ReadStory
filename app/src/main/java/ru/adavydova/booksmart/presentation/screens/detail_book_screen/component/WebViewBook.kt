@@ -3,6 +3,7 @@ package ru.adavydova.booksmart.presentation.screens.detail_book_screen.component
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.util.Log
+import android.view.ViewGroup
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -17,6 +18,8 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
+import androidx.webkit.WebSettingsCompat
+import androidx.webkit.WebViewFeature
 
 
 @Composable
@@ -57,8 +60,16 @@ fun WebViewBook(
 
             WebView(ctx).apply {
 
-                webViewClient = object : WebViewClient() {
 
+                layoutParams = ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT
+                )
+                if ( WebViewFeature.isFeatureSupported(WebViewFeature.ALGORITHMIC_DARKENING)){
+                    WebSettingsCompat.setAlgorithmicDarkeningAllowed(this.settings, true)
+                }
+
+                webViewClient = object : WebViewClient() {
                     override fun shouldOverrideUrlLoading(
                         view: WebView?,
                         request: WebResourceRequest?

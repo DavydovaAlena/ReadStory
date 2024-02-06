@@ -1,4 +1,4 @@
-package ru.adavydova.booksmart.presentation.player.component
+package ru.adavydova.booksmart.presentation.screens.player_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -24,7 +24,10 @@ class AudioFromExternalStorageViewModel
     val audioState = _audioState.asStateFlow()
 
     init {
+        downloadAudioData()
+    }
 
+    fun downloadAudioData(){
         _audioState.value = audioState.value.copy(load = true)
         viewModelScope.launch {
             when (val result = withContext(Dispatchers.IO) { audioUseCase.getAudioUseCase() }) {
@@ -47,9 +50,7 @@ class AudioFromExternalStorageViewModel
 
         }
         _audioState.value = audioState.value.copy(load = false)
-
     }
-
 
 }
 
