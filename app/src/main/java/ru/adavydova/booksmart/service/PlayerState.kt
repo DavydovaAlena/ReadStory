@@ -107,8 +107,6 @@ internal class PlayerStateImpl(
     override val player: Player
 ) : PlayerState {
 
-
-
     override var timeline: Timeline by mutableStateOf(player.currentTimeline)
         private set
 

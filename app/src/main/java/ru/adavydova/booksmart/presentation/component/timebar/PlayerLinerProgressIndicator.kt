@@ -51,12 +51,13 @@ fun PlayerLinerProgressIndicator(
 
     Box( modifier = modifier) {
 
+
         LinearProgressIndicator(
-            progress = {
-                currentPosition
-            },
+            progress = currentPosition,
             color = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.height(2.dp).fillMaxWidth(),
+            modifier = Modifier
+                .height(2.dp)
+                .fillMaxWidth(),
         )
     }
 

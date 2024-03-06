@@ -4,15 +4,15 @@ import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import ru.adavydova.booksmart.data.mapper.toBooks
-import ru.adavydova.booksmart.domain.model.Book
+import ru.adavydova.booksmart.domain.model.google_book.GoogleBook
 
 class SearchNewsPagingSource(
     private val booksApi: BooksApi,
     private val query: String,
     private val maxResults: Int,
     private val filters: Map<String,String>
-) : PagingSource<Int, Book>() {
-    override fun getRefreshKey(state: PagingState<Int, Book>): Int? {
+) : PagingSource<Int, GoogleBook>() {
+    override fun getRefreshKey(state: PagingState<Int, GoogleBook>): Int? {
 
         return state.anchorPosition?.let {
             val anchorPosition = state.closestPageToPosition(it)
@@ -21,7 +21,7 @@ class SearchNewsPagingSource(
 
     }
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Book> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, GoogleBook> {
         val page = params.key ?: 0
 
         return try {
@@ -33,20 +33,21 @@ class SearchNewsPagingSource(
             ).toBooks()
 
 
-            if (books.books.isEmpty()){
+            if (books.googleBooks.isEmpty()){
                 return LoadResult.Page(emptyList(), prevKey = null, nextKey = null)
             }
 
-            if (books.books.size < maxResults){
+            if (books.googleBooks.size < maxResults){
                 return LoadResult.Page(
-                    data = books.books,
+                    data = books.googleBooks,
                     prevKey = null,
                     nextKey = null
                 )
             }
 
+            Log.d("ok","okkkkkkk")
             LoadResult.Page(
-                data = books.books,
+                data = books.googleBooks,
                 prevKey = if (page > 0) page - 1 else null,
                 nextKey = page + 1
             )

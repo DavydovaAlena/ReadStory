@@ -15,26 +15,27 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.fragment.app.FragmentActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import ru.adavydova.booksmart.presentation.navigation.BottomNavigationApp
 import ru.adavydova.booksmart.presentation.navigation.NavHost
 import ru.adavydova.booksmart.presentation.permission_logic.MainViewModel
 import ru.adavydova.booksmart.presentation.permission_logic.PermissionEvent
+import ru.adavydova.booksmart.presentation.screens.reader_screen.component.setReaderFragmentFactory
 import ru.adavydova.booksmart.presentation.screens.search_book_enable_screen.component.PermissionDeclinedDialog
 import ru.adavydova.booksmart.presentation.screens.search_book_enable_screen.component.PermissionDialog
 import ru.adavydova.booksmart.ui.theme.BookSmartTheme
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class MainActivity : FragmentActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         setContent {
-            BookSmartTheme {
+            BookSmartTheme(dynamicColor = false) {
 
                 Surface(
                     shadowElevation = 5.dp,
@@ -42,6 +43,7 @@ class MainActivity : ComponentActivity() {
                         .fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+
 
                     val viewModel = hiltViewModel<MainViewModel>()
                     val context = LocalContext.current
@@ -57,7 +59,6 @@ class MainActivity : ComponentActivity() {
                         )
                     })
 
-                    Log.d("list",permissionRequiredList.joinToString() )
 
                     permissionRequiredList.forEach { permission ->
 

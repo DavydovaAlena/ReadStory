@@ -61,7 +61,7 @@ fun NavGraphBuilder.searchNavGraph(
                 if (toRead == true) {
                     navController.navigate(
                         Route.ReadBookScreen.route +
-                                "?bookName=${bookState.book?.title}&bookUrl=${bookState.book?.id}"
+                                "?bookName=${bookState.googleBook?.title}&bookUrl=${bookState.googleBook?.id}"
                     )
                 }
             }
@@ -72,19 +72,20 @@ fun NavGraphBuilder.searchNavGraph(
                         navigateBack = {
                             navController.popBackStack()
                         },
-                        bookUrl = bookState.book?.id,
+                        bookUrl = bookState.googleBook?.id,
                         read = toRead,
-                        bookName = bookState.book?.title,
+                        bookName = bookState.googleBook?.title,
                         toRead = { toRead = it },
                         favoriteState = bookState.favorite,
                         deleteOrInsertBook = { viewModel.onEvent(DetailBookEvent.DeleteOrInsertBook) })
 
                 }
             ) { padding ->
-                bookState.book?.let {
+                bookState.googleBook?.let {
                     DetailBookScreen(
-                        modifier = Modifier.padding(padding),
-                        book = it
+                        modifier = Modifier.padding(
+                            padding),
+                        googleBook = it
                     )
                 }
 

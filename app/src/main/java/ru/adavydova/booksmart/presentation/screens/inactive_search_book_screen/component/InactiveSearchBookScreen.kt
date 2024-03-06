@@ -1,5 +1,6 @@
 package ru.adavydova.booksmart.presentation.screens.inactive_search_book_screen.component
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -15,15 +16,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
-import ru.adavydova.booksmart.domain.model.Book
+import ru.adavydova.booksmart.domain.model.google_book.GoogleBook
 import ru.adavydova.booksmart.presentation.component.newsList.ListBooksWithScrollState
 import ru.adavydova.booksmart.presentation.component.search_item.middle_variant.CardBookItem
+import ru.adavydova.booksmart.presentation.permission_logic.PermissionTextProvider
 import ru.adavydova.booksmart.presentation.screens.inactive_search_book_screen.InactiveSearchBookScreenViewModel
 import ru.adavydova.booksmart.presentation.screens.inactive_search_book_screen.InactiveSearchScreenEvent
 import ru.adavydova.booksmart.presentation.screens.inactive_search_book_screen.ShowState
@@ -31,13 +35,12 @@ import ru.adavydova.booksmart.presentation.screens.inactive_search_book_screen.f
 import ru.adavydova.booksmart.presentation.screens.inactive_search_book_screen.filters.LanguageRestrictFilterBooks
 import ru.adavydova.booksmart.presentation.screens.inactive_search_book_screen.filters.OrderBooks
 import ru.adavydova.booksmart.presentation.screens.inactive_search_book_screen.getShowState
-import ru.adavydova.booksmart.presentation.permission_logic.PermissionTextProvider
 
 
 @Composable
 fun InactiveSearchBookScreen(
     modifier: Modifier = Modifier,
-    navigateToDetailBook: (Book) -> Unit,
+    navigateToDetailBook: (GoogleBook) -> Unit,
     navigateToOnActiveSearchScreen: (String) -> Unit,
     navigateToInactiveSearchScreen: (String) -> Unit,
     checkingThePermission: ((PermissionTextProvider, Boolean) -> Unit),
@@ -70,7 +73,8 @@ fun InactiveSearchBookScreen(
     })
 
     Scaffold(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize(),
         snackbarHost = {
             if (screenState.showSearchMenu == ShowState.Open) {
 
@@ -84,8 +88,13 @@ fun InactiveSearchBookScreen(
                             else -> throw IllegalArgumentException("error type")
                         }
                     },
-                    onExpended = { select , type->
-                        viewModel.onEvent(InactiveSearchScreenEvent.OpenOrCloseFilterMenu(select.getShowState(), type))
+                    onExpended = { select, type ->
+                        viewModel.onEvent(
+                            InactiveSearchScreenEvent.OpenOrCloseFilterMenu(
+                                select.getShowState(),
+                                type
+                            )
+                        )
                     },
                     closeMenu = {
                         viewModel.onEvent(InactiveSearchScreenEvent.CancelAndCloseSearchMenu)
@@ -120,6 +129,7 @@ fun InactiveSearchBookScreen(
 
             Column(
                 modifier = Modifier
+                    .background(brush = Brush.verticalGradient(listOf(Color.LightGray, Color.White)))
                     .fillMaxSize()
             ) {
 
@@ -152,14 +162,15 @@ fun InactiveSearchBookScreen(
                                 top = 2.dp,
                                 start = 16.dp,
                                 end = 16.dp,
-                                bottom = 16.dp
+                                bottom = 0.dp
                             ),
                         changeErrorState = { errorState.value = it },
                         navigateToDetail = navigateToDetailBook,
                         card = { book, isClicked ->
-                            CardBookItem(book, isClicked)
+                            CardBookItem(googleBook = book, onClick = isClicked)
                         },
-                        lazyState = lazyState)
+                        lazyState = lazyState
+                    )
                 }
 
 

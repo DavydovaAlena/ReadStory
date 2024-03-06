@@ -20,7 +20,7 @@ sealed class Route(val route: String) {
     object PersonalBooksScreen: Route(route = "personal_books_screen_route")
 
 
-    object MusicNavGraph : Route(route = "music_nav_graph")
-    object PersonalMusicScreen : Route(route = "personal_music_screen_route")
-    object ItemMusic : Route(route = "item_music_nav_graph")
+    object BookshelfNavGraph : Route(route = "bookshelf_nav_graph")
+    object BookshelfLibraryScreen : Route(route = "bookshelf_library_screen_route")
+    object ReaderBookScreen : Route(route = "reader_book_screen_route")
 }

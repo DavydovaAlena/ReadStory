@@ -23,11 +23,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import ru.adavydova.booksmart.domain.model.Book
+import ru.adavydova.booksmart.domain.model.google_book.GoogleBook
 
 @Composable
 fun SearchItem(
-    book: Book,
+    googleBook: GoogleBook,
     onClick: (String) -> Unit,
 
     ) {
@@ -35,7 +35,7 @@ fun SearchItem(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onClick(book.title) }
+            .clickable { onClick(googleBook.title) }
             .height(70.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp)
@@ -53,13 +53,13 @@ fun SearchItem(
         Text(
             modifier = Modifier.weight(5f),
             maxLines = 2,
-            text = book.title
+            text = googleBook.title
         )
 
         AsyncImage(
             contentScale = ContentScale.Crop,
             model = ImageRequest.Builder(context)
-                .data(book.imageLinks?.parseUrlImage())
+                .data(googleBook.imageLinks?.parseUrlImage())
                 .build(),
             contentDescription = null,
             modifier = Modifier

@@ -39,7 +39,6 @@ import ru.adavydova.booksmart.R
 import ru.adavydova.booksmart.data.local.audio.AudioData
 import ru.adavydova.booksmart.presentation.component.button.SeeAllButton
 import ru.adavydova.booksmart.presentation.screens.player_screen.AudioFromExternalStorageViewModel
-import ru.adavydova.booksmart.presentation.screens.player_screen.MusicPlayerState
 
 @Composable
 fun AudioList(

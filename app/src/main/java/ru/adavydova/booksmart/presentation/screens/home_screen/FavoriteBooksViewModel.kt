@@ -9,14 +9,16 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import ru.adavydova.booksmart.domain.model.Book
-import ru.adavydova.booksmart.domain.usecase.books_local.BooksLocalUseCase
+import ru.adavydova.booksmart.domain.model.google_book.GoogleBook
+import ru.adavydova.booksmart.domain.model.readium_book.ReadiumBook
+import ru.adavydova.booksmart.domain.usecase.google_books_local.BooksLocalUseCase
+import ru.adavydova.booksmart.domain.usecase.readium_books.ReadiumBookUseCase
 import ru.adavydova.booksmart.util.Resource
 import javax.inject.Inject
 
 @HiltViewModel
 class FavoriteBooksViewModel @Inject constructor(
-    private val booksLocalUseCase: BooksLocalUseCase
+    private val booksLocalUseCase: BooksLocalUseCase,
 ) : ViewModel() {
 
     private val _favoriteBooksState = MutableStateFlow(FavoriteBooksState())
@@ -36,7 +38,7 @@ class FavoriteBooksViewModel @Inject constructor(
                 is Resource.Success -> {
                     result.data?.onEach { books ->
                         _favoriteBooksState.update { state ->
-                            state.copy(books = books)
+                            state.copy(googleBooks = books)
                         }
                     }?.launchIn(viewModelScope)
                 }
@@ -49,5 +51,5 @@ class FavoriteBooksViewModel @Inject constructor(
 data class FavoriteBooksState(
     val load: Boolean = false,
     val error: String? = null,
-    val books: List<Book> = emptyList()
+    val googleBooks: List<GoogleBook> = emptyList()
 )

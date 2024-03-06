@@ -1,15 +1,7 @@
 {
   ConstraintSets: {
     start: {
-      favorite_book_block: {
-        translationZ: 1,
-        top: [
-          'column',
-          'top',
-          0
-        ],
-        width: 'spread',
-      },
+
       pager: {
         width: 'spread',
         height: 'spread',
@@ -17,7 +9,7 @@
         top: [
           'parent',
           'top',
-          -100
+          -60
         ],
         start: [
           'parent',
@@ -30,28 +22,27 @@
           0
         ],
         bottom: [
-          'page_indicator',
+          'search_bar',
           'bottom',
-          -60
+          -30
         ]
       },
-      shadow_box: {
-        height: 'spread',
+
+      pagerTint: {
         width: 'parent',
-        translationZ: -5,
-        top: [
-          'pager',
-          'top',
-          0
-        ],
+        height: 'spread',
+        top: ['pager', 'top', 0],
         bottom: [
-          'pager',
+          'search_bar',
           'bottom',
-          0
+          -60
         ],
-        alpha: 0.8,
+        alpha: 1,
       },
+
       search_bar: {
+        translationZ: 10,
+        height: 'wrap',
         top: [
           'parent',
           'top',
@@ -74,6 +65,7 @@
           'start',
           16
         ],
+        alpha: 0,
         width: 'spread',
         scaleX: 1,
         scaleY: 1,
@@ -95,12 +87,19 @@
           0
         ],
       },
+      divider: {
+        translationZ: 3,
+        width: 'spread',
+        height: 'spread',
+        top: ['page_indicator', 'bottom', 0],
+        alpha: 0,
+      },
       column: {
         width: 'parent',
         top: [
-          'page_indicator',
+          'search_bar',
           'bottom',
-          16
+          20
         ],
         start: [
           'parent',
@@ -115,7 +114,7 @@
       },
       box: {
         width: 'spread',
-        height: 'spread',
+        height: 'parent',
         start: [
           'parent',
           'start',
@@ -131,11 +130,7 @@
           'top',
           0
         ],
-        bottom: [
-          'parent',
-          'bottom',
-          -16
-        ],
+
       },
     },
     end: {
@@ -159,27 +154,24 @@
           0
         ],
         bottom: [
+          'title',
+          'bottom',
+          -50
+        ],
+      },
+
+      pagerTint: {
+        width: 'parent',
+        height: 'spread',
+        top: ['pager', 'top', 0],
+        bottom: [
           'page_indicator',
           'bottom',
-          -24
+          -30
         ],
+        alpha: 0,
       },
-      shadow_box: {
-        translationZ: -5,
-        height: 'spread',
-        width: 'parent',
-        top: [
-          'pager',
-          'top',
-          0
-        ],
-        bottom: [
-          'pager',
-          'bottom',
-          0
-        ],
-        alpha: 0.2,
-      },
+
       sort: {
         top: [
           'parent',
@@ -200,6 +192,7 @@
         height: 64,
       },
       search_bar: {
+        translationZ: 10,
         top: [
           'parent',
           'top',
@@ -228,16 +221,25 @@
           0
         ],
       },
+
+      divider: {
+        translationZ: 3,
+        width: 'spread',
+        height: 'spread',
+        top: ['page_indicator', 'bottom', 0],
+        alpha: 1,
+      },
+
       title: {
         top: [
           'search_bar',
           'bottom',
-          150
+          32
         ],
         start: [
           'parent',
           'start',
-          16
+          20
         ],
         translationX: 120,
         scaleX: 1.5,
@@ -248,7 +250,7 @@
         top: [
           'page_indicator',
           'bottom',
-          24
+          0
         ],
         start: [
           'parent',
@@ -261,15 +263,7 @@
           0
         ],
       },
-      favorite_book_block: {
-        translationZ: 1,
-        top: [
-          'column',
-          'top',
-          0
-        ],
-        width: 'spread',
-      },
+
       box: {
         width: 'spread',
         height: 'spread',
@@ -300,11 +294,7 @@
         from: 'start',
         to: 'end',
         pathMotionArc: 'startHorizontal',
-        KeyFrames: {
-          KeyAttributes: [
-          ]
-        }
-      }
-    }
+      },
+    },
   }
 }

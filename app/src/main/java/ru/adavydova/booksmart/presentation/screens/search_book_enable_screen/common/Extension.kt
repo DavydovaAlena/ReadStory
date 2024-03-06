@@ -19,6 +19,7 @@ val TextFieldDefaults.colorSearchBar: TextFieldColors
             disabledIndicatorColor = MaterialTheme.colorScheme.onSurface,
             focusedIndicatorColor = MaterialTheme.colorScheme.surface,
             unfocusedIndicatorColor = MaterialTheme.colorScheme.surface,
+
         )
 
 

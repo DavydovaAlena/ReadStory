@@ -1,5 +1,6 @@
 package ru.adavydova.booksmart.presentation.screens.search_book_enable_screen
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,7 +9,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.cancellable
-import ru.adavydova.booksmart.domain.usecase.books_remote.BooksRemoteUseCase
+import kotlinx.coroutines.flow.update
+import ru.adavydova.booksmart.domain.usecase.google_books_remote.BooksRemoteUseCase
 import javax.inject.Inject
 
 @HiltViewModel
@@ -36,9 +38,7 @@ class OnActiveSearchScreenViewModel @Inject constructor(
             is SearchBookEvent.UpdateAndSearchQuery -> {
 
                 searchBooksState.value.books?.cancellable()
-                _searchBooksState.value = searchBooksState.value.copy(
-                    query = event.query
-                )
+                _searchBooksState.update { it.copy(query = event.query) }
 
                 val books = bookUseCase.searchBookUseCase(
                     query = searchBooksState.value.query,

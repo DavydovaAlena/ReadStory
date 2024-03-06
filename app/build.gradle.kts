@@ -1,5 +1,3 @@
-import java.util.Properties
-
 
 plugins {
     id("com.android.application")
@@ -7,11 +5,14 @@ plugins {
     id ("kotlin-kapt")
     id("kotlin-parcelize")
     id("com.google.dagger.hilt.android")
-    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+//    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 
 }
 
+
+
 android {
+
     namespace = "ru.adavydova.booksmart"
     compileSdk = 34
 
@@ -40,13 +41,14 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_1_9
+        targetCompatibility = JavaVersion.VERSION_1_9
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "9"
     }
     buildFeatures {
+
         buildConfig = true
         compose = true
     }
@@ -61,6 +63,7 @@ android {
 }
 
 dependencies {
+    val readium_version = "3.0.0-alpha.1"
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
@@ -70,15 +73,14 @@ dependencies {
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
-//    implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.material3:material3")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.10.01"))
+    androidTestImplementation(platform("androidx.compose:compose-bom:v2024.02.00-alpha01"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
-    implementation("androidx.compose.material3:material3:1.2.0-rc01")
 
 
     implementation("com.squareup.okhttp3:okhttp")
@@ -114,12 +116,12 @@ dependencies {
 
     //Coil
     implementation("io.coil-kt:coil-compose:2.5.0")
-
+    implementation ("com.google.android.gms:play-services-location:21.1.0")
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
-    implementation("androidx.compose.foundation:foundation:1.6.0-rc01")
+    implementation("androidx.compose.foundation:foundation:1.6.1")
 
-    implementation ("com.google.android.recaptcha:recaptcha:18.4.0")
-    implementation ("com.google.android.gms:play-services-safetynet:18.0.1")
+//    implementation ("com.google.android.recaptcha:recaptcha:18.4.0")
+//    implementation ("com.google.android.gms:play-services-safetynet:18.0.1")
 
     //Media3
     implementation("androidx.media3:media3-datasource-okhttp:1.2.1")
@@ -130,6 +132,33 @@ dependencies {
     implementation("androidx.media3:media3-ui:1.2.1")
     implementation("androidx.media3:media3-ui-leanback:1.2.1")
     implementation("androidx.media3:media3-exoplayer-workmanager:1.2.1")
-    //
 
+    //Fragment
+    implementation("androidx.compose.ui:ui-viewbinding:1.6.1")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
+
+    //Readium
+
+//
+//    implementation("org.readium.kotlin-toolkit:readium-adapter-pdfium-navigator:3.0.0-alpha.1")
+//    implementation("org.readium.kotlin-toolkit:readium-adapter-pdfium-document:3.0.0-alpha.1")
+    implementation ("org.readium.kotlin-toolkit:readium-shared:$readium_version")
+    implementation ("org.readium.kotlin-toolkit:readium-streamer:$readium_version")
+    implementation ("org.readium.kotlin-toolkit:readium-navigator:$readium_version")
+    implementation ("org.readium.kotlin-toolkit:readium-lcp:$readium_version")
+    implementation("org.readium.kotlin-toolkit:readium-navigator-media-tts:3.0.0-alpha.1")
+
+    implementation("org.readium.kotlin-toolkit:readium-navigator-media:3.0.0-alpha.1")
+    implementation("org.readium.kotlin-toolkit:readium-adapter-exoplayer-audio:3.0.0-alpha.1")
+    // https://mavenlibs.com/maven/dependency/org.readium.kotlin-toolkit/readium-navigator-media-tts
+    implementation("org.readium.kotlin-toolkit:readium-navigator-media-tts:3.0.0-alpha.1")
+
+    implementation("joda-time:joda-time:2.12.7")
+    implementation ("com.jakewharton.timber:timber:5.0.1")
+
+    //DataStore
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+
+    implementation ("com.github.skydoves:colorpicker-compose:1.0.0")
+    implementation("dev.chrisbanes.haze:haze-jetpack-compose:0.5.4")
 }

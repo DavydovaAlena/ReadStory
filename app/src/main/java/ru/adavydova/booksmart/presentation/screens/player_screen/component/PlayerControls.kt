@@ -18,7 +18,7 @@ import ru.adavydova.booksmart.presentation.component.button.NextButton
 import ru.adavydova.booksmart.presentation.component.button.PlayPauseButton
 import ru.adavydova.booksmart.presentation.component.button.PreviousButton
 import ru.adavydova.booksmart.service.PlayerState
-import ru.adavydova.booksmart.service.isBuffering
+import ru.adavydova.booksmart.util.extensions.isBuffering
 
 @Composable
 fun PlayerControls(

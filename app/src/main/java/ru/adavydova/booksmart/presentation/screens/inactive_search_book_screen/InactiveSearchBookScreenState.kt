@@ -2,13 +2,13 @@ package ru.adavydova.booksmart.presentation.screens.inactive_search_book_screen
 
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
-import ru.adavydova.booksmart.domain.model.Book
+import ru.adavydova.booksmart.domain.model.google_book.GoogleBook
 import ru.adavydova.booksmart.presentation.screens.inactive_search_book_screen.filters.FilterBooks
 import ru.adavydova.booksmart.presentation.screens.inactive_search_book_screen.filters.LanguageRestrictFilterBooks
 import ru.adavydova.booksmart.presentation.screens.inactive_search_book_screen.filters.OrderBooks
 
 data class InactiveSearchBookScreenState(
-    val books: Flow<PagingData<Book>>? = null,
+    val books: Flow<PagingData<GoogleBook>>? = null,
     val query: String = "",
     val orderType: OrderBooks = OrderBooks.RelevanceOrderType,
     val languageRestrict: LanguageRestrictFilterBooks = LanguageRestrictFilterBooks.AllLanguage,

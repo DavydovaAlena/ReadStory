@@ -3,15 +3,20 @@ package ru.adavydova.booksmart.presentation.component.search_bar
 import android.app.Activity
 import android.content.Intent
 import android.speech.RecognizerIntent
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text2.input.rememberTextFieldState
+import androidx.compose.foundation.text2.input.setTextAndPlaceCursorAtEnd
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.Icon
@@ -34,6 +39,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
@@ -47,6 +54,7 @@ import ru.adavydova.booksmart.ui.theme.md_theme_dark_surfaceTint
 import java.util.Locale
 
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun OnActiveSearchBar(
     modifier: Modifier = Modifier,
@@ -65,6 +73,19 @@ fun OnActiveSearchBar(
     }
     var microState by remember {
         mutableStateOf(true)
+    }
+
+
+    var queryTextField by remember {
+        mutableStateOf(
+            TextFieldValue(
+                text = query,
+                selection = when(query.isEmpty()){
+                    true -> TextRange.Zero
+                    false -> TextRange(query.length)
+                }
+            )
+        )
     }
 
     val voiceQueryResultLauncher = rememberLauncherForActivityResult(
@@ -96,7 +117,7 @@ fun OnActiveSearchBar(
     )
 
     LaunchedEffect(key1 = LocalContext.current, block = {
-        delay(100)
+        delay(50)
         focusRequester.requestFocus()
     })
 
@@ -132,9 +153,12 @@ fun OnActiveSearchBar(
             modifier = modifier
                 .fillMaxWidth()
                 .focusRequester(focusRequester),
-            value = TextFieldValue(text = query, selection = TextRange(query.length)),
+            value = queryTextField,
             maxLines = 2,
-            onValueChange = { onValueChange(it.text) },
+            onValueChange = {
+                queryTextField = it
+                Log.d("p", "pppppp")
+                onValueChange(it.text) },
             trailingIcon = {
                 when (microState) {
                     true -> {
@@ -151,7 +175,10 @@ fun OnActiveSearchBar(
                     }
 
                     false -> {
-                        IconButton(onClick = clearQuery) {
+                        IconButton(onClick = {
+                            clearQuery()
+                            queryTextField = TextFieldValue(text = "", selection = TextRange.Zero)
+                        }) {
                             Icon(
                                 imageVector = Icons.Default.Clear,
                                 contentDescription = null,

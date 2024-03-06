@@ -1,3 +1,4 @@
+
 pluginManagement {
     repositories {
         google()
@@ -10,9 +11,9 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        gradlePluginPortal()
     }
 }
 
 rootProject.name = "BookSmart"
 include(":app")
- 

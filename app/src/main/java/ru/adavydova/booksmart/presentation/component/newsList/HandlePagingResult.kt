@@ -1,14 +1,13 @@
 package ru.adavydova.booksmart.presentation.component.newsList
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
-import ru.adavydova.booksmart.domain.model.Book
+import ru.adavydova.booksmart.domain.model.google_book.GoogleBook
 
 @Composable
 fun handlePagingResult(
-    books: LazyPagingItems<Book>
+    books: LazyPagingItems<GoogleBook>
 ): PagingStateLoad {
     val loadState = books.loadState
     val error: LoadState.Error? = when{

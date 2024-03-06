@@ -50,19 +50,19 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ExperimentalMotionApi
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import ru.adavydova.booksmart.domain.model.Book
+import ru.adavydova.booksmart.domain.model.google_book.GoogleBook
 import ru.adavydova.booksmart.presentation.component.search_item.short_variant.parseUrlImage
 
 @OptIn(ExperimentalMotionApi::class)
 @Composable
 fun DetailBookScreen(
     modifier: Modifier = Modifier,
-    book: Book
+    googleBook: GoogleBook
 ) {
 
     val context = LocalContext.current
     val scrollState = rememberScrollState()
-    val description = book.description ?: ""
+    val description = googleBook.description ?: ""
     val maxLines by remember {
         mutableIntStateOf(3)
     }
@@ -134,7 +134,7 @@ fun DetailBookScreen(
                     .border(1.dp, MaterialTheme.colorScheme.outline),
 
                 model = ImageRequest.Builder(context)
-                    .data(book.imageLinks?.parseUrlImage()).build(),
+                    .data(googleBook.imageLinks?.parseUrlImage()).build(),
                 contentDescription = null
             )
             Spacer(modifier = Modifier.height(20.dp))
@@ -145,7 +145,7 @@ fun DetailBookScreen(
                 textAlign = TextAlign.Center,
                 modifier = Modifier,
                 color = MaterialTheme.colorScheme.secondary,
-                text = book.title,
+                text = googleBook.title,
                 style = MaterialTheme.typography.titleMedium.copy(fontSize = 22.sp)
             )
 
@@ -155,7 +155,7 @@ fun DetailBookScreen(
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                text = "Author: " + book.authors
+                text = "Author: " + googleBook.authors
             )
 
 
@@ -166,7 +166,7 @@ fun DetailBookScreen(
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                text = "Categories: " + (book.categories)
+                text = "Categories: " + (googleBook.categories)
             )
 
 

@@ -27,7 +27,7 @@ import ru.adavydova.booksmart.R
 import ru.adavydova.booksmart.presentation.component.button.PlayPauseButton
 import ru.adavydova.booksmart.presentation.component.timebar.PlayerLinerProgressIndicator
 import ru.adavydova.booksmart.service.PlayerState
-import ru.adavydova.booksmart.service.isBuffering
+import ru.adavydova.booksmart.util.extensions.isBuffering
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -52,7 +52,8 @@ fun CompatPlayerView(
                         if (isSystemInDarkTheme())
                             MaterialTheme.colorScheme.onSecondary.copy(alpha = 0.5f)
                         else
-                            MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.5f))
+                            MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.5f)
+                    )
                     .height(80.dp)
                     .fillMaxWidth()
                     .padding(16.dp),

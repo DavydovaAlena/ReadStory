@@ -1,6 +1,5 @@
 package ru.adavydova.booksmart.presentation.screens.detail_book_screen
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,8 +8,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.adavydova.booksmart.util.Resource
-import ru.adavydova.booksmart.domain.usecase.books_local.BooksLocalUseCase
-import ru.adavydova.booksmart.domain.usecase.books_remote.BooksRemoteUseCase
+import ru.adavydova.booksmart.domain.usecase.google_books_local.BooksLocalUseCase
+import ru.adavydova.booksmart.domain.usecase.google_books_remote.BooksRemoteUseCase
 import javax.inject.Inject
 
 @HiltViewModel
@@ -35,7 +34,7 @@ class DetailBookViewModel @Inject constructor(
                         _bookState.value = bookState.value.copy(
                             favorite = true,
                             load = false,
-                            book = book
+                            googleBook = book
                         )
                     }
                 }
@@ -54,7 +53,7 @@ class DetailBookViewModel @Inject constructor(
 
             is Resource.Success -> {
                 _bookState.value = bookState.value.copy(
-                    book = book.data,
+                    googleBook = book.data,
                     error = null,
                     load = false
                 )
@@ -66,7 +65,7 @@ class DetailBookViewModel @Inject constructor(
 
     fun onEvent(event: DetailBookEvent) {
 
-        bookState.value.book?.let { book ->
+        bookState.value.googleBook?.let { book ->
 
             when (event) {
 

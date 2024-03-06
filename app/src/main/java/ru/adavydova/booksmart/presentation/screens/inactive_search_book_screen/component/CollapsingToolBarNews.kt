@@ -13,6 +13,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.LocalContext
@@ -61,11 +62,7 @@ fun SearchBooksMotionHandler(
         Image(
             modifier = Modifier
                 .layoutId("icon_program_image"),
-            imageVector = if (isSystemInDarkTheme()) {
-                ImageVector.vectorResource(id = R.drawable.color_logo___no_background)
-            } else {
-                ImageVector.vectorResource(id = R.drawable.black_logo___no_background)
-            },
+            imageVector = ImageVector.vectorResource(id = R.drawable.color_logo___no_background),
             contentDescription = null
         )
 
@@ -74,7 +71,7 @@ fun SearchBooksMotionHandler(
                 .layoutId("search_bar")
                 .border(
                     width = 1.dp,
-                    color = MaterialTheme.colorScheme.onSecondary,
+                    color = Color.DarkGray,
                     shape = CircleShape
                 )
                 .shadow(

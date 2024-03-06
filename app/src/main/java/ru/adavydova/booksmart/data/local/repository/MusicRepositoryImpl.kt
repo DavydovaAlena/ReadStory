@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.Cursor
 import android.provider.MediaStore
 import androidx.media3.common.MediaItem
+import androidx.media3.common.MediaMetadata
 import dagger.hilt.android.qualifiers.ApplicationContext
 import ru.adavydova.booksmart.data.local.audio.AudioData
 import ru.adavydova.booksmart.domain.repository.MusicRepository
@@ -60,6 +61,19 @@ class MusicRepositoryImpl @Inject constructor(
                         MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
                         id
                     )
+
+                    val metadata = MediaMetadata.Builder()
+                        .setDisplayTitle(displayName)
+                        .setArtist(artist)
+                        .setTitle(title)
+                        .build()
+
+                    val mediaItem = MediaItem.Builder()
+                        .setUri(uri)
+                        .setMediaId(id.toString())
+                        .setMediaMetadata(metadata)
+                        .build()
+
                     audioList.add(
                         AudioData(
                             uri =uri,
@@ -68,7 +82,7 @@ class MusicRepositoryImpl @Inject constructor(
                             artist = artist,
                             title = title,
                             duration = duration,
-                            mediaItem = MediaItem.fromUri(uri)
+                            mediaItem = mediaItem
                         )
                     )
                 }

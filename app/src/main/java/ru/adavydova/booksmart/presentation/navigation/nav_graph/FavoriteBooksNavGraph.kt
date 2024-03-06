@@ -1,11 +1,8 @@
 package ru.adavydova.booksmart.presentation.navigation.nav_graph
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -18,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -41,7 +39,6 @@ fun NavGraphBuilder.favoriteBooksNavGraph(
 
             val viewModel = hiltViewModel<FavoriteBooksViewModel>()
             val state by viewModel.favoriteBooksState.collectAsState()
-
 
 
             Column(
@@ -83,10 +80,10 @@ fun NavGraphBuilder.favoriteBooksNavGraph(
                             .fillMaxSize()
                     ) {
 
-                        items(state.books) { book ->
+                        items(state.googleBooks) { book ->
 
                             CardBookItem(
-                                book = book,
+                                googleBook = book,
                                 onClick = { navController.navigate(Route.DetailBookScreen.route + "?bookId=${it.id}") })
                             
                             Spacer(modifier = Modifier.height(8.dp))

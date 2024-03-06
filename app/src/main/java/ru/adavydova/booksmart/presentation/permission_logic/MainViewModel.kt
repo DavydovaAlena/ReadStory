@@ -34,7 +34,6 @@ class MainViewModel @Inject constructor() : ViewModel() {
             is PermissionEvent.PermissionRequest -> {
                 if (!event.isGranted) {
                     permissionRequiredList.add(0, event.permission)
-                    Log.d("per", event.permission.permissionName)
                 }
             }
         }

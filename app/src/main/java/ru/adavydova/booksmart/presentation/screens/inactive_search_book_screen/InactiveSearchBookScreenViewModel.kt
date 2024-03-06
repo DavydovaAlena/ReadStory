@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import ru.adavydova.booksmart.domain.usecase.books_remote.BooksRemoteUseCase
+import ru.adavydova.booksmart.domain.usecase.google_books_remote.BooksRemoteUseCase
 import ru.adavydova.booksmart.presentation.screens.inactive_search_book_screen.filters.FilterBookState
 import ru.adavydova.booksmart.presentation.screens.inactive_search_book_screen.filters.FilterBooks
 import ru.adavydova.booksmart.presentation.screens.inactive_search_book_screen.filters.LanguageRestrictFilterBooks

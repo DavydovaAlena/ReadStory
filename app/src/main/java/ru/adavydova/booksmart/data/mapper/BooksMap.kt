@@ -2,20 +2,20 @@ package ru.adavydova.booksmart.data.mapper
 
 import ru.adavydova.booksmart.data.remote.dto.books.BooksDto
 import ru.adavydova.booksmart.data.remote.dto.books.ItemDto
-import ru.adavydova.booksmart.domain.model.Book
-import ru.adavydova.booksmart.domain.model.Books
+import ru.adavydova.booksmart.domain.model.google_book.GoogleBook
+import ru.adavydova.booksmart.domain.model.google_book.GoogleBooks
 
-fun BooksDto.toBooks(): Books {
+fun BooksDto.toBooks(): GoogleBooks {
 
-    return Books(
+    return GoogleBooks(
 
         totalResult = totalItems,
-        books = items.map { book ->
+        googleBooks = items.map { book ->
             val saleInfo = book.saleInfo
             val volumeInfo = book.volumeInfo
             val accessInfo = book.accessInfo
 
-            Book(
+            GoogleBook(
                 amount = saleInfo?.listPrice?.amount,
                 currencyCode = saleInfo?.listPrice?.currencyCode,
                 buyLink = saleInfo?.buyLink,
@@ -44,8 +44,8 @@ fun BooksDto.toBooks(): Books {
     )
 }
 
-fun ItemDto.toBook(): Book {
-    return Book(
+fun ItemDto.toBook(): GoogleBook {
+    return GoogleBook(
         amount = saleInfo?.listPrice?.amount,
         currencyCode = saleInfo?.listPrice?.currencyCode,
         buyLink = saleInfo?.buyLink,

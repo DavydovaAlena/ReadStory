@@ -73,7 +73,7 @@ fun SearchFullWindowScreen(
                 changeErrorState = { errorState.value = it },
                 onClick = { navigateToFullSearchScreen(it) },
                 card = { book, onClick ->
-                    SearchItem(book = book, onClick = onClick)
+                    SearchItem(googleBook = book, onClick = onClick)
                 },
             )
         }
