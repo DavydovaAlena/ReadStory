@@ -47,8 +47,6 @@ size=1057x2160&amp;quality=96&amp;sign=3d9cb12bf823dc2c7fcf78190a31255d&amp;type
 size=1057x2160&amp;quality=96&amp;sign=087480bdd17f525f39340eff29b67b75&amp;type=album" alt="" width="150" height="307" /></td>
 <td style="width: 141.797px; height: 319.891px; text-align: center;"><img src=https://github.com/DavydovaAlena/ReadStory/assets/157409811/b3ace414-f0f4-4cc2-b0a6-c1f335724ffd
 size=1057x2160&amp;quality=96&amp;sign=505b24d059a770ba76088a762d6ace43&amp;type=album" alt="" width="150" height="307" /></td>
-<td style="width: 141.797px; height: 319.891px; text-align: center;"><img src=https://github.com/DavydovaAlena/ReadStory/assets/157409811/dd07a07d-a25a-47a2-86ba-e198fb685c3e
-size=1057x2160&amp;quality=96&amp;sign=c9af71c0cdd8658af771080e5da9e1a0&amp;type=album" alt="" width="150" height="307" /></td>
 <td style="width: 141.797px; height: 319.891px; text-align: center;"><img src=https://github.com/DavydovaAlena/ReadStory/assets/157409811/93963255-b466-4a7e-8c58-a7553d88849c
 size=1057x2160&amp;quality=96&amp;sign=3d9cb12bf823dc2c7fcf78190a31255d&amp;type=album" alt="" width="150" height="307" /></td>	
 <td style="width: 141.797px; height: 319.891px; text-align: center;"><img src=https://github.com/DavydovaAlena/ReadStory/assets/157409811/4bc45578-0078-4735-9748-e8a26734c714
