@@ -1,10 +1,8 @@
 ## Owerview
 An application for downloading and reading books. Main Functions:
-<ul>
-<li>Home Screen</li>
-</ul>
+### Home Screen
 The screen contains information on the most recently read books from the local database of the application and selected books from a remote source.
-<p>&nbsp;</p>
+
 <table style="height: 251px;" width="743">
 <tbody>
 <tr style="height: 319.891px;">
@@ -17,11 +15,10 @@ size=1057x2160&amp;quality=96&amp;sign=505b24d059a770ba76088a762d6ace43&amp;type
 </tr>
 </tbody>
 </table>
-<ul>
-<li>Search Screen</li>
-</ul>
+
+### Search Screen
 A screen for searching for books along with the Google book api. Support for filtering the query by language, book type (books without a plan, paid books, etc.) and order. If the book is free, download and preview are available, otherwise you can buy the book by clicking on the appropriate link or read the preview
-<p>&nbsp;</p>
+
 <table style="height: 251px;" width="743">
 <tbody>
 <tr style="height: 319.891px;">
@@ -38,6 +35,27 @@ size=1057x2160&amp;quality=96&amp;sign=3d9cb12bf823dc2c7fcf78190a31255d&amp;type
 </tbody>
 </table>
 
+### Bookshelf Screen
+On this screen, you can view books from your personal library. Currently, the supported formats to add to the library are: epub format. Each book can be read both page by page and by scrolling (by chapter). You can customize the theme, fonts, and margins, as it will be convenient for you. The progress of reading the book will be saved and you can easily return to the course where you left off later
+
+<table style="height: 251px;" width="743">
+<tbody>
+<tr style="height: 319.891px;">
+<td style="width: 141.797px; height: 319.891px; text-align: center;"><img src=https://github.com/DavydovaAlena/ReadStory/assets/157409811/97958ed0-ac30-4587-91c2-93f93598dc11
+size=1057x2160&amp;quality=96&amp;sign=3d9cb12bf823dc2c7fcf78190a31255d&amp;type=album" alt="" width="150" height="307" /></td>
+<td style="width: 141.797px; height: 319.891px; text-align: center;"><img src=https://github.com/DavydovaAlena/ReadStory/assets/157409811/149672e0-6c96-4c1e-a709-0a7b20f091ef
+size=1057x2160&amp;quality=96&amp;sign=087480bdd17f525f39340eff29b67b75&amp;type=album" alt="" width="150" height="307" /></td>
+<td style="width: 141.797px; height: 319.891px; text-align: center;"><img src=https://github.com/DavydovaAlena/ReadStory/assets/157409811/b3ace414-f0f4-4cc2-b0a6-c1f335724ffd
+size=1057x2160&amp;quality=96&amp;sign=505b24d059a770ba76088a762d6ace43&amp;type=album" alt="" width="150" height="307" /></td>
+<td style="width: 141.797px; height: 319.891px; text-align: center;"><img src=https://github.com/DavydovaAlena/ReadStory/assets/157409811/dd07a07d-a25a-47a2-86ba-e198fb685c3e
+size=1057x2160&amp;quality=96&amp;sign=c9af71c0cdd8658af771080e5da9e1a0&amp;type=album" alt="" width="150" height="307" /></td>
+<td style="width: 141.797px; height: 319.891px; text-align: center;"><img src=https://github.com/DavydovaAlena/ReadStory/assets/157409811/93963255-b466-4a7e-8c58-a7553d88849c
+size=1057x2160&amp;quality=96&amp;sign=3d9cb12bf823dc2c7fcf78190a31255d&amp;type=album" alt="" width="150" height="307" /></td>	
+<td style="width: 141.797px; height: 319.891px; text-align: center;"><img src=https://github.com/DavydovaAlena/ReadStory/assets/157409811/4bc45578-0078-4735-9748-e8a26734c714
+size=1057x2160&amp;quality=96&amp;sign=3d9cb12bf823dc2c7fcf78190a31255d&amp;type=album" alt="" width="150" height="307" /></td>	
+</tr>
+</tbody>
+</table>
 
 
  
