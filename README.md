@@ -22,15 +22,15 @@ A screen for searching for books along with the Google book api. Support for fil
 <table style="height: 251px;" width="743">
 <tbody>
 <tr style="height: 319.891px;">
-<td style="width: 141.797px; height: 319.891px; text-align: center;"><img src=https://github.com/DavydovaAlena/ReadStory/assets/157409811/30b09b98-01df-46eb-bc05-8c34ea567123 size=1057x2160&amp;quality=96&amp;sign=3d9cb12bf823dc2c7fcf78190a31255d&amp;type=album" alt="" width="150" height="307" /></td>
+<td style="width: 141.797px; height: 319.891px; text-align: center;"><img src=https://github.com/DavydovaAlena/ReadStory/assets/157409811/30b09b98-01df-46eb-bc05-8c34ea567123 size=1057x2160&amp;quality=96&amp;sign=3d9cb12bf823dc2c7fcf78190a31255d&amp;type=album" alt="" width="150" height="290" /></td>
 <td style="width: 141.797px; height: 319.891px; text-align: center;"><img src=https://github.com/DavydovaAlena/ReadStory/assets/157409811/b269e1e3-1d04-4b0a-8444-fba42c22a0b7
-size=1057x2160&amp;quality=96&amp;sign=087480bdd17f525f39340eff29b67b75&amp;type=album" alt="" width="150" height="307" /></td>
+size=1057x2160&amp;quality=96&amp;sign=087480bdd17f525f39340eff29b67b75&amp;type=album" alt="" width="150" height="290" /></td>
 <td style="width: 141.797px; height: 319.891px; text-align: center;"><img src=https://github.com/DavydovaAlena/ReadStory/assets/157409811/de4f4225-c75b-41fb-b726-1dd5cec44421
-size=1057x2160&amp;quality=96&amp;sign=505b24d059a770ba76088a762d6ace43&amp;type=album" alt="" width="150" height="307" /></td>
+size=1057x2160&amp;quality=96&amp;sign=505b24d059a770ba76088a762d6ace43&amp;type=album" alt="" width="150" height="290" /></td>
 <td style="width: 141.797px; height: 319.891px; text-align: center;"><img src=https://github.com/DavydovaAlena/ReadStory/assets/157409811/e7cf9d66-6fa2-486d-97a8-56d50b995cb5
-size=1057x2160&amp;quality=96&amp;sign=c9af71c0cdd8658af771080e5da9e1a0&amp;type=album" alt="" width="150" height="307" /></td>
+size=1057x2160&amp;quality=96&amp;sign=c9af71c0cdd8658af771080e5da9e1a0&amp;type=album" alt="" width="150" height="290" /></td>
 <td style="width: 141.797px; height: 319.891px; text-align: center;"><img src=https://github.com/DavydovaAlena/ReadStory/assets/157409811/8472e716-f2f3-48a9-bd45-306c8660a569
-size=1057x2160&amp;quality=96&amp;sign=3d9cb12bf823dc2c7fcf78190a31255d&amp;type=album" alt="" width="150" height="307" /></td>	
+size=1057x2160&amp;quality=96&amp;sign=3d9cb12bf823dc2c7fcf78190a31255d&amp;type=album" alt="" width="150" height="290" /></td>	
 </tr>
 </tbody>
 </table>
@@ -42,15 +42,15 @@ On this screen, you can view books from your personal library. Currently, the su
 <tbody>
 <tr style="height: 319.891px;">
 <td style="width: 141.797px; height: 319.891px; text-align: center;"><img src=https://github.com/DavydovaAlena/ReadStory/assets/157409811/97958ed0-ac30-4587-91c2-93f93598dc11
-size=1057x2160&amp;quality=96&amp;sign=3d9cb12bf823dc2c7fcf78190a31255d&amp;type=album" alt="" width="150" height="307" /></td>
+size=1057x2160&amp;quality=96&amp;sign=3d9cb12bf823dc2c7fcf78190a31255d&amp;type=album" alt="" width="150" height="290" /></td>
 <td style="width: 141.797px; height: 319.891px; text-align: center;"><img src=https://github.com/DavydovaAlena/ReadStory/assets/157409811/149672e0-6c96-4c1e-a709-0a7b20f091ef
-size=1057x2160&amp;quality=96&amp;sign=087480bdd17f525f39340eff29b67b75&amp;type=album" alt="" width="150" height="307" /></td>
+size=1057x2160&amp;quality=96&amp;sign=087480bdd17f525f39340eff29b67b75&amp;type=album" alt="" width="150" height="290" /></td>
 <td style="width: 141.797px; height: 319.891px; text-align: center;"><img src=https://github.com/DavydovaAlena/ReadStory/assets/157409811/b3ace414-f0f4-4cc2-b0a6-c1f335724ffd
-size=1057x2160&amp;quality=96&amp;sign=505b24d059a770ba76088a762d6ace43&amp;type=album" alt="" width="150" height="307" /></td>
+size=1057x2160&amp;quality=96&amp;sign=505b24d059a770ba76088a762d6ace43&amp;type=album" alt="" width="150" height="290" /></td>
 <td style="width: 141.797px; height: 319.891px; text-align: center;"><img src=https://github.com/DavydovaAlena/ReadStory/assets/157409811/93963255-b466-4a7e-8c58-a7553d88849c
-size=1057x2160&amp;quality=96&amp;sign=3d9cb12bf823dc2c7fcf78190a31255d&amp;type=album" alt="" width="150" height="307" /></td>	
+size=1057x2160&amp;quality=96&amp;sign=3d9cb12bf823dc2c7fcf78190a31255d&amp;type=album" alt="" width="150" height="290" /></td>	
 <td style="width: 141.797px; height: 319.891px; text-align: center;"><img src=https://github.com/DavydovaAlena/ReadStory/assets/157409811/4bc45578-0078-4735-9748-e8a26734c714
-size=1057x2160&amp;quality=96&amp;sign=3d9cb12bf823dc2c7fcf78190a31255d&amp;type=album" alt="" width="150" height="307" /></td>	
+size=1057x2160&amp;quality=96&amp;sign=3d9cb12bf823dc2c7fcf78190a31255d&amp;type=album" alt="" width="150" height="290" /></td>	
 </tr>
 </tbody>
 </table>
